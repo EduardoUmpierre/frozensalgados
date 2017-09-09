@@ -14,10 +14,7 @@
     <ion-card *ngFor="let customer of customers">
         <ion-card-header>
             {{ customer.name }}
+            <small>{{ customer.address }} - {{ customer.city }}</small>
         </ion-card-header>
-
-        <ion-card-content>
-        <!-- Add card content here! -->
-        </ion-card-content>
     </ion-card>
 </ion-content>

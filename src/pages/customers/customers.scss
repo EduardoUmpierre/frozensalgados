@@ -1,3 +1,8 @@
 page-customers {
-
+    ion-card-header {
+        & > small {
+            color: #454545;
+            display: block;
+        }
+    }
 }
