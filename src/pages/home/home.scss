@@ -1,4 +1,9 @@
 page-home {
+    .scroll-content {
+        display: flex;
+        align-items: center;
+    }
+
     ion-navbar {
         color: #FFF;
 
@@ -33,7 +38,13 @@ page-home {
         text-align: center;
     }
 
+    #seller-image {
+        > img {
+            @include border-radius(50%);
+        }
+    }
+
     #seller-name {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 }
