@@ -11,10 +11,30 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let customer of customers">
+    <ion-card *ngFor="let customer of customers; let i = index" (click)="toggleCard(i)">
         <ion-card-header>
             {{ customer.name }}
-            <small>{{ customer.address }} - {{ customer.city }}</small>
+            <small *ngIf="!customer.toggle">
+                {{ customer.address }} - {{ customer.city }}
+            </small>
         </ion-card-header>
+
+        <div class="card-sumary" *ngIf="customer.toggle">
+            <div>
+                <strong>Endereço:</strong> {{ customer.address }}
+            </div>
+            <div>
+                <strong>CEP:</strong> {{ customer.cep }}
+            </div>
+            <div>
+                <strong>Bairro:</strong> {{ customer.district }}
+            </div>
+            <div>
+                <strong>Cidade:</strong> {{ customer.city }}
+            </div>
+            <div>
+                <strong>Telefone:</strong> {{ customer.phone }}
+            </div>
+        </div>
     </ion-card>
 </ion-content>

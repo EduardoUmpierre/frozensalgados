@@ -5,4 +5,18 @@ page-customers {
             display: block;
         }
     }
+
+    .card-sumary {
+        color: #222;
+        font-size: 1.3rem;
+        padding: 0 16px 16px;
+
+        > div {
+            margin-bottom: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
 }

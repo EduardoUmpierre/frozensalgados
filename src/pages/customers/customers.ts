@@ -23,7 +23,8 @@ export class CustomersPage {
             "address": "Apollo Street, 315",
             "city": "Spelter",
             "district": "Tennessee",
-            "cep": 1967
+            "cep": 1967,
+            "toggle": false
         },
         {
             "id": "59b409c78dc482f676c13862",
@@ -32,7 +33,8 @@ export class CustomersPage {
             "address": "Lacon Court, 299",
             "city": "Baker",
             "district": "Virgin Islands",
-            "cep": 5310
+            "cep": 5310,
+            "toggle": false
         },
         {
             "id": "59b409c7c31be7016453e0f3",
@@ -41,7 +43,8 @@ export class CustomersPage {
             "address": "Bills Place, 137",
             "city": "Smock",
             "district": "West Virginia",
-            "cep": 3127
+            "cep": 3127,
+            "toggle": false
         },
         {
             "id": "59b409c7ad53bfb37d6229d3",
@@ -50,7 +53,8 @@ export class CustomersPage {
             "address": "Garden Place, 592",
             "city": "Sedley",
             "district": "South Dakota",
-            "cep": 4264
+            "cep": 4264,
+            "toggle": false
         },
         {
             "id": "59b409c77d402ec986a8eb2b",
@@ -59,7 +63,8 @@ export class CustomersPage {
             "address": "Sumner Place, 797",
             "city": "Tetherow",
             "district": "New York",
-            "cep": 7713
+            "cep": 7713,
+            "toggle": false
         },
         {
             "id": "59b409c74f65cf0e2355eaaa",
@@ -68,7 +73,8 @@ export class CustomersPage {
             "address": "Midwood Street, 510",
             "city": "Islandia",
             "district": "Vermont",
-            "cep": 310
+            "cep": 310,
+            "toggle": false
         },
         {
             "id": "59b409c77e7bb1abb71a7086",
@@ -77,7 +83,8 @@ export class CustomersPage {
             "address": "Court Street, 248",
             "city": "Helen",
             "district": "Washington",
-            "cep": 6079
+            "cep": 6079,
+            "toggle": false
         }
     ];
 
@@ -88,4 +95,7 @@ export class CustomersPage {
         console.log('ionViewDidLoad CustomersPage');
     }
 
+    toggleCard(index: number) {
+        this.customers[index]["toggle"] = !this.customers[index]["toggle"];
+    }
 }
