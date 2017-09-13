@@ -11,6 +11,8 @@
 </ion-header>
 
 <ion-content>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+
     <ion-card *ngFor="let customer of customers; let i = index" (click)="toggleCard(i)">
         <ion-card-header>
             {{ customer.name }}
