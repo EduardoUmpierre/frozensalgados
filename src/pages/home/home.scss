@@ -39,6 +39,8 @@ page-home {
     }
 
     #seller-image {
+        margin-bottom: 1rem;
+
         > img {
             @include border-radius(50%);
         }
@@ -46,5 +48,10 @@ page-home {
 
     #seller-name {
         font-size: 1.8rem;
+        margin-bottom: 0.25rem;
+    }
+
+    #seller-id {
+        font-size: 1.3rem;
     }
 }
