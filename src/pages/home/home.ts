@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { CustomersPage } from '../customers/customers';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
+import {CustomersPage} from '../customers/customers';
+import {OrdersPage} from '../orders/orders';
 
 @Component({
     selector: 'page-home',
@@ -12,9 +13,13 @@ export class HomePage {
 
     }
 
+    // Push another page onto the history stack
+    // Causing the nav controller to animate the new page in
     goToCustomers() {
-        //push another page onto the history stack
-        //causing the nav controller to animate the new page in
         this.navCtrl.push(CustomersPage);
+    }
+
+    goToOrders() {
+        this.navCtrl.push(OrdersPage);
     }
 }
