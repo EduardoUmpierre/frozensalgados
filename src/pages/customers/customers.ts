@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Http } from '@angular/http';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ApiProvider } from '../../providers/api/api';
+import {Component} from '@angular/core';
+import {Http} from '@angular/http';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ApiProvider} from '../../providers/api/api';
 
 /**
  * Generated class for the CustomersPage page.
@@ -19,8 +19,7 @@ export class CustomersPage {
 
     public customers;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
-        private apiProvider: ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     }
 
     /**
