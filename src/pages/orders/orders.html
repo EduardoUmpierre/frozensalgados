@@ -19,10 +19,13 @@
 
         <div class="card-sumary" *ngFor="let product of order.order_product">
             <div>
-                <strong>Produto:</strong> {{ product.name }}
+                <strong>Produto:</strong> {{ product.product.name }}
             </div>
             <div>
-                <strong>Preço:</strong> {{ product.price }}
+                <strong>Quantidade:</strong> {{ product.quantity }}
+            </div>
+            <div>
+                <strong>Preço:</strong> {{ product.unit_price }}
             </div>
         </div>
     </ion-card>

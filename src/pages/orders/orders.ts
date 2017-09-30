@@ -38,5 +38,4 @@ export class OrdersPage {
                 console.log(res);
             });
     }
-
 }
