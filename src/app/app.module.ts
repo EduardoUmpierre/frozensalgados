@@ -9,6 +9,7 @@ import {ContactPage} from '../pages/contact/contact';
 import {HomePage} from '../pages/home/home';
 import {CustomersPage} from '../pages/customers/customers';
 import {OrdersPage} from '../pages/orders/orders';
+import {ProductsPage} from "../pages/products/products";
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -21,7 +22,8 @@ import {ApiProvider} from '../providers/api/api';
         ContactPage,
         HomePage,
         CustomersPage,
-        OrdersPage
+        OrdersPage,
+        ProductsPage
     ],
     imports: [
         BrowserModule,
@@ -35,7 +37,8 @@ import {ApiProvider} from '../providers/api/api';
         ContactPage,
         HomePage,
         CustomersPage,
-        OrdersPage
+        OrdersPage,
+        ProductsPage
     ],
     providers: [
         StatusBar,
