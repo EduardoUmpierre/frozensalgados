@@ -11,22 +11,25 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let order of orders; let i = index">
-        <ion-card-header>
-            {{ order.created_at | date:'dd/MM/y' }} - {{ order.customer.name }} - R$ {{ order.total }} - ({{
-            order.status }})
-        </ion-card-header>
-
-        <div class="card-sumary" *ngFor="let product of order.order_product">
-            <div>
-                <strong>Produto:</strong> {{ product.product.name }}
-            </div>
-            <div>
-                <strong>Quantidade:</strong> {{ product.quantity }}
-            </div>
-            <div>
-                <strong>Preço:</strong> {{ product.unit_price }}
-            </div>
+    <ion-card *ngFor="let order of orders; let i = index" class="list-item">
+        <div class="list-item__header">
+            Pedido: {{ order.id }}
         </div>
+
+        <div class="list-item__content">
+            <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
+            <div>Status: {{ order.status }}</div>
+        </div>
+
+        <ion-grid class="list-item__footer">
+            <ion-row>
+                <ion-col col-6>
+                    <div>Cliente: {{ order.customer.name }}</div>
+                </ion-col>
+                <ion-col col-6>
+                    <div>Total: R$ {{ order.total }}</div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-card>
 </ion-content>

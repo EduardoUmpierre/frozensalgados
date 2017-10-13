@@ -4,24 +4,6 @@ page-home {
         align-items: center;
     }
 
-    ion-navbar {
-        color: #FFF;
-
-        & > .toolbar-background {
-            background-color: transparent;
-            border: 0 !important;
-        }
-
-        .toolbar-title {
-            color: inherit;
-        }
-    }
-
-    ion-content {
-        background: url("../assets/images/background.jpg") center no-repeat;
-        background-size: cover;
-    }
-
     button {
         &.button-clear-md,
         &.button-clear-ios {
