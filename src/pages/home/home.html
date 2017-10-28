@@ -11,9 +11,23 @@
         <ion-row>
             <ion-col col-5>
                 <!-- Botões laterais -->
-                <button ion-button (click)="goToCustomers()" clear full>Clientes</button>
-                <button ion-button (click)="goToOrders()" clear full>Pedidos</button>
-                <button ion-button (click)="goToProducts()" clear full>Produtos</button>
+                <button ion-button (click)="goToCustomers()" clear full>
+                    <ion-icon name="people"></ion-icon>
+
+                    Clientes
+                </button>
+
+                <button ion-button (click)="goToOrders()" clear full>
+                    <ion-icon name="clipboard"></ion-icon>
+
+                    Pedidos
+                </button>
+
+                <button ion-button (click)="goToProducts()" clear full>
+                    <ion-icon name="alarm"></ion-icon>
+
+                    Produtos
+                </button>
             </ion-col>
 
             <ion-col col-7>

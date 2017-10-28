@@ -5,6 +5,9 @@ page-home {
     }
 
     button {
+        height: 7.5rem !important;
+        margin: 1.8rem 0.2rem !important;
+
         &.button-clear-md,
         &.button-clear-ios {
             color: #FFF;
@@ -13,6 +16,21 @@ page-home {
         &.button-clear-md {
             text-transform: capitalize;
         }
+
+        > .button-inner {
+            -webkit-flex-flow: column nowrap;
+            -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+
+            > ion-icon {
+                font-size: 3em;
+                margin-bottom: 0.125em;
+            }
+        }
+    }
+
+    ion-row {
+        align-items: center;
     }
 
     #seller {
