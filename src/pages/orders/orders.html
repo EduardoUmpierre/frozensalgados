@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let order of orders; let i = index" class="list-item">
+    <ion-card *ngFor="let order of orders; let i = index" class="list-item" (click)="showDetails(order.id)">
         <div class="list-item__header">
             Pedido: {{ order.id }}
         </div>
