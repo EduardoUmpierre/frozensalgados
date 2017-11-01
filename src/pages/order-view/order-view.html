@@ -6,10 +6,30 @@
 -->
 <ion-header>
     <ion-navbar>
-        <ion-title>order_view</ion-title>
+        <ion-title *ngIf="order">Pedido {{ order.id }}</ion-title>
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <ion-card class="list-item"*ngIf="order">
+        <div class="list-item__header">
+            Informações
+        </div>
 
+        <div class="list-item__content">
+            <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
+            <div>Status: {{ order.status }}</div>
+        </div>
+
+        <ion-grid class="list-item__footer">
+            <ion-row>
+                <ion-col col-6>
+                    <div>Cliente: {{ order.customer.name }}</div>
+                </ion-col>
+                <ion-col col-6>
+                    <div>Total: R$ {{ order.total }}</div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 </ion-content>
