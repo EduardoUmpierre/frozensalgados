@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {Http} from '@angular/http';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ApiProvider} from '../../providers/api/api';
 
