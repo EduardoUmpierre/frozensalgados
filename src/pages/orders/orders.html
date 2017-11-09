@@ -12,11 +12,8 @@
 
 <ion-content>
     <ion-card *ngFor="let order of orders; let i = index" class="list-item" (click)="showDetails(order.id)">
-        <div class="list-item__header">
-            Pedido: {{ order.id }}
-        </div>
-
         <div class="list-item__content">
+            <div class="highlight">Pedido: {{ order.id }}</div>
             <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
             <div>Status: {{ order.status }}</div>
         </div>

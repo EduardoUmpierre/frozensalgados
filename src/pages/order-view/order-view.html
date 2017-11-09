@@ -11,17 +11,22 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="list-item"*ngIf="order">
+    <ion-card class="list-item" *ngIf="order">
         <div class="list-item__header">
             Informações
         </div>
 
         <div class="list-item__content">
+            <div class="highlight">Cliente {{ order.customer.name }}</div>
             <div>CNPJ: 123456789</div>
-            <div></div>
             <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
+        </div>
 
-            <div>Produtos:</div>
+        <div class="list-item__header">
+            Produtos
+        </div>
+
+        <div class="list-item__content">
             <ol>
                 <li *ngFor="let order_product of order.order_product">
                     <div>{{ order_product.product.name }}</div>

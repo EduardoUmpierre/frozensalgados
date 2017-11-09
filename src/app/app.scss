@@ -40,21 +40,34 @@ ion-content {
     font-size: 1em;
     padding: 1em 1em 0.5em;
 
-    > .list-item__header,
-    > .list-item__footer {
+    > .list-item__header {
+        border-bottom: 1px solid #f0f0f0;
+        color: #737373;
+        font-size: 0.714em;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+        text-transform: uppercase;
+    }
+
+    > .list-item__footer,
+    > .list-item__content > .highlight {
         color: #3b5998;
         font-weight: 500;
     }
 
     > .list-item__content {
         color: #a2a2a2;
-        padding-bottom: 0.5em;
+        padding-bottom: 1em;
+
+        > .list-title {
+
+        }
     }
 
     > .list-item__footer {
         border-top: 1px solid #f0f2f7;
         margin: 0 -1em;
-        padding: .5em 1em 0;
+        padding: 0.5em 1em 0;
         width: auto;
 
         ion-col {
