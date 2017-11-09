@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ApiProvider} from '../../providers/api/api';
+import {OrderViewPage} from '../order-view/order-view';
 
 /**
  * Generated class for the OrdersPage page.
@@ -37,5 +38,11 @@ export class OrdersPage {
                 this.orders = res;
                 console.log(res);
             });
+    }
+
+    showDetails(id) {
+        this.navCtrl.push(OrderViewPage, {
+            id: id
+        });
     }
 }

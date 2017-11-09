@@ -1,26 +1,16 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Frozen Salgados
 
-## How to use this template
+Aplicação de controle de pedidos e clientes desenvolvida em Ionic 3.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Como rodar a aplicação
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+Primeiro instale as dependências de projeto e, em seguida, rode a aplicação.
 
-### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
-
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myTabs tabs
+```
+$ npm install
+$ ionic serve --l
 ```
 
-Then, to run it, cd into `myTabs` and run:
+Após isso, instale e/ou rode a [API][1].
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
-
-Substitute ios for android if not on a Mac.
-
+[1]: https://github.com/EduardoUmpierre/frozensalgados-api
