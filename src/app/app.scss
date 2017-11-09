@@ -38,7 +38,7 @@ ion-content {
 
 .list-item {
     font-size: 1em;
-    padding: 1.429em 1.429em 0;
+    padding: 1em 1em 0.5em;
 
     > .list-item__header,
     > .list-item__footer {
@@ -48,12 +48,13 @@ ion-content {
 
     > .list-item__content {
         color: #a2a2a2;
+        padding-bottom: 0.5em;
     }
 
     > .list-item__footer {
         border-top: 1px solid #f0f2f7;
-        margin: .5em -1.429em 0;
-        padding: .5em 1.429em;
+        margin: 0 -1em;
+        padding: .5em 1em 0;
         width: auto;
 
         ion-col {
