@@ -8,11 +8,13 @@ import 'rxjs/add/operator/toPromise';
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
+
+  @todo Adicionar sistema de verificação de ambiente para modificar a URL da api
 */
 @Injectable()
 export class ApiProvider {
     private url: string;
-    private urlBase = '//localhost:8000/api/v1/';
+    private urlBase = 'https://frozensalgados.herokuapp.com/api/v1/';
     private urlParams = '';
 
     constructor(public http: Http) {
