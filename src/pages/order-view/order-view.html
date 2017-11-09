@@ -17,19 +17,23 @@
         </div>
 
         <div class="list-item__content">
+            <div>CNPJ: 123456789</div>
+            <div></div>
             <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
-            <div>Status: {{ order.status }}</div>
+
+            <div>Produtos:</div>
+            <ol>
+                <li *ngFor="let order_product of order.order_product">
+                    <div>{{ order_product.product.name }}</div>
+                    <div>Quantidade: {{ order_product.quantity }}</div>
+                    <div>Preço Un: R$ {{ order_product.unit_price }}</div>
+                    <div>Preço Total: R$ {{ order_product.unit_price * order_product.quantity }}</div>
+                </li>
+            </ol>
         </div>
 
-        <ion-grid class="list-item__footer">
-            <ion-row>
-                <ion-col col-6>
-                    <div>Cliente: {{ order.customer.name }}</div>
-                </ion-col>
-                <ion-col col-6>
-                    <div>Total: R$ {{ order.total }}</div>
-                </ion-col>
-            </ion-row>
+        <ion-grid class="list-item__footer centered">
+            <div>Total: R$ {{ order.total }}</div>
         </ion-grid>
     </ion-card>
 </ion-content>
