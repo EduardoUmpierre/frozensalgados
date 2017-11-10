@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {ApiProvider} from '../../providers/api/api';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiProvider } from '../../providers/api/api';
 
 /**
  * Generated class for the CustomersPage page.
@@ -31,7 +31,8 @@ export class CustomersPage {
     }
 
     /**
-     * Toggle card sumary status
+     * Toggle card summary status
+     *
      * @param  {number} index customer index
      */
     toggleCard(index: number) {
@@ -69,4 +70,5 @@ export class CustomersPage {
             });
         }
     }
+
 }
