@@ -9,7 +9,7 @@
         <ion-title>Pedidos</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only>
+            <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
             </button>
         </ion-buttons>
@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let order of orders; let i = index" class="list-item" (click)="showDetails(order.id)">
+    <ion-card *ngFor="let order of orders; let i = index" class="list-item" (click)="goToDetails(order.id)">
         <div class="list-item__content">
             <div class="highlight">Pedido: {{ order.id }}</div>
             <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
