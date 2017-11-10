@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
-import {CustomersPage} from '../customers/customers';
-import {OrdersPage} from '../orders/orders';
-import {ProductsPage} from "../products/products";
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { CustomersPage } from '../customers/customers';
+import { OrdersPage } from '../orders/orders';
+import { ProductsPage } from "../products/products";
 
 @Component({
     selector: 'page-home',
@@ -10,7 +10,7 @@ import {ProductsPage} from "../products/products";
 })
 export class HomePage {
 
-    constructor(public navCtrl: NavController) {
+    constructor(public navCtrl:NavController) {
 
     }
 
