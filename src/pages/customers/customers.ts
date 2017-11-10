@@ -43,8 +43,9 @@ export class CustomersPage {
      */
     initializeItems() {
         this.apiProvider
-            .builder('customers', null)
-            .getApiData()
+            .builder('customers')
+            .loader()
+            .get()
             .then((res) => {
                 this.customers = res;
                 console.log(res);

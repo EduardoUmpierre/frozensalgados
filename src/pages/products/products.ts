@@ -31,8 +31,9 @@ export class ProductsPage {
      */
     initializeItems() {
         this.apiProvider
-            .builder('products', null)
-            .getApiData()
+            .builder('products')
+            .loader()
+            .get()
             .then((res) => this.products = res);
     }
 }

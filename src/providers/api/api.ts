@@ -1,42 +1,68 @@
 import { Injectable } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 /*
-  Generated class for the ApiProvider provider.
+ Generated class for the ApiProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
+ See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+ for more info on providers and Angular DI.
 
-  @todo Adicionar sistema de verificação de ambiente para modificar a URL da api
-*/
+ @todo Adicionar sistema de verificação de ambiente para modificar a URL da api
+ */
 @Injectable()
 export class ApiProvider {
-    private url: string;
+    private url:string;
     private urlBase = 'https://frozensalgados.herokuapp.com/api/v1/';
-    private urlParams = '';
+    private loading;
 
-    constructor(public http: Http) {
-        console.log('Hello ApiProvider Provider');
+    constructor(public http:Http, public loadingCtrl:LoadingController) {
+        console.log('ApiProvider running');
     }
 
-    builder(type: string, params: string) {
-        this.url = this.urlBase + type;
-
-        if (params)
-            this.url += '?' + params;
-
-        this.url += this.urlParams;
+    /**
+     * Builds the final URL
+     *
+     * @param controller
+     * @param params
+     * @returns {ApiProvider}
+     */
+    builder(controller:string, params:string = null) {
+        this.url = this.urlBase + controller + (params ? '?' + params : '');
 
         return this;
     }
 
-    getApiData() {
+    /**
+     * Shows the loading modal
+     *
+     * @param message
+     * @returns {ApiProvider}
+     */
+    loader(message:string = 'Carregando...') {
+        this.loading = this.loadingCtrl.create({
+            content: message
+        });
+
+        this.loading.present();
+
+        return this;
+    }
+
+    /**
+     * Do the http get request
+     *
+     * @returns {any|Thenable<any|Promise<any>|JSON|{}>|Function|Promise<R>}
+     */
+    get() {
         return this.http.get(this.url)
             .toPromise()
             .then((api) => {
-                return api.json() || {}
+                this.loading.dismiss();
+
+                return api.json() || {};
             });
     }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {ApiProvider} from '../../providers/api/api';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ApiProvider } from '../../providers/api/api';
 
 /**
  * Generated class for the OrderViewPage page.
@@ -17,7 +17,7 @@ import {ApiProvider} from '../../providers/api/api';
 export class OrderViewPage {
     public order;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+    constructor(public navCtrl:NavController, public navParams:NavParams, private apiProvider:ApiProvider) {
     }
 
     ionViewDidLoad() {
@@ -32,10 +32,11 @@ export class OrderViewPage {
     initializeItems(id) {
         this.apiProvider
             .builder('orders/' + id, null)
-            .getApiData()
+            .loader('Carregando pedido ' + id + '...')
+            .get()
             .then((res) => {
-                this.order = res;
                 console.log(res);
+                this.order = res;
             });
     }
 }
