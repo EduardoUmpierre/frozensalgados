@@ -15,6 +15,7 @@ import { ApiProvider } from '../../providers/api/api';
     templateUrl: 'order-view.html',
 })
 export class OrderViewPage {
+
     public order;
 
     constructor(public navCtrl:NavController, public navParams:NavParams, private apiProvider:ApiProvider) {
@@ -23,13 +24,13 @@ export class OrderViewPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad OrderViewPage');
 
-        this.initializeItems(this.navParams.get('id'));
+        this.loadItem(this.navParams.get('id'));
     }
 
     /**
-     * Reset items back to all of the items
+     * Gets one item by id
      */
-    initializeItems(id) {
+    loadItem(id) {
         this.apiProvider
             .builder('orders/' + id, null)
             .loader('Carregando pedido ' + id + '...')
@@ -39,4 +40,5 @@ export class OrderViewPage {
                 this.order = res;
             });
     }
+
 }
