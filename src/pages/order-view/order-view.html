@@ -29,7 +29,7 @@
         <div class="list-item__content">
             <ol>
                 <li *ngFor="let order_product of order.order_product">
-                    <div>{{ order_product.product.name }}</div>
+                    <div class="highlight">{{ order_product.product.name }}</div>
                     <div>Quantidade: {{ order_product.quantity }}</div>
                     <div>Preço Un: R$ {{ order_product.unit_price }}</div>
                     <div>Preço Total: R$ {{ order_product.unit_price * order_product.quantity }}</div>
