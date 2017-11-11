@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, AlertController, App } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -14,11 +14,11 @@ import 'rxjs/add/operator/toPromise';
  */
 @Injectable()
 export class ApiProvider {
-    private url:string;
-    private urlBase = 'https://frozensalgados.herokuapp.com/api/v1/';
+    private url: string;
+    private urlBase = '//localhost:8000/api/v1/';
     private loading;
 
-    constructor(public http:Http, public loadingCtrl:LoadingController) {
+    constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App) {
         console.log('ApiProvider running');
     }
 
@@ -29,7 +29,7 @@ export class ApiProvider {
      * @param params
      * @returns {ApiProvider}
      */
-    builder(controller:string, params:string = null) {
+    builder(controller: string, params: string = null) {
         this.url = this.urlBase + controller + (params ? '?' + params : '');
 
         return this;
@@ -41,7 +41,7 @@ export class ApiProvider {
      * @param message
      * @returns {ApiProvider}
      */
-    loader(message:string = 'Carregando...') {
+    loader(message: string = 'Carregando...') {
         this.loading = this.loadingCtrl.create({
             content: message
         });
@@ -63,6 +63,24 @@ export class ApiProvider {
                 this.loading.dismiss();
 
                 return api.json() || {};
+            })
+            .catch(error => {
+                this.loading.dismiss();
+
+                let alert = this.alertCtrl.create({
+                    title: 'Erro inesperado',
+                    subTitle: 'Você será redirecionado para a página anterior.',
+                    buttons: [
+                        {
+                            text: 'OK',
+                            handler: () => {
+                                this.app.getRootNav().pop();
+                            }
+                        }
+                    ]
+                });
+
+                alert.present();
             });
     }
 }
