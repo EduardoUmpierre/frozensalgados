@@ -15,7 +15,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ApiProvider {
     private url: string;
-    private urlBase = '//localhost:8000/api/v1/';
+    private urlBase = 'https://frozensalgados.herokuapp.com/api/v1/';
     private loading;
 
     constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App) {
