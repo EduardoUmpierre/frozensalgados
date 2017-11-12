@@ -72,7 +72,7 @@ ion-content {
         color: #a2a2a2;
         padding-bottom: 1em;
 
-        .item-md {
+        ion-item {
             font-size: 1em;
 
             ion-avatar img {
@@ -90,8 +90,42 @@ ion-content {
         margin-bottom: 0;
         padding-bottom: 0;
 
-        &.list-md .item-block .item-inner {
-            border-bottom-color: #f0f0f0;
+        > .item {
+            color: #737373;
+            padding-left: 0;
+
+            > .item-inner {
+                border-bottom: none;
+                padding-right: 0;
+
+                ion-label {
+                    color: inherit;
+                    margin-bottom: 0;
+                }
+
+                ion-input,
+                ion-select {
+                    background-color: #efefef;
+                    padding-left: 16px;
+                }
+            }
+        }
+
+        &.product-list {
+            > .item {
+                > ion-avatar {
+                    margin-bottom: 0;
+                    margin-top: 0;
+                }
+
+                > .item-inner {
+                    ion-label {
+                        margin: 1em 0;
+                    }
+
+                    border-bottom: 1px solid #f6f7fa;
+                }
+            }
         }
     }
 
@@ -114,4 +148,14 @@ ion-content {
             text-align: center;
         }
     }
+}
+
+.list-ios > .item-block:last-child,
+.list-ios > .item-block:first-child,
+.list-ios > .item-wrapper:last-child .item-block{
+    border: 0;
+}
+
+.field-form-label {
+    font-size: 1.2rem;
 }

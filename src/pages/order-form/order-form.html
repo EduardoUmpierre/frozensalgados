@@ -20,8 +20,18 @@
     <div class="list-item">
         <ion-list>
             <ion-item>
-                <ion-label stacked>Cliente</ion-label>
-                <ion-input type="text"></ion-input>
+                <div class="field-form-label">Cliente</div>
+
+                <select-searchable
+                        [(ngModel)]="port"
+                        itemValueField="id"
+                        itemTextField="name"
+                        title="Cliente"
+                        [items]="ports"
+                        (onSearch)="searchPorts($event)"
+                        (onChange)="portChange($event)"
+                        [canSearch]="true">
+                </select-searchable>
             </ion-item>
 
             <ion-item>
@@ -38,7 +48,7 @@
             </ion-item>
         </ion-list>
 
-        <ion-list>
+        <ion-list class="product-list">
             <ion-item>
                 <ion-avatar item-start>
                     <img src="http://www.placehold.it/60" alt="">

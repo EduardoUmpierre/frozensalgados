@@ -13,6 +13,8 @@ import { ProductsPage } from '../pages/products/products';
 import { OrderViewPage } from '../pages/order-view/order-view'
 import { OrderFormPage } from '../pages/order-form/order-form'
 
+import { SelectSearchableModule } from '../components/select/select-module';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ApiProvider } from '../providers/api/api';
@@ -27,12 +29,13 @@ import { ApiProvider } from '../providers/api/api';
         OrdersPage,
         ProductsPage,
         OrderViewPage,
-        OrderFormPage
+        OrderFormPage,
     ],
     imports: [
         BrowserModule,
         HttpModule,
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
+        SelectSearchableModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
