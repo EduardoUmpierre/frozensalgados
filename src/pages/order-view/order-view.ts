@@ -18,7 +18,7 @@ export class OrderViewPage {
 
     public order;
 
-    constructor(public navCtrl:NavController, public navParams:NavParams, private apiProvider:ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     }
 
     ionViewDidLoad() {
