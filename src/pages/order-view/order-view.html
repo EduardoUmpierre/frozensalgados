@@ -11,34 +11,33 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="list-item" *ngIf="order">
-        <div class="list-item__header">
-            Informações
-        </div>
+    <div class="list-item" *ngIf="order">
+        <div class="list-item__header">Informações</div>
 
         <div class="list-item__content">
-            <div class="highlight">Cliente {{ order.customer.name }}</div>
-            <div>CNPJ: 123456789</div>
-            <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
+            <p class="highlight">Cliente {{ order.customer.name }}</p>
+            <p>CNPJ: 123456789</p>
+            <p>Endereço: {{ order.customer.address }}</p>
+            <p>Data: {{ order.created_at | date: 'dd/MM/y' }}</p>
         </div>
 
-        <div class="list-item__header">
-            Produtos
-        </div>
+        <div class="list-item__header">Produtos</div>
 
-        <div class="list-item__content">
-            <ol>
-                <li *ngFor="let order_product of order.order_product">
-                    <div class="highlight">{{ order_product.product.name }}</div>
-                    <div>Quantidade: {{ order_product.quantity }}</div>
-                    <div>Preço Un: R$ {{ order_product.unit_price }}</div>
-                    <div>Preço Total: R$ {{ order_product.unit_price * order_product.quantity }}</div>
-                </li>
-            </ol>
-        </div>
+        <ion-list>
+            <ion-item *ngFor="let order_product of order.order_product; let i = index">
+                <ion-avatar item-start>
+                    <img src="http://www.placehold.it/60" alt="">
+                </ion-avatar>
+
+                <p class="highlight">{{ order_product.product.name }}</p>
+                <p>Quantidade: {{ order_product.quantity }}</p>
+                <p>Preço Un: R$ {{ order_product.unit_price }}</p>
+                <p>Preço Total: R$ {{ order_product.unit_price * order_product.quantity }}</p>
+            </ion-item>
+        </ion-list>
 
         <ion-grid class="list-item__footer centered">
-            <div>Total: R$ {{ order.total }}</div>
+            <div>Valor total: R$ {{ order.total }}</div>
         </ion-grid>
-    </ion-card>
+    </div>
 </ion-content>
