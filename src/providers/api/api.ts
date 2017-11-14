@@ -64,7 +64,7 @@ export class ApiProvider {
 
                 return api.json() || {};
             })
-            .catch(error => {
+            .catch((error) => {
                 this.loading.dismiss();
 
                 let alert = this.alertCtrl.create({
@@ -73,9 +73,7 @@ export class ApiProvider {
                     buttons: [
                         {
                             text: 'OK',
-                            handler: () => {
-                                this.app.getRootNav().pop();
-                            }
+                            handler: () => this.app.getRootNav().pop()
                         }
                     ]
                 });
