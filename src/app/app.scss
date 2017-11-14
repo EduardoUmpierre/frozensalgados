@@ -159,3 +159,9 @@ ion-content {
 .field-form-label {
     font-size: 1.2rem;
 }
+
+ion-modal {
+    .back-button {
+        display: block!important
+    }
+}

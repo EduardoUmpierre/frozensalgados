@@ -12,6 +12,7 @@ import { OrdersPage } from '../pages/orders/orders';
 import { ProductsPage } from '../pages/products/products';
 import { OrderViewPage } from '../pages/order-view/order-view'
 import { OrderFormPage } from '../pages/order-form/order-form'
+import { OrderProductModalPage } from '../pages/order-product-modal/order-product-modal'
 
 import { SelectSearchableModule } from '../components/select/select-module';
 
@@ -30,6 +31,7 @@ import { ApiProvider } from '../providers/api/api';
         ProductsPage,
         OrderViewPage,
         OrderFormPage,
+        OrderProductModalPage
     ],
     imports: [
         BrowserModule,
@@ -47,7 +49,8 @@ import { ApiProvider } from '../providers/api/api';
         OrdersPage,
         ProductsPage,
         OrderViewPage,
-        OrderFormPage
+        OrderFormPage,
+        OrderProductModalPage
     ],
     providers: [
         StatusBar,

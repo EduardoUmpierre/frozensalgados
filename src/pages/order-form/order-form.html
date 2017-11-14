@@ -6,10 +6,10 @@
 -->
 <ion-header>
     <ion-navbar>
-        <ion-title>Criar Pedido</ion-title>
+        <ion-title>{{ pageTitle }}</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only>
+            <button ion-button icon-only (click)="create()">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
             </button>
         </ion-buttons>
@@ -23,13 +23,13 @@
                 <div class="field-form-label">Cliente</div>
 
                 <select-searchable
-                        [(ngModel)]="port"
+                        [(ngModel)]="customer"
                         itemValueField="id"
                         itemTextField="name"
                         title="Cliente"
-                        [items]="ports"
-                        (onSearch)="searchPorts($event)"
-                        (onChange)="portChange($event)"
+                        [items]="customer"
+                        (onSearch)="searchCustomers($event)"
+                        (onChange)="searchCustomerLists($event)"
                         [canSearch]="true">
                 </select-searchable>
             </ion-item>
@@ -43,32 +43,20 @@
             </ion-item>
 
             <ion-item>
-                <ion-label stacked>Produto</ion-label>
-                <ion-input type="text"></ion-input>
+                <button ion-button color="light" full (click)="loadProductModal()">Adicionar Produto</button>
             </ion-item>
         </ion-list>
 
         <ion-list class="product-list">
-            <ion-item>
+            <ion-item *ngFor="let product of order">
                 <ion-avatar item-start>
                     <img src="http://www.placehold.it/60" alt="">
                 </ion-avatar>
 
-                <p class="highlight">Produto 1</p>
-                <p>Quantidade: 10</p>
-                <p>Preço Un: R$ 10</p>
-                <p>Preço Total: R$ 100</p>
-            </ion-item>
-
-            <ion-item>
-                <ion-avatar item-start>
-                    <img src="http://www.placehold.it/60" alt="">
-                </ion-avatar>
-
-                <p class="highlight">Produto 1</p>
-                <p>Quantidade: 10</p>
-                <p>Preço Un: R$ 10</p>
-                <p>Preço Total: R$ 100</p>
+                <p class="highlight">{{ product.name }}</p>
+                <p>Quantidade: {{ product.quantity }}</p>
+                <p>Preço Un: R$ {{ product.price }}</p>
+                <p>Preço Total: R$ {{ product.price * product.quantity }}</p>
             </ion-item>
         </ion-list>
     </div>

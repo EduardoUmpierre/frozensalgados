@@ -19,7 +19,7 @@ import { OrderFormPage } from '../order-form/order-form';
 export class OrdersPage {
     public orders;
 
-    constructor(public navCtrl:NavController, public navParams:NavParams, private apiProvider:ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     }
 
     ionViewDidLoad() {
@@ -32,14 +32,10 @@ export class OrdersPage {
      * Reset items back to all of the items
      */
     initializeItems() {
-        this.apiProvider
-            .builder('orders')
-            .loader('Carregando pedidos...')
-            .get()
-            .then((res) => {
-                console.log(res);
-                this.orders = res;
-            });
+        this.apiProvider.builder('orders').loader('Carregando pedidos...').get().then((res) => {
+            console.log(res);
+            this.orders = res;
+        });
     }
 
     /**
