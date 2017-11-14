@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, AlertController, App } from 'ionic-angular';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -74,6 +74,35 @@ export class ApiProvider {
                         {
                             text: 'OK',
                             handler: () => this.app.getRootNav().pop()
+                        }
+                    ]
+                });
+
+                alert.present();
+            });
+    }
+
+    post(data) {
+        let headers = new Headers({'Content-Type' : 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.url, data, options)
+            .toPromise()
+            .then((api) => {
+                this.loading.dismiss();
+
+                return api.json() || {};
+            })
+            .catch((error) => {
+                this.loading.dismiss();
+
+                let alert = this.alertCtrl.create({
+                    title: 'Erro inesperado',
+                    subTitle: 'Você será redirecionado para a página anterior.',
+                    buttons: [
+                        {
+                            text: 'OK',
+                            // handler: () => this.app.getRootNav().pop()
                         }
                     ]
                 });
