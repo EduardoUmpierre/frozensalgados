@@ -60,8 +60,6 @@ export class OrderProductModalPage {
 
         if (this.order.validate()) {
             this.viewCtrl.dismiss(this.order);
-        } else {
-
         }
     }
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { SelectSearchable } from '../../components/select/select';
 import { ApiProvider } from "../../providers/api/api";
 import { OrderProductModalPage } from '../order-product-modal/order-product-modal';
+import { OrdersPage } from "../orders/orders";
 import { Product } from "../../models/Product";
 
 /**
@@ -37,6 +38,7 @@ export class OrderFormPage {
     }
 
     /**
+     * Loads the customer data
      *
      * @param event
      */
@@ -52,8 +54,11 @@ export class OrderFormPage {
     }
 
     /**
+     * Lados the customer's order lists
      *
      * @param event
+     *
+     * @todo Procura as listas do cliente selecionado
      */
     searchCustomerLists(event: { component: SelectSearchable, value: any }) {
         console.log(this.customer);
@@ -61,27 +66,39 @@ export class OrderFormPage {
     }
 
     /**
-     *
+     * Loads the product modal
      */
     loadProductModal() {
         let productModal = this.modalCtrl.create(OrderProductModalPage);
 
         productModal.onDidDismiss(data => {
-            console.log(data);
-            this.order.push(data);
+            if (data instanceof Product) {
+                this.order.push(data);
+            }
         });
 
         productModal.present();
     }
 
+    /**
+     * Creates the order and redirects to the orders page
+     */
     create() {
         let data = {customer: this.customer.id, order: this.normalizeOrderData(this.order)};
 
         this.apiProvider.builder('orders').loader().post(data).then((res) => {
-            this.navCtrl.pop();
+            this.navCtrl.push(OrdersPage).then(() => {
+                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+            });
         });
     }
 
+    /**
+     * Removes the unnecessary data from the array
+     *
+     * @param order
+     * @returns {Array}
+     */
     normalizeOrderData(order) {
         let data = [];
 
