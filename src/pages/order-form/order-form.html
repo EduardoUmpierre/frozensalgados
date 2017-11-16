@@ -58,6 +58,10 @@
                 <p>Preço Un: R$ {{ product.price }}</p>
                 <p>Preço Total: R$ {{ product.price * product.quantity }}</p>
             </ion-item>
+
+            <ion-item *ngIf="order.length == 0">
+                Nenhum produto adicionado
+            </ion-item>
         </ion-list>
     </div>
 </ion-content>
