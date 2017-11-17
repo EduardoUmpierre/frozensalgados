@@ -47,7 +47,7 @@ export class OrderFormPage {
 
         event.component.isSearching = true;
 
-        this.apiProvider.builder('customers', 'name=' + name).get().then((customers) => {
+        this.apiProvider.builder('customers').get({name: name}).then((customers) => {
             event.component.items = customers;
             event.component.isSearching = false;
         });
@@ -102,7 +102,7 @@ export class OrderFormPage {
     normalizeOrderData(order) {
         let data = [];
 
-        order.forEach(function(e, i) {
+        order.forEach(function (e, i) {
             data.push({id: e.id, qnt: e.quantity});
         });
 

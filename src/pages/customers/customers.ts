@@ -43,14 +43,7 @@ export class CustomersPage {
      * Reset items back to all of the items
      */
     initializeItems() {
-        this.apiProvider
-            .builder('customers')
-            .loader()
-            .get()
-            .then((res) => {
-                this.customers = res;
-                console.log(res);
-            });
+        this.apiProvider.builder('customers').loader().get().then((res) => this.customers = res);
     }
 
     /**

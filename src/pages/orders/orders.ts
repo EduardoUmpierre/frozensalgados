@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { OrderViewPage } from '../order-view/order-view';
 import { OrderFormPage } from '../order-form/order-form';
@@ -19,23 +19,14 @@ import { OrderFormPage } from '../order-form/order-form';
 export class OrdersPage {
     public orders;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad OrdersPage');
-
-        this.initializeItems();
+    constructor(public navCtrl: NavController, private apiProvider: ApiProvider) {
     }
 
     /**
-     * Reset items back to all of the items
+     * Gets the order list
      */
-    initializeItems() {
-        this.apiProvider.builder('orders').loader('Carregando pedidos...').get().then((res) => {
-            console.log(res);
-            this.orders = res;
-        });
+    ionViewDidLoad() {
+        this.apiProvider.builder('orders').loader().get({order: 'desc'}).then((res) => this.orders = res);
     }
 
     /**

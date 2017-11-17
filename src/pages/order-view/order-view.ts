@@ -22,8 +22,6 @@ export class OrderViewPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad OrderViewPage');
-
         this.loadItem(this.navParams.get('id'));
     }
 
@@ -31,9 +29,6 @@ export class OrderViewPage {
      * Gets one item by id
      */
     loadItem(id) {
-        this.apiProvider.builder('orders/' + id, null).loader('Carregando pedido ' + id + '...').get().then((res) => {
-            console.log(res);
-            this.order = res;
-        });
+        this.apiProvider.builder('orders/' + id).loader().get().then((res) => this.order = res);
     }
 }

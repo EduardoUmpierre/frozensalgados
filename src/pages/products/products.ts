@@ -30,10 +30,6 @@ export class ProductsPage {
      * Reset items back to all of the items
      */
     initializeItems() {
-        this.apiProvider
-            .builder('products')
-            .loader()
-            .get()
-            .then((res) => this.products = res);
+        this.apiProvider.builder('products').loader().get().then((res) => this.products = res);
     }
 }
