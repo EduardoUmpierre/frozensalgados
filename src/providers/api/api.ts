@@ -29,8 +29,8 @@ export class ApiProvider {
      * @param params
      * @returns {ApiProvider}
      */
-    builder(controller: string, params: string = null) {
-        this.url = this.urlBase + controller + (params ? '?' + params : '');
+    builder(controller: string) {
+        this.url = this.urlBase + controller;
 
         return this;
     }
@@ -56,9 +56,22 @@ export class ApiProvider {
      *
      * @returns {any|Thenable<any|Promise<any>|JSON|{}>|Function|Promise<R>}
      */
-    get() {
-        return this.http.get(this.url)
-            .toPromise()
+    get(params = {}) {
+        let urlParams = '';
+
+        for (let key in params) {
+            if (urlParams) {
+                urlParams += '&';
+            }
+
+            urlParams += key + '=' + params[key];
+        }
+
+        if (urlParams) {
+            this.url += '?' + urlParams;
+        }
+
+        return this.http.get(this.url).toPromise()
             .then((api) => {
                 this.loading.dismiss();
 
@@ -82,12 +95,17 @@ export class ApiProvider {
             });
     }
 
+    /**
+     * Do the http post request
+     *
+     * @param data
+     * @returns {any}
+     */
     post(data) {
-        let headers = new Headers({'Content-Type' : 'application/json'});
-        let options = new RequestOptions({ headers: headers });
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
 
-        return this.http.post(this.url, data, options)
-            .toPromise()
+        return this.http.post(this.url, data, options).toPromise()
             .then((api) => {
                 this.loading.dismiss();
 
@@ -98,12 +116,9 @@ export class ApiProvider {
 
                 let alert = this.alertCtrl.create({
                     title: 'Erro inesperado',
-                    subTitle: 'Você será redirecionado para a página anterior.',
+                    subTitle: 'Tente novamente, por favor.',
                     buttons: [
-                        {
-                            text: 'OK',
-                            // handler: () => this.app.getRootNav().pop()
-                        }
+                        {text: 'OK'}
                     ]
                 });
 
