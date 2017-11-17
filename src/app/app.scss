@@ -125,6 +125,10 @@ ion-content {
 
                     border-bottom: 1px solid #f6f7fa;
                 }
+
+                &:last-child > .item-inner {
+                    border-bottom: 0;
+                }
             }
         }
     }
