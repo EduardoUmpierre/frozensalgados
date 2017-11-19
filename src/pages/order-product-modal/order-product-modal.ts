@@ -36,11 +36,11 @@ export class OrderProductModalPage {
     }
 
     searchProducts(event: { component: SelectSearchable, text: string }) {
-        let name = event.text || '';
+        let id = event.text || '';
 
         event.component.isSearching = true;
 
-        this.apiProvider.builder('products').get({name: name}).then((products) => {
+        this.apiProvider.builder('products').get({id: id}).then((products) => {
             event.component.items = products;
             event.component.isSearching = false;
         });
