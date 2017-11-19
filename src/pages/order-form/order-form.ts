@@ -43,11 +43,11 @@ export class OrderFormPage {
      * @param event
      */
     searchCustomers(event: { component: SelectSearchable, text: string }) {
-        let name = event.text || '';
+        let id = event.text || '';
 
         event.component.isSearching = true;
 
-        this.apiProvider.builder('customers').get({name: name}).then((customers) => {
+        this.apiProvider.builder('customers').get({id: id}).then((customers) => {
             event.component.items = customers;
             event.component.isSearching = false;
         });
