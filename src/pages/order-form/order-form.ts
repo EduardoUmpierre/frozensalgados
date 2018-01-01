@@ -54,7 +54,7 @@ export class OrderFormPage {
     }
 
     /**
-     * Lados the customer's order lists
+     * Loads the customer's order lists
      *
      * @param event
      *
