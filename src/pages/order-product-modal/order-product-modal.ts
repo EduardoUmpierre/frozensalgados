@@ -55,6 +55,9 @@ export class OrderProductModalPage {
         console.log('value:', product);
     }
 
+    /**
+     * Dissmiss product modal
+     */
     dismiss() {
         console.log('Order: ', this.order);
 
