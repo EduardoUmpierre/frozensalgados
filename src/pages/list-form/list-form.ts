@@ -1,0 +1,88 @@
+import { Component } from '@angular/core';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { OrderProductModalPage } from "../order-product-modal/order-product-modal";
+import { Product } from "../../models/Product";
+import { OrdersPage } from "../orders/orders";
+import { ApiProvider } from "../../providers/api/api";
+
+/**
+ * Generated class for the ListFormPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+    selector: 'page-list-form',
+    templateUrl: 'list-form.html',
+})
+export class ListFormPage {
+    pageTitle = 'Criar lista';
+    customer: number;
+    list = {
+        title: '',
+        order: []
+    };
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,  public apiProvider: ApiProvider) {
+        if (navParams.get('list')) {
+            this.pageTitle = 'Editar lista';
+        } else {
+
+        }
+
+        this.list.order = navParams.get('order');
+        this.customer = navParams.get('customer');
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad ListFormPage');
+    }
+
+    /**
+     * Loads the product modal
+     */
+    loadProductModal() {
+        let productModal = this.modalCtrl.create(OrderProductModalPage);
+
+        productModal.onDidDismiss(data => {
+            if (data instanceof Product) {
+                this.list.order.push(data);
+            }
+        });
+
+        productModal.present();
+    }
+
+    /**
+     * Creates the order and redirects to the orders page
+     *
+     * @todo Modificar o user para o usuário logado no sistema
+     */
+    create() {
+        let data = {customer: this.customer, user: 1, title: this.list.title, order: this.normalizeOrderData(this.list.order)};
+
+        this.apiProvider.builder('lists').loader().post(data).then((res) => {
+            this.navCtrl.push(OrdersPage).then(() => {
+                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+            });
+        });
+    }
+
+    /**
+     * Removes the unnecessary data from the array
+     *
+     * @param order
+     * @returns {Array}
+     */
+    normalizeOrderData(order) {
+        let data = [];
+
+        order.forEach(function (e) {
+            data.push({id: e.id, qnt: e.quantity});
+        });
+
+        return data;
+    }
+}
