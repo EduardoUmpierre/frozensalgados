@@ -65,7 +65,7 @@ export class ListFormPage {
 
         this.apiProvider.builder('lists').loader().post(data).then((res) => {
             this.navCtrl.push(OrdersPage).then(() => {
-                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+                this.navCtrl.remove(this.navCtrl.getActive().index - 3, 3);
             });
         });
     }
