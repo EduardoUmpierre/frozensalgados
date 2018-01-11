@@ -80,7 +80,7 @@ export class ListFormPage {
         let data = [];
 
         order.forEach(function (e) {
-            data.push({id: e.id, qnt: e.quantity});
+            data.push({id: e.product ? e.product.id : e.id, qnt: e.quantity});
         });
 
         return data;
