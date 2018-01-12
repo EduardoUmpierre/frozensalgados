@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
+import { CustomerViewPage } from "../customer-view/customer-view";
 
 /**
  * Generated class for the CustomersPage page.
@@ -64,4 +65,12 @@ export class CustomersPage {
         }
     }
 
+    /**
+     * Push to customer details page
+     *
+     * @param id
+     */
+    goToDetails(id) {
+        this.navCtrl.push(CustomerViewPage, {id: id});
+    }
 }

@@ -14,6 +14,7 @@ import { OrderViewPage } from '../pages/order-view/order-view'
 import { OrderFormPage } from '../pages/order-form/order-form'
 import { OrderProductModalPage } from '../pages/order-product-modal/order-product-modal'
 import { ListFormPage } from '../pages/list-form/list-form'
+import { CustomerViewPage } from '../pages/customer-view/customer-view'
 
 import { SelectSearchableModule } from '../components/select/select-module';
 
@@ -33,7 +34,8 @@ import { ApiProvider } from '../providers/api/api';
         OrderViewPage,
         OrderFormPage,
         OrderProductModalPage,
-        ListFormPage
+        ListFormPage,
+        CustomerViewPage
     ],
     imports: [
         BrowserModule,
@@ -53,7 +55,8 @@ import { ApiProvider } from '../providers/api/api';
         OrderViewPage,
         OrderFormPage,
         OrderProductModalPage,
-        ListFormPage
+        ListFormPage,
+        CustomerViewPage
     ],
     providers: [
         StatusBar,

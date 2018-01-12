@@ -40,8 +40,7 @@
         <!--</div>-->
     <!--</ion-card>-->
 
-    <!--<ion-card *ngFor="let customer of customers; let i = index" class="list-item" (click)="goToDetails(order.id)">-->
-    <ion-card *ngFor="let customer of customers; let i = index" class="list-item">
+    <ion-card *ngFor="let customer of customers; let i = index" class="list-item" (click)="goToDetails(customer.id)">
         <div class="list-item__content">
             <div class="highlight">Cliente {{ customer.name }}</div>
             <div>Código: {{ customer.id }}</div>
