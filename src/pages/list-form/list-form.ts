@@ -20,20 +20,28 @@ import { ApiProvider } from "../../providers/api/api";
 export class ListFormPage {
     pageTitle = 'Criar lista';
     customer: number;
+    previousPage;
+    options: {};
+
     list = {
         title: '',
         order: []
     };
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,  public apiProvider: ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public apiProvider: ApiProvider) {
         if (navParams.get('list')) {
             this.pageTitle = 'Editar lista';
-        } else {
-
         }
 
+        this.previousPage = navCtrl.getPrevious();
         this.list.order = navParams.get('order');
         this.customer = navParams.get('customer');
+
+        if (this.previousPage.instance instanceof OrdersPage) {
+            this.options = {
+                id: navParams.get('orderId')
+            };
+        }
     }
 
     ionViewDidLoad() {
@@ -61,10 +69,15 @@ export class ListFormPage {
      * @todo Modificar o user para o usuário logado no sistema
      */
     create() {
-        let data = {customer: this.customer, user: 1, title: this.list.title, order: this.normalizeOrderData(this.list.order)};
+        let data = {
+            customer: this.customer,
+            user: 1,
+            title: this.list.title,
+            order: this.normalizeOrderData(this.list.order)
+        };
 
         this.apiProvider.builder('lists').loader().post(data).then((res) => {
-            this.navCtrl.push(OrdersPage).then(() => {
+            this.navCtrl.push(this.previousPage.component, this.options).then(() => {
                 this.navCtrl.remove(this.navCtrl.getActive().index - 3, 3);
             });
         });
