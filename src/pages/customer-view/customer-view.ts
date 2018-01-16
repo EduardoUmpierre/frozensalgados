@@ -34,4 +34,11 @@ export class CustomerViewPage {
             console.log(res);
         });
     }
+
+    /**
+     * Push to list form page
+     */
+    goToForm() {
+        this.navCtrl.push(ListFormPage, {customer: this.customer.id, order: []});
+    }
 }
