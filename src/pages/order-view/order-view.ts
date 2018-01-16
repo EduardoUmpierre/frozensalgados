@@ -17,25 +17,28 @@ import { ListFormPage } from "../list-form/list-form";
 })
 export class OrderViewPage {
     public order;
+    private id;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
-    }
-
-    ionViewDidLoad() {
-        this.loadItem(this.navParams.get('id'));
     }
 
     /**
      * Gets one item by id
      */
-    loadItem(id) {
-        this.apiProvider.builder('orders/' + id).loader().get().then((res) => this.order = res);
+    ionViewDidLoad() {
+        this.id = this.navParams.get('id');
+
+        this.apiProvider.builder('orders/' + this.id).loader().get().then((res) => this.order = res);
     }
 
     /**
      * Push to list form page
      */
     goToForm() {
-        this.navCtrl.push(ListFormPage, {customer: this.order.customer.id, order: this.order.order_product});
+        this.navCtrl.push(ListFormPage, {
+            customer: this.order.customer.id,
+            orderId: this.id,
+            order: this.order.order_product
+        });
     }
 }
