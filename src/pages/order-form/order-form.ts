@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { SelectSearchable } from '../../components/select/select';
-import { ApiProvider } from "../../providers/api/api";
-import { OrderProductModalPage } from '../order-product-modal/order-product-modal';
-import { OrdersPage } from "../orders/orders";
-import { Product } from "../../models/Product";
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import {SelectSearchable} from '../../components/select/select';
+import {ApiProvider} from "../../providers/api/api";
+import {OrderProductModalPage} from '../order-product-modal/order-product-modal';
+import {OrdersPage} from "../orders/orders";
+import {Product} from "../../models/Product";
 
 /**
  * Generated class for the OrderFormPage page.
@@ -21,13 +21,12 @@ import { Product } from "../../models/Product";
 export class OrderFormPage {
     pageTitle = 'Criar pedido';
     customer;
+    lists = [];
     order: Product[] = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
-        } else {
-
         }
     }
 
@@ -63,6 +62,17 @@ export class OrderFormPage {
     searchCustomerLists(event: { component: SelectSearchable, value: any }) {
         console.log(this.customer);
         console.log('value:', event.value);
+
+        this.apiProvider.builder('lists').get({
+            customer: event.value.id
+        }).then((lists) => {
+            this.lists = lists;
+            console.log(lists);
+        });
+    }
+
+    loadList(selectedValue: any) {
+        console.log('Selected', selectedValue);
     }
 
     /**

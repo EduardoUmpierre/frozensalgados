@@ -34,11 +34,10 @@
                 </select-searchable>
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="lists.length != 0">
                 <ion-label stacked>Lista de Pedidos</ion-label>
-                <ion-select>
-                    <ion-option value="1">Lista 1</ion-option>
-                    <ion-option value="2">Lista 2</ion-option>
+                <ion-select (ionChange)="loadList($event)">
+                    <ion-option *ngFor="let list of lists">{{ list.title }}</ion-option>
                 </ion-select>
             </ion-item>
 
