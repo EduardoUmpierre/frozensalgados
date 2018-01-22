@@ -32,15 +32,6 @@ export class CustomersPage {
     }
 
     /**
-     * Toggle card summary status
-     *
-     * @param  {number} index customer index
-     */
-    toggleCard(index: number) {
-        this.customers[index]["toggle"] = !this.customers[index]["toggle"];
-    }
-
-    /**
      * Push to customer details page
      *
      * @param id
