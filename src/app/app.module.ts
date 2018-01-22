@@ -21,7 +21,7 @@ import { SelectSearchableModule } from '../components/select/select-module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { IonicStorageModule } from '@ionic/storage';
 import { ApiProvider } from '../providers/api/api';
 import { AuthProvider } from '../providers/auth/auth';
 
@@ -45,7 +45,11 @@ import { AuthProvider } from '../providers/auth/auth';
         BrowserModule,
         HttpModule,
         IonicModule.forRoot(MyApp),
-        SelectSearchableModule
+        SelectSearchableModule,
+        IonicStorageModule.forRoot({
+            name: '__mydb',
+            driverOrder: ['indexeddb', 'sqlite', 'websql']
+        })
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -68,8 +72,7 @@ import { AuthProvider } from '../providers/auth/auth';
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         ApiProvider,
-        AuthProvider,
-        NativeStorage
+        AuthProvider
     ]
 })
 export class AppModule {
