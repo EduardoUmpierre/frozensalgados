@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>login-form</ion-title>
+        <ion-title>Autenticação</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -16,16 +16,14 @@
 <ion-content>
     <form (submit)="login($event)" class="list-item">
         <ion-list>
-            <h2>Autenticação</h2>
-
             <ion-item>
                 <ion-label stacked>Login</ion-label>
-                <ion-input type="text" [(ngModel)]="user.username"></ion-input>
+                <ion-input type="text" name="username" [(ngModel)]="user.username"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label stacked>Senha</ion-label>
-                <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+                <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
             </ion-item>
 
             <ion-item>

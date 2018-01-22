@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from "../../providers/auth/auth";
-import { NativeStorage } from "@ionic-native/native-storage";
 import { ApiProvider } from "../../providers/api/api";
+import { HomePage } from "../home/home";
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the LoginFormPage page.
@@ -22,11 +23,8 @@ export class LoginFormPage {
         password: null
     };
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private ApiProvider: ApiProvider, private AuthProvider: AuthProvider, private nativeStorage: NativeStorage) {
-    }
+    constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private ApiProvider: ApiProvider, private AuthProvider: AuthProvider, private storage: Storage) {
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad LoginFormPage');
     }
 
     login(e) {
@@ -38,24 +36,52 @@ export class LoginFormPage {
 
         let data = {
             grant_type: 'password',
-            client_id: '7',
-            client_secret: 'nfTVOcNidNsnut6Zobd9uz2Teb1Q90fZN8LGyv6z',
+            client_id: '5',
+            client_secret: '1a8RPbjkYzOTMImXYlcla4Ra7Q08sZvpikEs1ZNk',
             username: this.user.username,
             password: this.user.password,
             scope: ''
         }
 
-        this.AuthProvider.login(data).then((res) => {
-            res = res.json();
+        this.AuthProvider.login(data)
+            .then((res) => {
+                this.storage.set('token', res.access_token);
 
-            this.nativeStorage.setItem('token', {
-                'access_token': res.access_token,
-                'expires': res.expires_in
+                this.navCtrl.setRoot(HomePage);
+            })
+            .catch((err) => {
+                let message = 'Algo deu errado no servidor, informe o erro ' + err.status + ' ao administrador';
+
+                if (err.status === 401) {
+                    message = 'Você não tem permissão para ver isso, informe um usuário e senha válidos';
+
+                    let error = JSON.parse(err._body) || {};
+
+                    if (error.error == 'invalid_credentials') {
+                        message = 'Usuário e/ou senha inválidos';
+                    }
+                }
+
+                if (err.status === 422) {
+                    message = 'Falha de validação, verifique os campos';
+                }
+
+                if (err.status === 404) {
+                    message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em alguns minutos';
+                }
+
+                let alert = this.alertCtrl.create({
+                    title: 'Erro',
+                    subTitle: message,
+                    buttons: [
+                        {text: 'OK'}
+                    ]
+                });
+
+                alert.present();
+
+                return err;
             });
-
-            this.ApiProvider.setAccessToken();
-            this.navCtrl.push('home');
-        });
     }
 
 }
