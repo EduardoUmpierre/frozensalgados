@@ -15,12 +15,15 @@ import { OrderFormPage } from '../pages/order-form/order-form'
 import { OrderProductModalPage } from '../pages/order-product-modal/order-product-modal'
 import { ListFormPage } from '../pages/list-form/list-form'
 import { CustomerViewPage } from '../pages/customer-view/customer-view'
+import { LoginFormPage } from '../pages/login-form/login-form'
 
 import { SelectSearchableModule } from '../components/select/select-module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { NativeStorage } from '@ionic-native/native-storage';
 import { ApiProvider } from '../providers/api/api';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
     declarations: [
@@ -35,7 +38,8 @@ import { ApiProvider } from '../providers/api/api';
         OrderFormPage,
         OrderProductModalPage,
         ListFormPage,
-        CustomerViewPage
+        CustomerViewPage,
+        LoginFormPage,
     ],
     imports: [
         BrowserModule,
@@ -56,13 +60,16 @@ import { ApiProvider } from '../providers/api/api';
         OrderFormPage,
         OrderProductModalPage,
         ListFormPage,
-        CustomerViewPage
+        CustomerViewPage,
+        LoginFormPage,
     ],
     providers: [
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        ApiProvider
+        ApiProvider,
+        AuthProvider,
+        NativeStorage
     ]
 })
 export class AppModule {
