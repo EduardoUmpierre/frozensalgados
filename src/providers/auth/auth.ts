@@ -11,7 +11,7 @@ import 'rxjs/add/operator/toPromise';
 */
 @Injectable()
 export class AuthProvider {
-    private urlBase = '//localhost:8000/';
+    private urlBase = '//localhost:8000';
 
     constructor(private ApiProvider: ApiProvider, public http: Http) {
         console.log('Hello AuthProvider Provider');
