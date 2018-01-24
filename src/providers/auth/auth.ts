@@ -10,19 +10,14 @@ import 'rxjs/add/operator/toPromise';
   and Angular DI.
 */
 @Injectable()
-export class AuthProvider {
-    private urlBase = '//localhost:8000';
-
-    constructor(private ApiProvider: ApiProvider, public http: Http) {
-        console.log('Hello AuthProvider Provider');
-    }
-
-    getUser() {
-        return this.ApiProvider.builder('auth/me').get();
+export class AuthProvider extends ApiProvider {
+    getUser(token) {
+        return this.builder('auth/me', token).loader().get()
+            .then((res) => res);
     }
 
     login(data) {
-        return this.http.post(this.urlBase + '/oauth/token', data).toPromise().then((res) => res.json() || {});
+        return this.http.post(this.urlBase + 'oauth/token', data).toPromise()
+            .then((res) => res.json() || {});
     }
-
 }

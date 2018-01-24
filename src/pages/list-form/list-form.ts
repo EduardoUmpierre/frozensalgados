@@ -4,6 +4,7 @@ import { OrderProductModalPage } from "../order-product-modal/order-product-moda
 import { Product } from "../../models/Product";
 import { OrdersPage } from "../orders/orders";
 import { ApiProvider } from "../../providers/api/api";
+import {Storage} from "@ionic/storage";
 
 /**
  * Generated class for the ListFormPage page.
@@ -22,16 +23,19 @@ export class ListFormPage {
     customer: number;
     previousPage;
     options: {};
+    user: any = {};
 
     list = {
         title: '',
         order: []
     };
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public apiProvider: ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public apiProvider: ApiProvider, public storage: Storage) {
         if (navParams.get('list')) {
             this.pageTitle = 'Editar lista';
         }
+
+        this.storage.get('user').then((user) => this.user = user);
 
         this.previousPage = navCtrl.getPrevious();
         this.list.order = navParams.get('order');
@@ -65,13 +69,11 @@ export class ListFormPage {
 
     /**
      * Creates the order and redirects to the orders page
-     *
-     * @todo Modificar o user para o usuário logado no sistema
      */
     create() {
         let data = {
             customer: this.customer,
-            user: 1,
+            user: this.user.id,
             title: this.list.title,
             order: this.normalizeOrderData(this.list.order)
         };
