@@ -16,6 +16,7 @@ import { OrderProductModalPage } from '../pages/order-product-modal/order-produc
 import { ListFormPage } from '../pages/list-form/list-form'
 import { CustomerViewPage } from '../pages/customer-view/customer-view'
 import { LoginFormPage } from '../pages/login-form/login-form'
+import { UserPage } from '../pages/user/user'
 
 import { SelectSearchableModule } from '../components/select/select-module';
 
@@ -40,6 +41,7 @@ import { AuthProvider } from '../providers/auth/auth';
         ListFormPage,
         CustomerViewPage,
         LoginFormPage,
+        UserPage
     ],
     imports: [
         BrowserModule,
@@ -66,6 +68,7 @@ import { AuthProvider } from '../providers/auth/auth';
         ListFormPage,
         CustomerViewPage,
         LoginFormPage,
+        UserPage
     ],
     providers: [
         StatusBar,

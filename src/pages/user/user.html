@@ -1,0 +1,34 @@
+<!--
+  Generated template for the UserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Detalhes de vendedor</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid fixed>
+        <ion-row align-items-start>
+            <ion-col>
+                <ion-card class="list-item">
+                    <div class="list-item__content">
+                        <div class="highlight">{{ user.name }}</div>
+                        <div>CPF: {{ user.cpf }}</div>
+                        <div>ID: {{ user.id }}</div>
+                    </div>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row align-items-end>
+            <ion-col>
+                <button ion-button color="light" block>Alterar senha</button>
+                <button ion-button color="danger" block (click)="logout()">Deslogar</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

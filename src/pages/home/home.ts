@@ -3,7 +3,8 @@ import { NavController } from 'ionic-angular';
 import { CustomersPage } from '../customers/customers';
 import { OrdersPage } from '../orders/orders';
 import { ProductsPage } from "../products/products";
-import {Storage} from "@ionic/storage";
+import { UserPage } from "../user/user";
+import { Storage } from "@ionic/storage";
 
 @Component({
     selector: 'page-home',
@@ -38,5 +39,12 @@ export class HomePage {
      */
     goToProducts() {
         this.navCtrl.push(ProductsPage);
+    }
+
+    /**
+     * Push to user page
+     */
+    goToUser() {
+        this.navCtrl.push(UserPage);
     }
 }
