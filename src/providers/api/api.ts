@@ -17,7 +17,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class ApiProvider {
     private url: string;
-    protected urlBase = 'https://frozensalgados.herokuapp.com/';
+    protected urlBase = '//localhost:8000/';
     private loading;
     private header;
 
