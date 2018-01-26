@@ -57,8 +57,21 @@ ion-content {
         color: #737373;
         font-size: 0.714em;
         margin-bottom: 1em;
+        margin-top: 1em;
         padding-bottom: 1em;
         text-transform: uppercase;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &.list__header {
+            margin-bottom: 0;
+
+            & + .list-md {
+                margin-top: 0;
+            }
+        }
     }
 
     .highlight,
@@ -148,7 +161,6 @@ ion-content {
         }
 
         &.centered {
-            font-size: 1.2em;
             text-align: center;
         }
     }
