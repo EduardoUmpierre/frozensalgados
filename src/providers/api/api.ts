@@ -70,7 +70,7 @@ export class ApiProvider {
      * @param params
      */
     buildUrlParams(params) {
-        if (params) {
+        if (params && params.length > 0) {
             let urlParams = '';
 
             for (let key in params) {
