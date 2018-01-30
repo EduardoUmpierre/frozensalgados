@@ -28,7 +28,7 @@ export class OrderViewPage {
     ionViewDidLoad() {
         this.id = this.navParams.get('id');
 
-        this.apiProvider.builder('orders/' + this.id).loader().get().then((res) => this.order = res);
+        this.apiProvider.builder('orders/' + this.id).loader().get().subscribe((res) => this.order = res);
     }
 
     /**

@@ -37,7 +37,7 @@
             <ion-item *ngIf="lists.length != 0">
                 <ion-label stacked>Lista de Pedidos</ion-label>
                 <ion-select (ionChange)="loadList($event)">
-                    <ion-option *ngFor="let list of lists">{{ list.title }}</ion-option>
+                    <ion-option value="{{ list.id }}" *ngFor="let list of lists">{{ list.title }}</ion-option>
                 </ion-select>
             </ion-item>
 

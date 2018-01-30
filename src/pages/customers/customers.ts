@@ -28,7 +28,7 @@ export class CustomersPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad CustomersPage');
 
-        this.apiProvider.builder('customers').loader().get().then((res) => this.customers = res);
+        this.apiProvider.builder('customers').loader().get().subscribe((res) => this.customers = res);
     }
 
     /**

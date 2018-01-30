@@ -5,6 +5,14 @@ export class Product {
     private _price: string;
     private _quantity: number;
 
+    constructor(id?: number, name?: string, image?: string, price?: string, quantity?: number) {
+        this._id = id;
+        this._name = name;
+        this._image = image;
+        this._price = price;
+        this._quantity = quantity;
+    }
+
     get id(): number {
         return this._id;
     }

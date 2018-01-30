@@ -29,7 +29,7 @@ export class CustomerViewPage {
      * Gets one item by id
      */
     loadItem(id) {
-        this.apiProvider.builder('customers/' + id).loader().get().then((res) => {
+        this.apiProvider.builder('customers/' + id).loader().get().subscribe((res) => {
             this.customer = res;
             console.log(res);
         });

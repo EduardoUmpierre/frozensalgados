@@ -3,8 +3,12 @@ import { LoadingController, AlertController, App } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/observable/fromPromise';
 import { LoginFormPage } from "../../pages/login-form/login-form";
 import { Storage } from '@ionic/storage';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import { Observable } from "rxjs/Observable";
 
 /*
  Generated class for the ApiProvider provider.
@@ -22,8 +26,6 @@ export class ApiProvider {
     private header;
 
     constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App, private storage: Storage) {
-        console.log('Contructor');
-        this.setAccessToken();
     }
 
     /**
@@ -41,11 +43,13 @@ export class ApiProvider {
     /**
      *
      */
-    setAccessToken() {
-        this.storage.get('token').then((res) => {
-            console.log('api access', res);
+    getApiToken(): Observable<Headers> {
+        return Observable.fromPromise(this.storage.get('token'));
+    }
 
-            this.header = new Headers({'Authorization': 'Bearer ' + (res ? res.access_token : ''), 'Content-Type': 'application/json'});
+    getHeaders(): Headers {
+        return new Headers({
+            'Content-Type': 'application/json'
         });
     }
 
@@ -69,8 +73,10 @@ export class ApiProvider {
      *
      * @param params
      */
-    buildUrlParams(params) {
-        if (params && params.length > 0) {
+    buildUrlParams(params = null) {
+        if (params) {
+            console.log('params: ', params);
+
             let urlParams = '';
 
             for (let key in params) {
@@ -80,47 +86,51 @@ export class ApiProvider {
                 urlParams += key + '=' + params[key];
             }
 
-            this.url += '?' + urlParams;
+            this.url += urlParams !== '' ? '?' + urlParams : '';
         }
     }
 
     /**
      * Do the http get request
-     *
-     * @param {{}} params
-     * @returns {Promise<T | any[]>}
-     */
+    **/
     get(params = {}) {
         this.buildUrlParams(params);
 
-        let observable = this.http.get(this.url, {headers: this.header});
+        let headers: Headers = this.getHeaders();
 
-        return this.toPromise(observable);
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.get(this.url, {headers: headers});
+        }));
     }
 
     /**
      * Do the http post request
      *
-     * @param data
+     * @param params
      * @returns {Promise<T | any[]>}
      */
-    post(data) {
-        let observable = this.http.post(this.url, data, {headers: this.header});
+    post(params) {
+        let headers: Headers = this.getHeaders();
 
-        return this.toPromise(observable);
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.post(this.url, params, {headers: headers});
+        }));
     }
 
     /**
      * @param request
-     * @returns {Promise<T | any[]>}
      */
     toPromise(request) {
-        return request.toPromise()
-            .then((res) => {
+        return request
+            .map((res) => {
                 if (this.loading)
                     this.loading.dismiss();
 
-                return res.json();
+                return res.json() || [];
             })
             .catch((err) => {
                 if (this.loading)

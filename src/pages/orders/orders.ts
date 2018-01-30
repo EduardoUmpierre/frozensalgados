@@ -26,7 +26,7 @@ export class OrdersPage {
      * Gets the order list
      */
     ionViewDidLoad() {
-        this.apiProvider.builder('orders').loader().get({order: 'desc'}).then((res) => this.orders = res);
+        this.apiProvider.builder('orders').loader().get({order: 'desc'}).subscribe((res) => this.orders = res);
     }
 
     /**
