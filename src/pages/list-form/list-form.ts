@@ -73,12 +73,11 @@ export class ListFormPage {
     create() {
         let data = {
             customer: this.customer,
-            user: this.user.id,
             title: this.list.title,
             order: this.normalizeOrderData(this.list.order)
         };
 
-        this.apiProvider.builder('lists').loader().post(data).then((res) => {
+        this.apiProvider.builder('lists').loader().post(data).subscribe((res) => {
             this.navCtrl.push(this.previousPage.component, this.options).then(() => {
                 this.navCtrl.remove(this.navCtrl.getActive().index - 3, 3);
             });

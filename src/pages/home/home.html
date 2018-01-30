@@ -37,8 +37,8 @@
                         <img src="http://www.placehold.it/90" alt="">
                     </div>
 
-                    <div id="seller-name">{{ user.name }}</div>
-                    <div id="seller-id">Vendedor #{{ user.id }}</div>
+                    <div id="seller-name" *ngIf="user && user.name">{{ user.name }}</div>
+                    <div id="seller-id" *ngIf="user && user.id">Vendedor #{{ user.id }}</div>
                 </div>
             </ion-col>
         </ion-row>

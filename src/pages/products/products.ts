@@ -22,7 +22,7 @@ export class ProductsPage {
     }
 
     ionViewDidLoad() {
-        this.apiProvider.builder('products').loader().get().then((res) => this.products = res);
+        this.apiProvider.builder('products').loader().get().subscribe((res) => this.products = res);
     }
 
 }

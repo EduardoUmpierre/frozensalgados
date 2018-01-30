@@ -40,8 +40,9 @@ export class OrderProductModalPage {
 
         event.component.isSearching = true;
 
-        this.apiProvider.builder('products').get({id: id}).then((products) => {
+        this.apiProvider.builder('products').get({id: id}).subscribe((products) => {
             event.component.items = products;
+
             event.component.isSearching = false;
         });
     }
