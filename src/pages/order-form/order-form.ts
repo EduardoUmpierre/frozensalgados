@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
-import { SelectSearchable } from '../../components/select/select';
-import { ApiProvider } from "../../providers/api/api";
-import { OrderProductModalPage } from '../order-product-modal/order-product-modal';
-import { OrdersPage } from "../orders/orders";
-import { Product } from "../../models/Product";
+import {Component} from '@angular/core';
+import {
+    IonicPage,
+    NavController,
+    NavParams,
+    ModalController,
+    ActionSheetController,
+    AlertController
+} from 'ionic-angular';
+import {SelectSearchable} from '../../components/select/select';
+import {ApiProvider} from "../../providers/api/api";
+import {OrderProductModalPage} from '../order-product-modal/order-product-modal';
+import {OrdersPage} from "../orders/orders";
+import {Product} from "../../models/Product";
 
 /**
  * Generated class for the OrderFormPage page.
@@ -130,14 +137,22 @@ export class OrderFormPage {
         return data;
     }
 
-    showOptions(id: number) {
+    showOptions(id: number, key: number) {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Opções',
             buttons: [
                 {
                     text: 'Editar',
                     handler: () => {
-                        console.log('Archive clicked');
+                        let productModal = this.modalCtrl.create(OrderProductModalPage, {product: this.order[key]});
+
+                        productModal.onDidDismiss(data => {
+                            if (data instanceof Product) {
+                                this.order[key] = data;
+                            }
+                        });
+
+                        productModal.present();
                     }
                 },
                 {
@@ -155,7 +170,7 @@ export class OrderFormPage {
                                 {
                                     text: 'Remover',
                                     handler: () => {
-                                        this.removeFromOrder(id);
+                                        this.removeFromOrder(key);
                                     }
                                 }
                             ]
@@ -174,18 +189,14 @@ export class OrderFormPage {
         actionSheet.present();
     }
 
-    removeFromOrder(id: number) {
-        this.order.forEach((e, i) => {
-            console.log(i, e);
-
-           if (e.id == id) {
-               console.log(i);
-               console.log(id);
-
-               this.order = this.order.splice(i - 1, 1);
-
-               return;
-           }
-        });
+    /**
+     * Removes a order item
+     *
+     * @param {number} key
+     */
+    removeFromOrder(key: number) {
+        if (this.order[key]) {
+            this.order.splice(key, 1);
+        }
     }
 }

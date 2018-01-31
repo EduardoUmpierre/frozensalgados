@@ -47,7 +47,7 @@
         </ion-list>
 
         <ion-list class="product-list">
-            <ion-item *ngFor="let product of order">
+            <ion-item *ngFor="let product of order; let i = index">
                 <ion-avatar item-start>
                     <img src="http://www.placehold.it/60" alt="">
                 </ion-avatar>
@@ -57,7 +57,7 @@
                 <p>Preço Un: R$ {{ product.price }}</p>
                 <p>Preço Total: R$ {{ product.price * product.quantity }}</p>
 
-                <button ion-button clear item-end icon-only large class="options-button" (click)="showOptions(product.id)">
+                <button ion-button clear item-end icon-only large class="options-button" (click)="showOptions(product.id, i)">
                     <ion-icon name="more"></ion-icon>
                 </button>
             </ion-item>
