@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
 import { SelectSearchable } from '../../components/select/select';
 import { ApiProvider } from "../../providers/api/api";
 import { OrderProductModalPage } from '../order-product-modal/order-product-modal';
@@ -24,7 +24,7 @@ export class OrderFormPage {
     lists = [];
     order: Product[] = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
         }
@@ -81,6 +81,8 @@ export class OrderFormPage {
             });
 
             this.order = updatedOrder;
+
+            console.log(this.order);
         });
     }
 
@@ -126,5 +128,64 @@ export class OrderFormPage {
         });
 
         return data;
+    }
+
+    showOptions(id: number) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opções',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        console.log('Archive clicked');
+                    }
+                },
+                {
+                    text: 'Excluir',
+                    role: 'destructive',
+                    handler: () => {
+                        let alert = this.alertCtrl.create({
+                            title: 'Confirmar exclusão',
+                            message: 'Deseja remover esse produto?',
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel'
+                                },
+                                {
+                                    text: 'Remover',
+                                    handler: () => {
+                                        this.removeFromOrder(id);
+                                    }
+                                }
+                            ]
+                        });
+
+                        alert.present();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
+    }
+
+    removeFromOrder(id: number) {
+        this.order.forEach((e, i) => {
+            console.log(i, e);
+
+           if (e.id == id) {
+               console.log(i);
+               console.log(id);
+
+               this.order = this.order.splice(i - 1, 1);
+
+               return;
+           }
+        });
     }
 }

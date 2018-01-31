@@ -139,6 +139,14 @@ ion-content {
                     border-bottom: 1px solid #f6f7fa;
                 }
 
+                .options-button {
+
+                    > .button-inner {
+                        color: #3b5998;
+                        font-size: 1.6rem;
+                    }
+                }
+
                 &:last-child > .item-inner {
                     border-bottom: 0;
                 }
