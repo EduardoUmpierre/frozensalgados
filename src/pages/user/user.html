@@ -16,9 +16,9 @@
             <ion-col>
                 <ion-card class="list-item">
                     <div class="list-item__content">
-                        <div class="highlight">{{ user.name }}</div>
-                        <div>CPF: {{ user.cpf }}</div>
-                        <div>ID: {{ user.id }}</div>
+                        <div class="highlight" *ngIf="user && user.name">{{ user.name }}</div>
+                        <div *ngIf="user && user.cpf">CPF: {{ user.cpf }}</div>
+                        <div *ngIf="user && user.id">ID: {{ user.id }}</div>
                     </div>
                 </ion-card>
             </ion-col>

@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import {
+    IonicPage,
+    NavController,
+    NavParams,
+    ModalController,
+    ActionSheetController,
+    AlertController
+} from 'ionic-angular';
 import {SelectSearchable} from '../../components/select/select';
 import {ApiProvider} from "../../providers/api/api";
 import {OrderProductModalPage} from '../order-product-modal/order-product-modal';
@@ -24,7 +31,7 @@ export class OrderFormPage {
     lists = [];
     order: Product[] = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
         }
@@ -45,8 +52,9 @@ export class OrderFormPage {
         let id = event.text || '';
 
         event.component.isSearching = true;
+        this.order = [];
 
-        this.apiProvider.builder('customers').get({id: id}).then((customers) => {
+        this.apiProvider.builder('customers').get({id: id}).subscribe((customers) => {
             event.component.items = customers;
             event.component.isSearching = false;
         });
@@ -56,23 +64,33 @@ export class OrderFormPage {
      * Loads the customer's order lists
      *
      * @param event
-     *
-     * @todo Procura as listas do cliente selecionado
      */
     searchCustomerLists(event: { component: SelectSearchable, value: any }) {
-        console.log(this.customer);
-        console.log('value:', event.value);
+        this.order = [];
 
-        this.apiProvider.builder('lists').get({
-            customer: event.value.id
-        }).then((lists) => {
+        this.apiProvider.builder('lists').get({customer: event.value.id}).subscribe((lists) => {
             this.lists = lists;
-            console.log(lists);
         });
     }
 
     loadList(selectedValue: any) {
         console.log('Selected', selectedValue);
+
+        this.apiProvider.builder('lists/' + selectedValue).get().subscribe((res) => {
+            console.log(res);
+
+            this.order = [];
+
+            let updatedOrder = [];
+
+            res.list_product.forEach(function (e, i) {
+                updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity));
+            });
+
+            this.order = updatedOrder;
+
+            console.log(this.order);
+        });
     }
 
     /**
@@ -96,7 +114,7 @@ export class OrderFormPage {
     create() {
         let data = {customer: this.customer.id, order: this.normalizeOrderData(this.order)};
 
-        this.apiProvider.builder('orders').loader().post(data).then((res) => {
+        this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
             this.navCtrl.push(OrdersPage).then(() => {
                 this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
             });
@@ -117,5 +135,68 @@ export class OrderFormPage {
         });
 
         return data;
+    }
+
+    showOptions(id: number, key: number) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opções',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        let productModal = this.modalCtrl.create(OrderProductModalPage, {product: this.order[key]});
+
+                        productModal.onDidDismiss(data => {
+                            if (data instanceof Product) {
+                                this.order[key] = data;
+                            }
+                        });
+
+                        productModal.present();
+                    }
+                },
+                {
+                    text: 'Excluir',
+                    role: 'destructive',
+                    handler: () => {
+                        let alert = this.alertCtrl.create({
+                            title: 'Confirmar exclusão',
+                            message: 'Deseja remover esse produto?',
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel'
+                                },
+                                {
+                                    text: 'Remover',
+                                    handler: () => {
+                                        this.removeFromOrder(key);
+                                    }
+                                }
+                            ]
+                        });
+
+                        alert.present();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
+    }
+
+    /**
+     * Removes a order item
+     *
+     * @param {number} key
+     */
+    removeFromOrder(key: number) {
+        if (this.order[key]) {
+            this.order.splice(key, 1);
+        }
     }
 }

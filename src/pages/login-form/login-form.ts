@@ -27,6 +27,10 @@ export class LoginFormPage {
 
     }
 
+    /**
+     *
+     * @param e
+     */
     login(e) {
         e.preventDefault();
 
@@ -35,24 +39,21 @@ export class LoginFormPage {
         }
 
         let data = {
-            grant_type: 'password',
-            client_id: '5',
-            client_secret: '1a8RPbjkYzOTMImXYlcla4Ra7Q08sZvpikEs1ZNk',
             username: this.user.username,
-            password: this.user.password,
-            scope: ''
-        }
+            password: this.user.password
+        };
 
         this.AuthProvider.login(data)
             .then((res) => {
-                this.storage.set('token', res.access_token)
-                    .then((token) => {
-                    this.AuthProvider.getUser(token)
-                        .then((user) => {
-                            this.storage.set('user', user)
-                                .then(() => this.navCtrl.setRoot(HomePage))
-                        });
-                });
+                this.storage.set('token', res.access_token).then(() => {
+                    console.log('token criado');
+
+                    this.AuthProvider.getUser().subscribe((user) => {
+                        console.log(user);
+
+                        this.storage.set('user', user).then(() => this.navCtrl.setRoot(HomePage))
+                    })
+                })
             })
             .catch((err) => {
                 let message = 'Algo deu errado no servidor, informe o erro ' + err.status + ' ao administrador';

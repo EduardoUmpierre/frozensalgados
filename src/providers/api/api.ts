@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, AlertController, App } from 'ionic-angular';
-import {Http, Headers, RequestOptions} from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/observable/fromPromise';
 import { LoginFormPage } from "../../pages/login-form/login-form";
 import { Storage } from '@ionic/storage';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import { Observable } from "rxjs/Observable";
 
 /*
  Generated class for the ApiProvider provider.
@@ -22,53 +26,31 @@ export class ApiProvider {
     private header;
 
     constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App, private storage: Storage) {
-        console.log('ApiProvider running');
     }
 
     /**
      * Builds the final URL
      *
      * @param {string} controller
-     * @param {string} token
      * @returns {ApiProvider}
      */
-    builder(controller: string, token: string = null) {
+    builder(controller: string) {
         this.url = this.urlBase + 'api/v1/' + controller;
-
-        this.setAccessToken(token);
 
         return this;
     }
 
-    buildUrlParams(params) {
-        let urlParams = '';
-
-        for (let key in params) {
-            if (urlParams) {
-                urlParams += '&';
-            }
-
-            urlParams += key + '=' + params[key];
-        }
-
-        if (urlParams) {
-            this.url += '?' + urlParams;
-        }
+    /**
+     *
+     */
+    getApiToken(): Observable<Headers> {
+        return Observable.fromPromise(this.storage.get('token'));
     }
 
-    setAccessToken(token: string = null) {
-        if (!token) {
-            this.storage.get('token').then((res) => {
-                this.setHeaders(res);
-            });
-        } else {
-            this.setHeaders(token);
-        }
-    }
-
-    setHeaders(token) {
-        let headers = new Headers({'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'});
-        this.header = new RequestOptions({ headers: headers });
+    getHeaders(): Headers {
+        return new Headers({
+            'Content-Type': 'application/json'
+        });
     }
 
     /**
@@ -88,93 +70,109 @@ export class ApiProvider {
     }
 
     /**
-     * Do the http get request
      *
-     * @returns {any|Thenable<any|Promise<any>|JSON|{}>|Function|Promise<R>}
+     * @param params
      */
+    buildUrlParams(params = null) {
+        if (params) {
+            console.log('params: ', params);
+
+            let urlParams = '';
+
+            for (let key in params) {
+                if (urlParams)
+                    urlParams += '&';
+
+                urlParams += key + '=' + params[key];
+            }
+
+            this.url += urlParams !== '' ? '?' + urlParams : '';
+        }
+    }
+
+    /**
+     * Do the http get request
+    **/
     get(params = {}) {
         this.buildUrlParams(params);
 
-        let observable = this.http.get(this.url, this.header);
+        let headers: Headers = this.getHeaders();
 
-        return this.toPromise(observable);
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
 
-        // .catch((error) => {
-        //     this.loading.dismiss();
-        //
-        //     let alert = this.alertCtrl.create({
-        //         title: 'Erro inesperado',
-        //         subTitle: 'Você será redirecionado para a página anterior.',
-        //         buttons: [
-        //             {
-        //                 text: 'OK',
-        //                 handler: () => this.app.getRootNav().pop()
-        //             }
-        //         ]
-        //     });
-        //
-        //     alert.present();
-        // });
+            return this.http.get(this.url, {headers: headers});
+        }));
     }
 
     /**
      * Do the http post request
      *
-     * @param data
-     * @returns {any}
+     * @param params
+     * @returns {Promise<T | any[]>}
      */
-    post(data) {
-        let observable = this.http.post(this.url, data, this.header);
+    post(params) {
+        let headers: Headers = this.getHeaders();
 
-        return this.toPromise(observable);
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.post(this.url, params, {headers: headers});
+        }));
     }
 
     /**
      * @param request
-     * @returns {Promise<T>}
      */
     toPromise(request) {
-        console.log(request);
-
-        return request.toPromise()
-            .then((res) => {
+        return request
+            .map((res) => {
                 if (this.loading)
                     this.loading.dismiss();
 
-                console.log(res);
-
-                return res.json() || {};
+                return res.json() || [];
             })
             .catch((err) => {
                 if (this.loading)
                     this.loading.dismiss();
 
-                let message = 'Algo deu errado no servidor, informe o erro ' + err.status + ' ao administrador';
-
-                if (err.status === 401) {
-                    message = 'Você não tem permissão para ver isso, informe um usuário e senha válidos';
-                    this.app.getActiveNav().setRoot(LoginFormPage);
-                }
-
-                if (err.status === 422) {
-                    message = 'Falha de validação, verifique os campos';
-                }
-
-                if (err.status === 404) {
-                    message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em alguns minutos';
-                }
-
-                let alert = this.alertCtrl.create({
-                    title: 'Erro',
-                    subTitle: message,
-                    buttons: [
-                        {text: 'OK'}
-                    ]
-                });
-
-                alert.present();
+                this.promiseErrorResolver(err).present();
 
                 return [];
             });
+    }
+
+    /**
+     *
+     * @param error
+     * @returns {Alert}
+     */
+    promiseErrorResolver(error) {
+        let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador';
+        let title = 'Erro';
+
+        if (error.status === 401) {
+            title = 'Sessão expirada';
+            message = 'A sua sessão expirou, logue-se novamente.';
+            this.app.getActiveNav().setRoot(LoginFormPage);
+        }
+
+        if (error.status === 422) {
+            message = 'Falha de validação, verifique os campos';
+        }
+
+        if (error.status === 404) {
+            message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em breve';
+        }
+
+        return this.alertCtrl.create({
+            title: title,
+            subTitle: message,
+            buttons: [
+                {
+                    text: 'OK'
+                }
+            ]
+        });
     }
 }

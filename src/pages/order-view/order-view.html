@@ -27,7 +27,7 @@
             <p>Data: {{ order.created_at | date: 'dd/MM/y' }}</p>
         </div>
 
-        <div class="list-item__header">Produtos</div>
+        <div class="list-item__header list__header">Produtos</div>
 
         <ion-list class="product-list">
             <ion-item *ngFor="let order_product of order.order_product; let i = index">

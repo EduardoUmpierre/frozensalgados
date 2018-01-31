@@ -57,8 +57,21 @@ ion-content {
         color: #737373;
         font-size: 0.714em;
         margin-bottom: 1em;
+        margin-top: 1em;
         padding-bottom: 1em;
         text-transform: uppercase;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &.list__header {
+            margin-bottom: 0;
+
+            & + .list-md {
+                margin-top: 0;
+            }
+        }
     }
 
     .highlight,
@@ -126,6 +139,14 @@ ion-content {
                     border-bottom: 1px solid #f6f7fa;
                 }
 
+                .options-button {
+
+                    > .button-inner {
+                        color: #3b5998;
+                        font-size: 1.6rem;
+                    }
+                }
+
                 &:last-child > .item-inner {
                     border-bottom: 0;
                 }
@@ -148,7 +169,6 @@ ion-content {
         }
 
         &.centered {
-            font-size: 1.2em;
             text-align: center;
         }
     }
