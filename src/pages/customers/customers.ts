@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { CustomerViewPage } from "../customer-view/customer-view";
+import { Storage } from "@ionic/storage";
 
 /**
  * Generated class for the CustomersPage page.
@@ -16,10 +17,10 @@ import { CustomerViewPage } from "../customer-view/customer-view";
     templateUrl: 'customers.html',
 })
 export class CustomersPage {
-
+    user: any = {};
     public customers;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage) {
     }
 
     /**
@@ -29,6 +30,7 @@ export class CustomersPage {
         console.log('ionViewDidLoad CustomersPage');
 
         this.apiProvider.builder('customers').loader().get().subscribe((res) => this.customers = res);
+        this.storage.get('user').then((user) => this.user = user);
     }
 
     /**
