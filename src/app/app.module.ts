@@ -8,6 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { CustomersPage } from '../pages/customers/customers';
+import { CustomerFormPage } from '../pages/customer-form/customer-form';
 import { OrdersPage } from '../pages/orders/orders';
 import { ProductsPage } from '../pages/products/products';
 import { OrderViewPage } from '../pages/order-view/order-view'
@@ -33,6 +34,7 @@ import { AuthProvider } from '../providers/auth/auth';
         ContactPage,
         HomePage,
         CustomersPage,
+        CustomerFormPage,
         OrdersPage,
         ProductsPage,
         OrderViewPage,
@@ -60,6 +62,7 @@ import { AuthProvider } from '../providers/auth/auth';
         ContactPage,
         HomePage,
         CustomersPage,
+        CustomerFormPage,
         OrdersPage,
         ProductsPage,
         OrderViewPage,

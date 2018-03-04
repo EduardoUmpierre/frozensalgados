@@ -17,41 +17,22 @@
 </ion-header>
 
 <ion-content>
-    <!--<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>-->
+    <ion-list class="single-item">
+        <ion-item *ngFor="let customer of customers; let i = index" class="list-item">
+            <div (click)="goToDetails(customer.id)">
+                <div class="highlight">Cliente {{ customer.name }}</div>
+                <div>Código: {{ customer.id }}</div>
+                <div>Endereço: {{ customer.address }}</div>
+                <div>Telefone: {{ customer.phone }}</div>
+            </div>
 
-    <!--<ion-card *ngFor="let customer of customers; let i = index" (click)="toggleCard(i)">-->
-        <!--<ion-card-header>-->
+            <button ion-button clear item-end icon-only large class="options-button" (click)="showOptions(customer.id)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-item>
 
-            <!--<small *ngIf="!customer.toggle">-->
-                <!--{{ customer.address }} - {{ customer.city }}-->
-            <!--</small>-->
-        <!--</ion-card-header>-->
-
-        <!--<div class="card-sumary" *ngIf="customer.toggle">-->
-            <!--<div>-->
-                <!--<strong>Endereço:</strong>-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<strong>CEP:</strong> {{ customer.cep }}-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<strong>Bairro:</strong> {{ customer.district }}-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<strong>Cidade:</strong> {{ customer.city }}-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<strong>Telefone:</strong> {{ customer.phone }}-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</ion-card>-->
-
-    <ion-card *ngFor="let customer of customers; let i = index" class="list-item" (click)="goToDetails(customer.id)">
-        <div class="list-item__content">
-            <div class="highlight">Cliente {{ customer.name }}</div>
-            <div>Código: {{ customer.id }}</div>
-            <div>Endereço: {{ customer.address }}</div>
-            <div>Telefone: {{ customer.phone }}</div>
-        </div>
-    </ion-card>
+        <ion-item *ngIf="customers.length == 0">
+            Nenhum cliente adicionado
+        </ion-item>
+    </ion-list>
 </ion-content>

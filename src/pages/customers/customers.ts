@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ActionSheetController, AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { CustomerViewPage } from "../customer-view/customer-view";
 import { Storage } from "@ionic/storage";
+import { CustomerFormPage } from "../customer-form/customer-form";
 
 /**
  * Generated class for the CustomersPage page.
@@ -18,9 +19,9 @@ import { Storage } from "@ionic/storage";
 })
 export class CustomersPage {
     user: any = {};
-    public customers;
+    public customers = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
     }
 
     /**
@@ -40,5 +41,57 @@ export class CustomersPage {
      */
     goToDetails(id) {
         this.navCtrl.push(CustomerViewPage, {id: id});
+    }
+
+    /**
+     * Push to customer form page
+     *
+     * @param {number} id
+     */
+    goToForm(id: number = null) {
+        this.navCtrl.push(CustomerFormPage, {id: id});
+    }
+
+    showOptions(id: number) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opções',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        this.goToForm(id);
+                    }
+                },
+                {
+                    text: 'Excluir',
+                    role: 'destructive',
+                    handler: () => {
+                        let alert = this.alertCtrl.create({
+                            title: 'Confirmar exclusão',
+                            message: 'Deseja remover esse produto?',
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel'
+                                },
+                                {
+                                    text: 'Remover',
+                                    handler: () => {
+                                    }
+                                }
+                            ]
+                        });
+
+                        alert.present();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
     }
 }

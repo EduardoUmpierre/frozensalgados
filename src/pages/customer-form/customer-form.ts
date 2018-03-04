@@ -10,16 +10,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-customer-form',
-  templateUrl: 'customer-form.html',
+    selector: 'page-customer-form',
+    templateUrl: 'customer-form.html',
 })
 export class CustomerFormPage {
+    pageTitle = 'Novo cliente';
+    customer = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        if (navParams.get('id')) {
+            this.pageTitle = 'Editar cliente';
+        }
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CustomerFormPage');
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad CustomerFormPage');
+    }
 
 }
