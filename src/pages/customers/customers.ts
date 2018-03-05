@@ -52,15 +52,16 @@ export class CustomersPage {
         this.navCtrl.push(CustomerFormPage, {id: id});
     }
 
-    showOptions(id: number) {
+    /**
+     * @param {number} id
+     */
+    showOptions(id: number, key: number) {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Opções',
             buttons: [
                 {
                     text: 'Editar',
-                    handler: () => {
-                        this.goToForm(id);
-                    }
+                    handler: () => this.goToForm(id)
                 },
                 {
                     text: 'Excluir',
@@ -68,7 +69,7 @@ export class CustomersPage {
                     handler: () => {
                         let alert = this.alertCtrl.create({
                             title: 'Confirmar exclusão',
-                            message: 'Deseja remover esse produto?',
+                            message: 'Deseja remover esse cliente?',
                             buttons: [
                                 {
                                     text: 'Cancelar',
@@ -77,6 +78,7 @@ export class CustomersPage {
                                 {
                                     text: 'Remover',
                                     handler: () => {
+                                        this.apiProvider.builder('customers/' + id).loader().delete().subscribe((res) => this.remove(key));
                                     }
                                 }
                             ]
@@ -93,5 +95,16 @@ export class CustomersPage {
         });
 
         actionSheet.present();
+    }
+
+    /**
+     * Removes a order item
+     *
+     * @param {number} key
+     */
+    remove(key: number) {
+        if (this.customers[key]) {
+            this.customers.splice(key, 1);
+        }
     }
 }

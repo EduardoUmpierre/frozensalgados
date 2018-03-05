@@ -138,6 +138,22 @@ export class ApiProvider {
     }
 
     /**
+     * Do the http delete request
+     *
+     * @param params
+     * @returns {Promise<T | any[]>}
+     */
+    delete() {
+        let headers: Headers = this.getHeaders();
+
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.delete(this.url, {headers: headers});
+        }));
+    }
+
+    /**
      * @param request
      */
     toPromise(request) {

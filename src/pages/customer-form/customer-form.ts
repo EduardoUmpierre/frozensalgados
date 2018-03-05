@@ -34,13 +34,20 @@ export class CustomerFormPage {
         }
     }
 
+    /**
+     * Submit function
+     */
     submit() {
         if (this.navParams.get('id')) {
-            this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().put(this.customer).subscribe((res) => {
-                this.navCtrl.push(CustomersPage).then(() => {
-                    this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-                });
-            });
+            this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().put(this.customer).subscribe((res) => this.redirect());
+        } else {
+            this.apiProvider.builder('customers').loader().post(this.customer).subscribe((res) => this.redirect());
         }
+    }
+
+    redirect() {
+        this.navCtrl.push(CustomersPage).then(() => {
+            this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+        });
     }
 }
