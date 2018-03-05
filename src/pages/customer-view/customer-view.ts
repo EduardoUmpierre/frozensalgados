@@ -21,15 +21,11 @@ export class CustomerViewPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     }
 
-    ionViewDidLoad() {
-        this.loadItem(this.navParams.get('id'));
-    }
-
     /**
      * Gets one item by id
      */
-    loadItem(id) {
-        this.apiProvider.builder('customers/' + id).loader().get().subscribe((res) => {
+    ionViewDidLoad() {
+        this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().get().subscribe((res) => {
             this.customer = res;
             console.log(res);
         });

@@ -9,7 +9,7 @@
         <ion-title>{{ pageTitle }}</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only (click)="create()">
+            <button ion-button icon-only (click)="submit()">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
             </button>
         </ion-buttons>
@@ -30,6 +30,11 @@
             </ion-item>
 
             <ion-item>
+                <ion-label stacked>CEP</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.cep"></ion-input>
+            </ion-item>
+
+            <ion-item>
                 <ion-label stacked>Endereço</ion-label>
                 <ion-input type="text" [(ngModel)]="customer.address"></ion-input>
             </ion-item>
@@ -40,17 +45,8 @@
             </ion-item>
 
             <ion-item>
-                <ion-label stacked>CEP</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.cep"></ion-input>
-            </ion-item>
-
-            <ion-item>
                 <ion-label stacked>Bairro</ion-label>
                 <ion-input type="text" [(ngModel)]="customer.district"></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <button ion-button color="light" full (click)="loadProductModal()">Adicionar Produto</button>
             </ion-item>
         </ion-list>
     </div>

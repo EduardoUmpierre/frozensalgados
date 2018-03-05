@@ -195,7 +195,19 @@ ion-modal {
 ion-list {
 
     > ion-item {
+
+        &:first-child {
+
+            > .item-inner {
+
+                ion-label {
+                    margin-top: 0;
+                }
+            }
+        }
+
         > .item-inner {
+            color: #737373;
             padding-right: 0 !important;
 
             > .options-button {
