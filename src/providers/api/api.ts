@@ -122,6 +122,22 @@ export class ApiProvider {
     }
 
     /**
+     * Do the http post request
+     *
+     * @param params
+     * @returns {Promise<T | any[]>}
+     */
+    put(params) {
+        let headers: Headers = this.getHeaders();
+
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.put(this.url, params, {headers: headers});
+        }));
+    }
+
+    /**
      * @param request
      */
     toPromise(request) {
