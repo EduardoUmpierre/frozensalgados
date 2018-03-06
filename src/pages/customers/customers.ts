@@ -19,7 +19,7 @@ import { CustomerFormPage } from "../customer-form/customer-form";
 })
 export class CustomersPage {
     user: any = {};
-    public customers = [];
+    customers = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
     }
@@ -54,6 +54,7 @@ export class CustomersPage {
 
     /**
      * @param {number} id
+     * @param {number} key
      */
     showOptions(id: number, key: number) {
         let actionSheet = this.actionSheetCtrl.create({
