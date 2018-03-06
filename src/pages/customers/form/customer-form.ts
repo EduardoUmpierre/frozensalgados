@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ApiProvider } from "../../providers/api/api";
-import { CustomersPage } from "../customers/customers";
+import { ApiProvider } from "../../../providers/api/api";
+import { CustomersPage } from "../index/customers";
 
 /**
  * Generated class for the CustomerFormPage page.
@@ -17,7 +17,7 @@ import { CustomersPage } from "../customers/customers";
 })
 export class CustomerFormPage {
     pageTitle = 'Novo cliente';
-    customer = {};
+    customer: any = {};
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
         if (navParams.get('id')) {

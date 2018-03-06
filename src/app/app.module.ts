@@ -7,15 +7,15 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { CustomersPage } from '../pages/customers/customers';
-import { CustomerFormPage } from '../pages/customer-form/customer-form';
-import { OrdersPage } from '../pages/orders/orders';
-import { ProductsPage } from '../pages/products/products';
-import { OrderViewPage } from '../pages/order-view/order-view'
-import { OrderFormPage } from '../pages/order-form/order-form'
-import { OrderProductModalPage } from '../pages/order-product-modal/order-product-modal'
+import { CustomersPage } from '../pages/customers/index/customers';
+import { CustomerFormPage } from '../pages/customers/form/customer-form';
+import { CustomerViewPage } from '../pages/customers/view/customer-view'
+import { OrdersPage } from '../pages/orders/index/orders';
+import { ProductsPage } from '../pages/products/index/products';
+import { OrderViewPage } from '../pages/orders/view/order-view'
+import { OrderFormPage } from '../pages/orders/form/order-form'
+import { OrderProductModalPage } from '../pages/orders/modal/order-product-modal'
 import { ListFormPage } from '../pages/list-form/list-form'
-import { CustomerViewPage } from '../pages/customer-view/customer-view'
 import { LoginFormPage } from '../pages/login-form/login-form'
 import { UserPage } from '../pages/user/user'
 

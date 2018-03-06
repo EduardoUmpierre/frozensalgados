@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ApiProvider } from "../../providers/api/api";
-import { ListFormPage } from "../list-form/list-form";
+import { ApiProvider } from "../../../providers/api/api";
+import { ListFormPage } from "../../list-form/list-form";
 
 /**
  * Generated class for the CustomerViewPage page.

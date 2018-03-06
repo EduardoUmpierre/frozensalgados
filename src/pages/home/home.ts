@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { CustomersPage } from '../customers/customers';
-import { OrdersPage } from '../orders/orders';
-import { ProductsPage } from "../products/products";
+import { CustomersPage } from '../customers/index/customers';
+import { OrdersPage } from '../orders/index/orders';
+import { ProductsPage } from "../products/index/products";
 import { UserPage } from "../user/user";
 import { Storage } from "@ionic/storage";
 

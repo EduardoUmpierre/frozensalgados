@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController, IonicPage, NavController } from 'ionic-angular';
-import { ApiProvider } from '../../providers/api/api';
+import { ActionSheetController, AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiProvider } from '../../../providers/api/api';
+import { CustomerViewPage } from "../view/customer-view";
 import { Storage } from "@ionic/storage";
-import { CustomerFormPage } from "../customer-form/customer-form";
+import { CustomerFormPage } from "../form/customer-form";
 
 /**
- * Generated class for the ProductsPage page.
+ * Generated class for the CustomersPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
@@ -13,19 +14,38 @@ import { CustomerFormPage } from "../customer-form/customer-form";
 
 @IonicPage()
 @Component({
-    selector: 'page-products',
-    templateUrl: 'products.html',
+    selector: 'page-customers',
+    templateUrl: 'customers.html',
 })
-export class ProductsPage {
+export class CustomersPage {
     user: any = {};
-    products = [];
+    customers = [];
+    loaded: boolean = false;
 
-    constructor(public navCtrl: NavController, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
     }
 
+    /**
+     * Called when the view is loaded
+     */
     ionViewDidLoad() {
+        console.log('ionViewDidLoad CustomersPage');
+
+        this.apiProvider.builder('customers').loader().get().subscribe((res) => {
+            this.customers = res;
+            this.loaded = true;
+        });
+
         this.storage.get('user').then((user) => this.user = user);
-        this.apiProvider.builder('products').loader().get().subscribe((res) => this.products = res);
+    }
+
+    /**
+     * Push to customer details page
+     *
+     * @param id
+     */
+    goToDetails(id) {
+        this.navCtrl.push(CustomerViewPage, {id: id});
     }
 
     /**
@@ -55,7 +75,7 @@ export class ProductsPage {
                     handler: () => {
                         let alert = this.alertCtrl.create({
                             title: 'Confirmar exclusão',
-                            message: 'Deseja remover esse produto?',
+                            message: 'Deseja remover esse cliente?',
                             buttons: [
                                 {
                                     text: 'Cancelar',
@@ -64,7 +84,7 @@ export class ProductsPage {
                                 {
                                     text: 'Remover',
                                     handler: () => {
-                                        this.apiProvider.builder('products/' + id).loader().delete().subscribe((res) => this.remove(key));
+                                        this.apiProvider.builder('customers/' + id).loader().delete().subscribe((res) => this.remove(key));
                                     }
                                 }
                             ]
@@ -89,8 +109,8 @@ export class ProductsPage {
      * @param {number} key
      */
     remove(key: number) {
-        if (this.products[key]) {
-            this.products.splice(key, 1);
+        if (this.customers[key]) {
+            this.customers.splice(key, 1);
         }
     }
 }

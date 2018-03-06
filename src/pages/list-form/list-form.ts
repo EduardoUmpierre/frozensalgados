@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
-import { OrderProductModalPage } from "../order-product-modal/order-product-modal";
+import { OrderProductModalPage } from "../orders/modal/order-product-modal";
 import { Product } from "../../models/Product";
-import { OrdersPage } from "../orders/orders";
+import { OrdersPage } from "../orders/index/orders";
 import { ApiProvider } from "../../providers/api/api";
 import {Storage} from "@ionic/storage";
 

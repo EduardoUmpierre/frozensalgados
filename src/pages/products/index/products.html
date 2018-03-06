@@ -31,7 +31,7 @@
             </button>
         </ion-item>
 
-        <ion-item *ngIf="products.length == 0">
+        <ion-item *ngIf="loaded && products.length == 0">
             Nenhum cliente adicionado
         </ion-item>
     </ion-list>
