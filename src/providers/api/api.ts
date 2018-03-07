@@ -59,7 +59,7 @@ export class ApiProvider {
      * @param message
      * @returns {ApiProvider}
      */
-    loader(message: string = 'Carregando...') {
+    loader(message: string = 'Carregando') {
         this.loading = this.loadingCtrl.create({
             content: message
         });

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActionSheetController, AlertController, IonicPage, NavController } from 'ionic-angular';
 import { ApiProvider } from '../../../providers/api/api';
 import { Storage } from "@ionic/storage";
-import { CustomerFormPage } from "../../customers/form/customer-form";
+import { ProductFormPage } from "../form/product-form";
 
 /**
  * Generated class for the ProductsPage page.
@@ -38,7 +38,7 @@ export class ProductsPage {
      * @param {number} id
      */
     goToForm(id: number = null) {
-        this.navCtrl.push(CustomerFormPage, {id: id});
+        this.navCtrl.push(ProductFormPage, {id: id});
     }
 
     /**

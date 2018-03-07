@@ -26,6 +26,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiProvider } from '../providers/api/api';
 import { AuthProvider } from '../providers/auth/auth';
+import { ProductFormPage } from "../pages/products/form/product-form";
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { AuthProvider } from '../providers/auth/auth';
         CustomerFormPage,
         OrdersPage,
         ProductsPage,
+        ProductFormPage,
         OrderViewPage,
         OrderFormPage,
         OrderProductModalPage,
@@ -65,6 +67,7 @@ import { AuthProvider } from '../providers/auth/auth';
         CustomerFormPage,
         OrdersPage,
         ProductsPage,
+        ProductFormPage,
         OrderViewPage,
         OrderFormPage,
         OrderProductModalPage,
