@@ -5,6 +5,7 @@ import { OrdersPage } from '../orders/index/orders';
 import { ProductsPage } from "../products/index/products";
 import { UserPage } from "../user/user";
 import { Storage } from "@ionic/storage";
+import { SellersPage } from "../sellers/sellers";
 
 @Component({
     selector: 'page-home',
@@ -46,5 +47,12 @@ export class HomePage {
      */
     goToUser() {
         this.navCtrl.push(UserPage);
+    }
+
+    /**
+     * Push to sellers page
+     */
+    goToSellers() {
+        this.navCtrl.push(SellersPage);
     }
 }
