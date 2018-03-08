@@ -108,7 +108,8 @@ ion-content {
         margin-bottom: 0;
         padding-bottom: 0;
 
-        > .item {
+        > .item,
+        > form > .item {
             color: #737373;
             padding-left: 0;
 
@@ -243,5 +244,15 @@ ion-list {
                 }
             }
         }
+    }
+}
+
+form {
+
+    > .error {
+        color: red;
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-top: 1rem;
     }
 }

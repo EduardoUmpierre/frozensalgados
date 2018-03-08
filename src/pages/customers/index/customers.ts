@@ -18,7 +18,7 @@ import { CustomerFormPage } from "../form/customer-form";
     templateUrl: 'customers.html',
 })
 export class CustomersPage {
-    user: any = {};
+    currentUser: any = {};
     customers = [];
     loaded: boolean = false;
 
@@ -36,7 +36,7 @@ export class CustomersPage {
             this.loaded = true;
         });
 
-        this.storage.get('user').then((user) => this.user = user);
+        this.storage.get('user').then((user) => this.currentUser = user);
     }
 
     /**

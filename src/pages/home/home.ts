@@ -3,19 +3,19 @@ import { NavController } from 'ionic-angular';
 import { CustomersPage } from '../customers/index/customers';
 import { OrdersPage } from '../orders/index/orders';
 import { ProductsPage } from "../products/index/products";
-import { UserPage } from "../user/user";
+import { UserPage } from "../users/user/user";
 import { Storage } from "@ionic/storage";
-import { SellersPage } from "../sellers/sellers";
+import { UsersPage } from "../users/index/users";
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage {
-    user: any = {};
+    currentUser: any = {};
 
     constructor(public navCtrl:NavController, public storage: Storage) {
-        this.storage.get('user').then((user) => this.user = user);
+        this.storage.get('user').then((user) => this.currentUser = user);
     }
 
     // Push another page onto the history stack
@@ -52,7 +52,7 @@ export class HomePage {
     /**
      * Push to sellers page
      */
-    goToSellers() {
-        this.navCtrl.push(SellersPage);
+    goToUsers() {
+        this.navCtrl.push(UsersPage);
     }
 }

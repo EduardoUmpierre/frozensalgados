@@ -8,7 +8,7 @@
     <ion-navbar>
         <ion-title>Produtos</ion-title>
 
-        <ion-buttons end *ngIf="user.role == 1">
+        <ion-buttons end *ngIf="currentUser.role == 1">
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
             </button>
@@ -26,7 +26,7 @@
             <p class="highlight">{{ product.name }}</p>
             <p>Preço Un: R$ {{ product.price }}</p>
 
-            <button ion-button clear item-end icon-only large class="options-button" (click)="showOptions(product.id, i)" *ngIf="user.role == 1">
+            <button ion-button clear item-end icon-only large class="options-button" (click)="showOptions(product.id, i)" *ngIf="currentUser.role == 1">
                 <ion-icon name="more"></ion-icon>
             </button>
         </ion-item>

@@ -11,11 +11,6 @@
         <ion-row>
             <ion-col col-5>
                 <!-- Botões laterais -->
-                <button ion-button (click)="goToSellers()" clear full *ngIf="user.role == 1">
-                    <ion-icon name="briefcase"></ion-icon>
-                    Vendedores
-                </button>
-
                 <button ion-button (click)="goToCustomers()" clear full>
                     <ion-icon name="people"></ion-icon>
                     Clientes
@@ -30,6 +25,11 @@
                     <ion-icon name="alarm"></ion-icon>
                     Produtos
                 </button>
+
+                <button ion-button (click)="goToUsers()" clear full *ngIf="currentUser.role == 1">
+                    <ion-icon name="briefcase"></ion-icon>
+                    Usuários
+                </button>
             </ion-col>
 
             <ion-col col-7>
@@ -39,8 +39,8 @@
                         <img src="http://www.placehold.it/90" alt="">
                     </div>
 
-                    <div id="seller-name" *ngIf="user && user.name">{{ user.name }}</div>
-                    <div id="seller-id" *ngIf="user && user.id">Vendedor #{{ user.id }}</div>
+                    <div id="seller-name" *ngIf="currentUser && currentUser.name">{{ currentUser.name }}</div>
+                    <div id="seller-id" *ngIf="currentUser && currentUser.id">Vendedor #{{ currentUser.id }}</div>
                 </div>
             </ion-col>
         </ion-row>

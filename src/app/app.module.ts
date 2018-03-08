@@ -17,8 +17,9 @@ import { OrderFormPage } from '../pages/orders/form/order-form'
 import { OrderProductModalPage } from '../pages/orders/modal/order-product-modal'
 import { ListFormPage } from '../pages/list-form/list-form'
 import { LoginFormPage } from '../pages/login-form/login-form'
-import { UserPage } from '../pages/user/user'
-import { SellersPage } from '../pages/sellers/sellers'
+import { UserPage } from '../pages/users/user/user'
+import { UsersPage } from '../pages/users/index/users'
+import { UserFormPage } from '../pages/users/form/user-form'
 
 import { SelectSearchableModule } from '../components/select/select-module';
 
@@ -47,7 +48,8 @@ import { ProductFormPage } from "../pages/products/form/product-form";
         CustomerViewPage,
         LoginFormPage,
         UserPage,
-        SellersPage
+        UsersPage,
+        UserFormPage
     ],
     imports: [
         BrowserModule,
@@ -77,7 +79,8 @@ import { ProductFormPage } from "../pages/products/form/product-form";
         CustomerViewPage,
         LoginFormPage,
         UserPage,
-        SellersPage
+        UsersPage,
+        UserFormPage
     ],
     providers: [
         StatusBar,

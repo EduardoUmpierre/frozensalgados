@@ -17,7 +17,7 @@ import { ProductFormPage } from "../form/product-form";
     templateUrl: 'products.html',
 })
 export class ProductsPage {
-    user: any = {};
+    currentUser: any = {};
     products = [];
     loaded: boolean = false;
 
@@ -25,7 +25,8 @@ export class ProductsPage {
     }
 
     ionViewDidLoad() {
-        this.storage.get('user').then((user) => this.user = user);
+        this.storage.get('user').then((user) => this.currentUser = user);
+
         this.apiProvider.builder('products').loader().get().subscribe((res) => {
             this.products = res;
             this.loaded = true;
