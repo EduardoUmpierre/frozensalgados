@@ -58,8 +58,6 @@ export class UserFormPage {
             rv['passwordMismatch'] = true;
         }
 
-        console.log(cg);
-
         return rv;
     }
 

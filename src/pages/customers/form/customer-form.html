@@ -9,45 +9,89 @@
         <ion-title>{{ pageTitle }}</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only (click)="submit()">
+            <button ion-button icon-only (click)="submit()" [disabled]="!form.valid">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
     <div class="list-item">
         <ion-list>
-            <ion-item>
-                <ion-label stacked>Nome</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.name"></ion-input>
-            </ion-item>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <!-- Name -->
+                <ion-item [class.ng-touched]="form.controls.name && !form.controls.name.untouched">
+                    <ion-label stacked>Nome</ion-label>
+                    <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
 
-            <ion-item>
-                <ion-label stacked>Telefone</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.phone"></ion-input>
-            </ion-item>
+                <p class="error" *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched">
+                    O campo é obrigatório.
+                </p>
 
-            <ion-item>
-                <ion-label stacked>CEP</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.cep"></ion-input>
-            </ion-item>
+                <!-- CNPJ -->
+                <ion-item [class.ng-touched]="form.controls.cnpj && !form.controls.cnpj.untouched">
+                    <ion-label stacked>CNPJ</ion-label>
+                    <ion-input type="text" formControlName="cnpj"></ion-input>
+                </ion-item>
 
-            <ion-item>
-                <ion-label stacked>Endereço</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.address"></ion-input>
-            </ion-item>
+                <!-- Phone -->
+                <ion-item [class.ng-touched]="form.controls.phone && !form.controls.phone.untouched">
+                    <ion-label stacked>Telefone</ion-label>
+                    <ion-input type="text" formControlName="phone"></ion-input>
+                </ion-item>
 
-            <ion-item>
-                <ion-label stacked>Cidade</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.city"></ion-input>
-            </ion-item>
+                <!-- Cep -->
+                <ion-item [class.ng-touched]="form.controls.cep && !form.controls.cep.untouched">
+                    <ion-label stacked>CEP</ion-label>
+                    <ion-input type="text" formControlName="cep" (blur)="fetchAddress()"></ion-input>
+                </ion-item>
 
-            <ion-item>
-                <ion-label stacked>Bairro</ion-label>
-                <ion-input type="text" [(ngModel)]="customer.district"></ion-input>
-            </ion-item>
+                <p class="error" *ngIf="form.controls.cep && !form.controls.cep.valid && !form.controls.cep.untouched">
+                    O campo é obrigatório.
+                </p>
+
+                <!-- Address -->
+                <ion-item [class.ng-touched]="form.controls.address && !form.controls.address.untouched">
+                    <ion-label stacked>Endereço</ion-label>
+                    <ion-input type="text" formControlName="address"></ion-input>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.address && !form.controls.address.valid && !form.controls.address.untouched">
+                    O campo é obrigatório.
+                </p>
+
+                <!-- Number -->
+                <ion-item [class.ng-touched]="form.controls.address_number && !form.controls.address_number.untouched">
+                    <ion-label stacked>Número</ion-label>
+                    <ion-input type="text" formControlName="address_number"></ion-input>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.address_number && !form.controls.address_number.valid && !form.controls.address_number.untouched">
+                    O campo é obrigatório.
+                </p>
+
+                <!-- City -->
+                <ion-item [class.ng-touched]="form.controls.city && !form.controls.city.untouched">
+                    <ion-label stacked>Cidade</ion-label>
+                    <ion-input type="text" formControlName="city"></ion-input>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.city && !form.controls.city.valid && !form.controls.city.untouched">
+                    O campo é obrigatório.
+                </p>
+
+                <!-- District -->
+                <ion-item [class.ng-touched]="form.controls.district && !form.controls.district.untouched">
+                    <ion-label stacked>Bairro</ion-label>
+                    <ion-input type="text" formControlName="district"></ion-input>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.district && !form.controls.district.valid && !form.controls.district.untouched">
+                    O campo é obrigatório.
+                </p>
+            </form>
         </ion-list>
     </div>
 </ion-content>
