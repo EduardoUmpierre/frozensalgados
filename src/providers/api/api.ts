@@ -23,7 +23,6 @@ export class ApiProvider {
     private url: string;
     protected urlBase = '//localhost:8000/';
     private loading;
-    private header;
 
     constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App, private storage: Storage) {
     }
@@ -32,6 +31,7 @@ export class ApiProvider {
      * Builds the final URL
      *
      * @param {string} controller
+     * @param {boolean} external
      * @returns {ApiProvider}
      */
     builder(controller: string) {
@@ -41,12 +41,15 @@ export class ApiProvider {
     }
 
     /**
-     *
+     * @returns {Observable<Headers>}
      */
     getApiToken(): Observable<Headers> {
         return Observable.fromPromise(this.storage.get('token'));
     }
 
+    /**
+     * @returns {Headers}
+     */
     getHeaders(): Headers {
         return new Headers({
             'Content-Type': 'application/json'
