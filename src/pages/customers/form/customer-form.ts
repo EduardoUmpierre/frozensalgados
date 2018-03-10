@@ -38,7 +38,7 @@ export class CustomerFormPage {
             cnpj: new FormControl(''),
             phone: new FormControl(''),
             cep: new FormControl('', Validators.required),
-            address: new FormControl('2', Validators.required),
+            address: new FormControl('', Validators.required),
             address_number: new FormControl('', Validators.required),
             city: new FormControl('', Validators.required),
             district: new FormControl('', Validators.required)
