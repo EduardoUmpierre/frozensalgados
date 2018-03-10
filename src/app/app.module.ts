@@ -27,7 +27,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiProvider } from '../providers/api/api';
-import { CepProvider } from '../providers/api/cep';
+import { ExternalProvider } from '../providers/api/external';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProductFormPage } from "../pages/products/form/product-form";
 
@@ -88,7 +88,7 @@ import { ProductFormPage } from "../pages/products/form/product-form";
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         ApiProvider,
-        CepProvider,
+        ExternalProvider,
         AuthProvider
     ]
 })

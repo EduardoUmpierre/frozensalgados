@@ -9,6 +9,10 @@
         {
             "path": "/cep",
             "proxyUrl": "https://viacep.com.br"
+        },
+        {
+            "path": "/receita",
+            "proxyUrl": "https://www.receitaws.com.br"
         }
     ]
 }

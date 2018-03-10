@@ -15,7 +15,7 @@ import 'rxjs/add/operator/catch';
  for more info on providers and Angular DI.
  */
 @Injectable()
-export class CepProvider {
+export class ExternalProvider {
     private loading;
 
     constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App) {
@@ -28,7 +28,7 @@ export class CepProvider {
      * @param message
      * @returns {ApiProvider}
      */
-    loader(message: string = 'Buscando CEP') {
+    loader(message: string = 'Buscando') {
         this.loading = this.loadingCtrl.create({
             content: message
         });
@@ -45,18 +45,17 @@ export class CepProvider {
         return this.toPromise(this.http.get(url));
     }
 
+    /**
+     * @param request
+     */
     private toPromise(request) {
         return request
             .map((res) => {
-                if (this.loading)
-                    this.loading.dismiss();
+                this.hideLoader();
 
                 return res.json() || [];
             })
             .catch((err) => {
-                if (this.loading)
-                    this.loading.dismiss();
-
                 this.promiseErrorResolver(err).present();
 
                 return [];
@@ -69,6 +68,8 @@ export class CepProvider {
      * @returns {Alert}
      */
     promiseErrorResolver(error) {
+        this.hideLoader();
+
         let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador';
         let title = 'Erro';
 
@@ -95,5 +96,14 @@ export class CepProvider {
                 }
             ]
         });
+    }
+
+    /**
+     *
+     */
+    private hideLoader() {
+        if (this.loading) {
+            this.loading.dismiss();
+        }
     }
 }
