@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
 import { CustomersPage } from "../index/customers";
 import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
-import { CepProvider } from "../../../providers/api/cep";
+import { ExternalProvider } from "../../../providers/api/external";
 
 /**
  * Generated class for the CustomerFormPage page.
@@ -24,7 +24,7 @@ export class CustomerFormPage {
     private form: FormGroup;
     private id: number = null;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private formBuilder: FormBuilder, private cepProvider: CepProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private formBuilder: FormBuilder, private externalProvider: ExternalProvider) {
         if (navParams.get('id')) {
             this.pageTitle = 'Editar cliente';
             this.id = navParams.get('id');
@@ -35,7 +35,7 @@ export class CustomerFormPage {
                 Validators.pattern('[a-zA-Z ]*'),
                 Validators.required
             ])),
-            cnpj: new FormControl(''),
+            cnpj: new FormControl('', Validators.required),
             phone: new FormControl(''),
             cep: new FormControl('', Validators.required),
             address: new FormControl('', Validators.required),
@@ -78,12 +78,27 @@ export class CustomerFormPage {
     }
 
     /**
-     * Fetch address by CEP function
+     * Fetch customer data by CNPJ
+     */
+    fetchCustomer() {
+        this.externalProvider.loader().get('/receita/v1/cnpj/' + this.form.controls.cnpj.value).subscribe(res => {
+            this.form.controls['name'].setValue(res.nome);
+            this.form.controls['phone'].setValue(res.telefone);
+            this.form.controls['cep'].setValue(res.cep);
+            this.form.controls['address'].setValue(res.logradouro);
+            this.form.controls['address_number'].setValue(res.numero);
+            this.form.controls['city'].setValue(res.municipio);
+            this.form.controls['district'].setValue(res.bairro);
+        });
+    }
+
+    /**
+     * Fetch address by CEP
      */
     fetchAddress() {
         console.log(this.form.controls.cep.value);
 
-        this.cepProvider.loader().get('/cep/ws/' + this.form.controls.cep.value + '/json/').subscribe((res) => {
+        this.externalProvider.loader().get('/cep/ws/' + this.form.controls.cep.value + '/json/').subscribe((res) => {
             console.log(res);
             this.form.controls['address'].setValue(res.logradouro);
             this.form.controls['city'].setValue(res.localidade);
