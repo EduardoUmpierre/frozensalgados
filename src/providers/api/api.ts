@@ -23,7 +23,6 @@ export class ApiProvider {
     private url: string;
     protected urlBase = 'https://frozensalgados.herokuapp.com/';
     private loading;
-    private header;
 
     constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App, private storage: Storage) {
     }
@@ -32,6 +31,7 @@ export class ApiProvider {
      * Builds the final URL
      *
      * @param {string} controller
+     * @param {boolean} external
      * @returns {ApiProvider}
      */
     builder(controller: string) {
@@ -41,12 +41,15 @@ export class ApiProvider {
     }
 
     /**
-     *
+     * @returns {Observable<Headers>}
      */
     getApiToken(): Observable<Headers> {
         return Observable.fromPromise(this.storage.get('token'));
     }
 
+    /**
+     * @returns {Headers}
+     */
     getHeaders(): Headers {
         return new Headers({
             'Content-Type': 'application/json'
@@ -59,7 +62,7 @@ export class ApiProvider {
      * @param message
      * @returns {ApiProvider}
      */
-    loader(message: string = 'Carregando...') {
+    loader(message: string = 'Carregando') {
         this.loading = this.loadingCtrl.create({
             content: message
         });
@@ -118,6 +121,38 @@ export class ApiProvider {
             headers.append('Authorization', 'Bearer ' + res);
 
             return this.http.post(this.url, params, {headers: headers});
+        }));
+    }
+
+    /**
+     * Do the http post request
+     *
+     * @param params
+     * @returns {Promise<T | any[]>}
+     */
+    put(params) {
+        let headers: Headers = this.getHeaders();
+
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.put(this.url, params, {headers: headers});
+        }));
+    }
+
+    /**
+     * Do the http delete request
+     *
+     * @param params
+     * @returns {Promise<T | any[]>}
+     */
+    delete() {
+        let headers: Headers = this.getHeaders();
+
+        return this.toPromise(this.getApiToken().flatMap(res => {
+            headers.append('Authorization', 'Bearer ' + res);
+
+            return this.http.delete(this.url, {headers: headers});
         }));
     }
 

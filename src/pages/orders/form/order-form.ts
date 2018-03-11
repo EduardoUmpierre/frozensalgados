@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { SelectSearchable } from '../../components/select/select';
-import { ApiProvider } from "../../providers/api/api";
-import { OrderProductModalPage } from '../order-product-modal/order-product-modal';
-import { OrdersPage } from "../orders/orders";
-import { Product } from "../../models/Product";
+import {Component} from '@angular/core';
+import {
+    IonicPage,
+    NavController,
+    NavParams,
+    ModalController,
+    ActionSheetController,
+    AlertController
+} from 'ionic-angular';
+import {SelectSearchable} from '../../../components/select/select';
+import {ApiProvider} from "../../../providers/api/api";
+import {OrderProductModalPage} from '../modal/order-product-modal';
+import {OrdersPage} from "../index/orders";
+import {Product} from "../../../models/Product";
 
 /**
  * Generated class for the OrderFormPage page.
@@ -24,7 +31,7 @@ export class OrderFormPage {
     lists = [];
     order: Product[] = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
         }
@@ -81,6 +88,8 @@ export class OrderFormPage {
             });
 
             this.order = updatedOrder;
+
+            console.log(this.order);
         });
     }
 
@@ -126,5 +135,68 @@ export class OrderFormPage {
         });
 
         return data;
+    }
+
+    showOptions(id: number, key: number) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opções',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        let productModal = this.modalCtrl.create(OrderProductModalPage, {product: this.order[key]});
+
+                        productModal.onDidDismiss(data => {
+                            if (data instanceof Product) {
+                                this.order[key] = data;
+                            }
+                        });
+
+                        productModal.present();
+                    }
+                },
+                {
+                    text: 'Excluir',
+                    role: 'destructive',
+                    handler: () => {
+                        let alert = this.alertCtrl.create({
+                            title: 'Confirmar exclusão',
+                            message: 'Deseja remover esse produto?',
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel'
+                                },
+                                {
+                                    text: 'Remover',
+                                    handler: () => {
+                                        this.removeFromOrder(key);
+                                    }
+                                }
+                            ]
+                        });
+
+                        alert.present();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
+    }
+
+    /**
+     * Removes a order item
+     *
+     * @param {number} key
+     */
+    removeFromOrder(key: number) {
+        if (this.order[key]) {
+            this.order.splice(key, 1);
+        }
     }
 }

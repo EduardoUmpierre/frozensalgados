@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { SelectSearchable } from '../../components/select/select';
-import { ApiProvider } from "../../providers/api/api";
-import { Product } from "../../models/Product";
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {SelectSearchable} from '../../../components/select/select';
+import {ApiProvider} from "../../../providers/api/api";
+import {Product} from "../../../models/Product";
 
 /**
  * Generated class for the OrderProductModalPage page.
@@ -18,15 +18,17 @@ import { Product } from "../../models/Product";
 })
 export class OrderProductModalPage {
     pageTitle = 'Adicionar produto';
-
-    private order: Product;
+    order: Product;
+    quantity: number;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public viewCtrl: ViewController) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar produto';
+            this.order = navParams.get('product');
+            this.quantity = this.order.quantity;
         } else {
             this.order = new Product();
-            this.order.quantity = 1;
+            this.quantity = 1;
         }
     }
 
@@ -62,8 +64,15 @@ export class OrderProductModalPage {
     dismiss() {
         console.log('Order: ', this.order);
 
-        if (this.order.validate()) {
-            this.viewCtrl.dismiss(this.order);
+        if (this.validate()) {
+            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, this.order.price, this.quantity));
         }
+    }
+
+    /**
+     * @returns {boolean}
+     */
+    validate() {
+        return this.order.name !== null && this.quantity > 0;
     }
 }

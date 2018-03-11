@@ -41,6 +41,11 @@ ion-content {
     border-radius: 5px;
     margin: 10px;
     padding: 1em 1em 0.5em;
+    width: auto;
+
+    &.transparent {
+        background-color: transparent;
+    }
 
     &,
     p {
@@ -103,9 +108,14 @@ ion-content {
         margin-bottom: 0;
         padding-bottom: 0;
 
-        > .item {
+        > .item,
+        > form > .item {
             color: #737373;
             padding-left: 0;
+
+            &:last-child {
+                border-bottom: 0;
+            }
 
             > .item-inner {
                 border-bottom: none;
@@ -179,5 +189,98 @@ ion-content {
 ion-modal {
     .back-button {
         display: block!important
+    }
+}
+
+// List
+ion-list {
+
+    > ion-item,
+    > form > ion-item {
+
+        > .item-inner {
+            color: #737373;
+            padding-right: 0 !important;
+
+            > .options-button {
+                margin-right: 0 !important;
+
+                > .button-inner {
+                    color: #3b5998;
+                    font-size: 1.6rem;
+                }
+            }
+        }
+
+        &:first-child {
+
+            > .item-inner {
+
+                ion-label {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        ion-label {
+
+            > div {
+                cursor: pointer;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    &.single-item {
+
+        > ion-item {
+
+            > .item-inner {
+                border-bottom: none !important;
+
+                ion-label {
+                    margin-bottom: 0;
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    // Form
+    > form {
+
+        > ion-item {
+
+            > .item-inner {
+
+                > button {
+                    height: 3.3rem !important;
+                    margin-bottom: 0 !important;
+                    margin-right: 0 !important;
+                    margin-top: 2.7rem !important;
+                }
+            }
+
+            &:first-child {
+
+                > .item-inner {
+
+                    > button {
+                        margin-top: 1.4rem !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+form {
+
+    > .error {
+        color: red;
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-top: 1rem;
     }
 }

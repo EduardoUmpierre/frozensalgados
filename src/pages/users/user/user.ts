@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
-import { LoginFormPage } from "../login-form/login-form";
+import { LoginFormPage } from "../../login-form/login-form";
+import { UserFormPage } from "../form/user-form";
 
 /**
  * Generated class for the UserPage page.
@@ -24,6 +25,15 @@ export class UserPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad UserPage');
+    }
+
+    /**
+     * Push to user form page
+     *
+     * @param {number} id
+     */
+    goToForm(id: number = null) {
+        this.navCtrl.push(UserFormPage, {id: this.user.id});
     }
 
     logout() {

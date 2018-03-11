@@ -38,6 +38,10 @@
                 <p>Produtos: {{ list.product_count }}</p>
                 <p>Preço Total: R$ {{ list.total }}</p>
             </ion-item>
+
+            <ion-item *ngIf="customer.lists.length == 0">
+                <p>Nenhuma lista adicionada</p>
+            </ion-item>
         </ion-list>
     </div>
 </ion-content>
