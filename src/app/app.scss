@@ -210,13 +210,6 @@ ion-list {
                     font-size: 1.6rem;
                 }
             }
-
-            > button {
-                height: 3.3rem !important;
-                margin-bottom: 0 !important;
-                margin-right: 0 !important;
-                margin-top: 2.7rem !important;
-            }
         }
 
         &:first-child {
@@ -225,10 +218,6 @@ ion-list {
 
                 ion-label {
                     margin-top: 0;
-                }
-
-                > button {
-                    margin-top: 1.4rem !important;
                 }
             }
         }
@@ -253,6 +242,33 @@ ion-list {
                 ion-label {
                     margin-bottom: 0;
                     margin-top: 0;
+                }
+            }
+        }
+    }
+
+    // Form
+    > form {
+
+        > ion-item {
+
+            > .item-inner {
+
+                > button {
+                    height: 3.3rem !important;
+                    margin-bottom: 0 !important;
+                    margin-right: 0 !important;
+                    margin-top: 2.7rem !important;
+                }
+            }
+
+            &:first-child {
+
+                > .item-inner {
+
+                    > button {
+                        margin-top: 1.4rem !important;
+                    }
                 }
             }
         }
