@@ -18,9 +18,7 @@ import { ExternalProvider } from "../../../providers/api/external";
     templateUrl: 'customer-form.html',
 })
 export class CustomerFormPage {
-    pageTitle = 'Novo cliente';
-    customer: any = {};
-
+    private pageTitle = 'Novo cliente';
     private form: FormGroup;
     private id: number = null;
 
@@ -42,6 +40,9 @@ export class CustomerFormPage {
         });
     }
 
+    /**
+     *
+     */
     ionViewDidLoad() {
         if (this.id) {
             this.apiProvider.builder('customers/' + this.id).loader().get({'lists': 0}).subscribe((res) => {
@@ -68,6 +69,9 @@ export class CustomerFormPage {
         }
     }
 
+    /**
+     *
+     */
     redirect() {
         this.navCtrl.push(CustomersPage).then(() => {
             this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
