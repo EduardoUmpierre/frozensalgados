@@ -31,10 +31,7 @@ export class CustomerFormPage {
         }
 
         this.form = this.formBuilder.group({
-            name: new FormControl('', Validators.compose([
-                Validators.pattern('[a-zA-Z ]*'),
-                Validators.required
-            ])),
+            name: new FormControl('', Validators.required),
             cnpj: new FormControl('', Validators.required),
             phone: new FormControl(''),
             cep: new FormControl('', Validators.required),
