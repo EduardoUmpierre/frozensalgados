@@ -9,7 +9,7 @@
         <ion-title>{{ pageTitle }}</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only (click)="submit()">
+            <button ion-button icon-only (click)="submit()" [disabled]="!form.valid">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
             </button>
         </ion-buttons>
@@ -19,15 +19,27 @@
 <ion-content>
     <div class="list-item">
         <ion-list>
-            <ion-item>
-                <ion-label stacked>Nome</ion-label>
-                <ion-input type="text" [(ngModel)]="product.name"></ion-input>
-            </ion-item>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <!-- Name -->
+                <ion-item [class.ng-touched]="form.controls.name && !form.controls.name.untouched">
+                    <ion-label stacked>Nome</ion-label>
+                    <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
 
-            <ion-item>
-                <ion-label stacked>Preço</ion-label>
-                <ion-input type="text" [(ngModel)]="product.price"></ion-input>
-            </ion-item>
+                <p class="error" *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched">
+                    O campo é obrigatório.
+                </p>
+
+                <!-- Price -->
+                <ion-item [class.ng-touched]="form.controls.price && !form.controls.price.untouched">
+                    <ion-label stacked>Preço</ion-label>
+                    <ion-input type="text" formControlName="price"></ion-input>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.price && !form.controls.price.valid && !form.controls.price.untouched">
+                    O campo é obrigatório.
+                </p>
+            </form>
         </ion-list>
     </div>
 </ion-content>
