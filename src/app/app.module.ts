@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
+import { HTTP } from '@ionic-native/http';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -30,6 +31,10 @@ import { ApiProvider } from '../providers/api/api';
 import { ExternalProvider } from '../providers/api/external';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProductFormPage } from "../pages/products/form/product-form";
+
+import { HttpProvider } from "../providers/api/http/http"
+import { HttpAngularProvider } from "../providers/api/http/http-angular"
+import { HttpNativeProvider } from "../providers/api/http/http-native"
 
 @NgModule({
     declarations: [
@@ -89,7 +94,11 @@ import { ProductFormPage } from "../pages/products/form/product-form";
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         ApiProvider,
         ExternalProvider,
-        AuthProvider
+        AuthProvider,
+        HttpProvider,
+        HttpAngularProvider,
+        HttpNativeProvider,
+        HTTP
     ]
 })
 export class AppModule {
