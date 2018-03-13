@@ -7,11 +7,11 @@ import {
     ActionSheetController,
     AlertController
 } from 'ionic-angular';
-import {SelectSearchable} from '../../components/select/select';
-import {ApiProvider} from "../../providers/api/api";
-import {OrderProductModalPage} from '../order-product-modal/order-product-modal';
-import {OrdersPage} from "../orders/orders";
-import {Product} from "../../models/Product";
+import {SelectSearchable} from '../../../components/select/select';
+import {ApiProvider} from "../../../providers/api/api";
+import {OrderProductModalPage} from '../modal/order-product-modal';
+import {OrdersPage} from "../index/orders";
+import {Product} from "../../../models/Product";
 
 /**
  * Generated class for the OrderFormPage page.

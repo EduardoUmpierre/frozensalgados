@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {SelectSearchable} from '../../components/select/select';
-import {ApiProvider} from "../../providers/api/api";
-import {Product} from "../../models/Product";
+import {SelectSearchable} from '../../../components/select/select';
+import {ApiProvider} from "../../../providers/api/api";
+import {Product} from "../../../models/Product";
 
 /**
  * Generated class for the OrderProductModalPage page.

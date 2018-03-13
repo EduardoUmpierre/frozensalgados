@@ -4,5 +4,15 @@
     "type": "ionic-angular",
     "integrations": {
         "cordova": {}
-    }
+    },
+    "proxies": [
+        {
+            "path": "/cep",
+            "proxyUrl": "https://viacep.com.br"
+        },
+        {
+            "path": "/receita",
+            "proxyUrl": "https://www.receitaws.com.br"
+        }
+    ]
 }

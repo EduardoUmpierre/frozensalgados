@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-import { ApiProvider } from '../../providers/api/api';
-import { OrderViewPage } from '../order-view/order-view';
-import { OrderFormPage } from '../order-form/order-form';
+import { ApiProvider } from '../../../providers/api/api';
+import { OrderViewPage } from '../view/order-view';
+import { OrderFormPage } from '../form/order-form';
 
 /**
  * Generated class for the OrdersPage page.
