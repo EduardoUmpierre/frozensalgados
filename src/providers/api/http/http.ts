@@ -8,7 +8,7 @@ export class HttpProvider {
     public http;
 
     constructor(private platform: Platform, private angularHttp: HttpAngularProvider, private nativeHttp: HttpNativeProvider) {
-        let isApp = this.platform.is('core') && !this.platform.is('mobileweb');
+        let isApp = this.platform.is('core') || this.platform.is('cordova');
 
         console.log(this.platform.platforms());
         console.log('IS APP?');

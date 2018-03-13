@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, App } from 'ionic-angular';
+import { LoadingController, AlertController, App, Platform } from 'ionic-angular';
 import { HttpProvider } from './http/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -18,9 +18,8 @@ export class ApiProvider {
     private url: string;
     protected urlBase = 'https://frozensalgados.herokuapp.com/';
     private loading;
-    private header;
 
-    constructor(public httpProvider: HttpProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public app: App, private storage: Storage) {
+    constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public app: App, private storage: Storage) {
     }
 
     /**
@@ -164,7 +163,7 @@ export class ApiProvider {
 
         return this.alertCtrl.create({
             title: title,
-            subTitle: message,
+            subTitle: message + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + (this.platform.is('core') || this.platform.is('cordova')) + ' ' + this.platform.platforms(),
             buttons: [{text: 'OK'}]
         });
     }

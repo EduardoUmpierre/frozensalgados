@@ -12,15 +12,11 @@ export class HttpNativeProvider {
     /**
      *
      * @param url
-     * @param params
      * @param options
      * @returns {Observable<HTTPResponse>}
      */
-    public get(url, params?: any, options: any = {}) {
-        let responseData = this.http.get(url, params, {})
-            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
-
-        return Observable.fromPromise(responseData);
+    public get(url, options: any = {}) {
+        return this.http.get(url, {}, options).then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
     }
 
     /**
