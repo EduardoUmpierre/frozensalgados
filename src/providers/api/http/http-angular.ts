@@ -31,6 +31,7 @@ export class HttpAngularProvider {
     public post(url, params: any, options: any = {}) {
         let requestOptions = new RequestOptions();
         requestOptions.withCredentials = true;
+        requestOptions.headers = options;
 
         return this.http.post(url, params, requestOptions).map(resp => options.responseType == 'text' ? resp.text() : resp.json());
     }
@@ -44,6 +45,7 @@ export class HttpAngularProvider {
     public put(url, options: any = {}) {
         let requestOptions = new RequestOptions();
         requestOptions.withCredentials = true;
+        requestOptions.headers = options;
 
         return this.http.put(url, requestOptions).map(resp => options.responseType == 'text' ? resp.text() : resp.json());
     }
@@ -57,6 +59,7 @@ export class HttpAngularProvider {
     public delete(url, options: any = {}) {
         let requestOptions = new RequestOptions();
         requestOptions.withCredentials = true;
+        requestOptions.headers = options;
 
         return this.http.delete(url, requestOptions).map(resp => options.responseType == 'text' ? resp.text() : resp.json());
     }
