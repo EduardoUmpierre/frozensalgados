@@ -2,12 +2,6 @@ import { Injectable } from '@angular/core';
 import { ApiProvider } from "../api/api";
 import 'rxjs/add/operator/toPromise';
 
-/*
-  Generated class for the AuthProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class AuthProvider extends ApiProvider {
     client = {
@@ -17,43 +11,42 @@ export class AuthProvider extends ApiProvider {
     };
 
     /**
+     * Get current user data
      *
-     * @returns {Promise<T | any[]>}
+     * @returns {any}
      */
     getUser() {
         return this.builder('auth/me').loader().get();
     }
 
     /**
+     * Do the login request
      *
      * @param data
-     * @returns {Promise<T | any[]>}
      */
     login(data) {
-        console.log('login');
-
         data = this.buildAuthForm(data);
         data.grant_type = 'password';
 
-        return this.http.post(this.urlBase + 'oauth/token', data).toPromise().then((res) => res.json());
+        return this.httpProvider.http.post(this.urlBase + 'oauth/token', data).toPromise().then(res => res);
     }
 
     /**
+     * Refresh the authorization token
      *
      * @param data
-     * @returns {Promise<T | any[]>}
+     * @returns {any}
      */
     refreshToken(data) {
-        console.log('refresh');
-
         data = this.buildAuthForm(data);
         data.grant_type = 'refresh_token';
 
-        let observable = this.http.post(this.urlBase + 'oauth/token', data);
+        let observable = this.httpProvider.http.post(this.urlBase + 'oauth/token', data);
         return this.toPromise(observable);
     }
 
     /**
+     * Builds the authorization form
      *
      * @param data
      * @returns {any}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, App } from 'ionic-angular';
-import { Http, Headers } from '@angular/http';
+import { LoadingController, AlertController, App, Platform } from 'ionic-angular';
+import { HttpProvider } from './http/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/fromPromise';
@@ -11,12 +11,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from "rxjs/Observable";
 
 /*
- Generated class for the ApiProvider provider.
-
- See https://angular.io/docs/ts/latest/guide/dependency-injection.html
- for more info on providers and Angular DI.
-
- @todo Adicionar sistema de verificação de ambiente para modificar a URL da api
+    @todo Adicionar sistema de verificação de ambiente para modificar a URL da api
  */
 @Injectable()
 export class ApiProvider {
@@ -24,14 +19,13 @@ export class ApiProvider {
     protected urlBase = 'https://frozensalgados.herokuapp.com/';
     private loading;
 
-    constructor(public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, protected app: App, private storage: Storage) {
+    constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public app: App, private storage: Storage) {
     }
 
     /**
      * Builds the final URL
      *
      * @param {string} controller
-     * @param {boolean} external
      * @returns {ApiProvider}
      */
     builder(controller: string) {
@@ -45,15 +39,6 @@ export class ApiProvider {
      */
     getApiToken(): Observable<Headers> {
         return Observable.fromPromise(this.storage.get('token'));
-    }
-
-    /**
-     * @returns {Headers}
-     */
-    getHeaders(): Headers {
-        return new Headers({
-            'Content-Type': 'application/json'
-        });
     }
 
     /**
@@ -73,13 +58,12 @@ export class ApiProvider {
     }
 
     /**
+     * Builds the URL parameters
      *
      * @param params
      */
-    buildUrlParams(params = null) {
+    private buildUrlParams(params = null) {
         if (params) {
-            console.log('params: ', params);
-
             let urlParams = '';
 
             for (let key in params) {
@@ -94,82 +78,58 @@ export class ApiProvider {
     }
 
     /**
-     * Do the http get request
-    **/
+     * HTTP GET request
+     *
+     * @param {{}} params
+     * @returns {any}
+     */
     get(params = {}) {
         this.buildUrlParams(params);
 
-        let headers: Headers = this.getHeaders();
-
-        return this.toPromise(this.getApiToken().flatMap(res => {
-            headers.append('Authorization', 'Bearer ' + res);
-
-            return this.http.get(this.url, {headers: headers});
-        }));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.get(this.url, {'Authorization': 'Bearer ' + res})));
     }
 
     /**
-     * Do the http post request
+     * HTTP POST request
      *
      * @param params
-     * @returns {Promise<T | any[]>}
+     * @returns {any}
      */
     post(params) {
-        let headers: Headers = this.getHeaders();
-
-        return this.toPromise(this.getApiToken().flatMap(res => {
-            headers.append('Authorization', 'Bearer ' + res);
-
-            return this.http.post(this.url, params, {headers: headers});
-        }));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.post(this.url, params, {'Authorization': 'Bearer ' + res})));
     }
 
     /**
-     * Do the http post request
+     * HTTP PUT request
      *
      * @param params
-     * @returns {Promise<T | any[]>}
+     * @returns {any}
      */
     put(params) {
-        let headers: Headers = this.getHeaders();
-
-        return this.toPromise(this.getApiToken().flatMap(res => {
-            headers.append('Authorization', 'Bearer ' + res);
-
-            return this.http.put(this.url, params, {headers: headers});
-        }));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.put(this.url, params, {'Authorization': 'Bearer ' + res})));
     }
 
     /**
-     * Do the http delete request
+     * HTTP DELETE request
      *
-     * @param params
-     * @returns {Promise<T | any[]>}
+     * @returns {any}
      */
     delete() {
-        let headers: Headers = this.getHeaders();
-
-        return this.toPromise(this.getApiToken().flatMap(res => {
-            headers.append('Authorization', 'Bearer ' + res);
-
-            return this.http.delete(this.url, {headers: headers});
-        }));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.delete(this.url, {'Authorization': 'Bearer ' + res})));
     }
 
     /**
      * @param request
      */
-    toPromise(request) {
+    public toPromise(request) {
         return request
             .map((res) => {
-                if (this.loading)
-                    this.loading.dismiss();
+                this.hideLoader();
 
-                return res.json() || [];
+                return res || [];
             })
             .catch((err) => {
-                if (this.loading)
-                    this.loading.dismiss();
+                this.hideLoader();
 
                 this.promiseErrorResolver(err).present();
 
@@ -182,32 +142,38 @@ export class ApiProvider {
      * @param error
      * @returns {Alert}
      */
-    promiseErrorResolver(error) {
-        let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador';
+    private promiseErrorResolver(error) {
         let title = 'Erro';
+        let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador.';
 
         if (error.status === 401) {
             title = 'Sessão expirada';
             message = 'A sua sessão expirou, logue-se novamente.';
+
             this.app.getActiveNav().setRoot(LoginFormPage);
         }
 
         if (error.status === 422) {
-            message = 'Falha de validação, verifique os campos';
+            message = 'Falha de validação, verifique os campos.';
         }
 
         if (error.status === 404) {
-            message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em breve';
+            message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em breve.';
         }
 
         return this.alertCtrl.create({
             title: title,
-            subTitle: message,
-            buttons: [
-                {
-                    text: 'OK'
-                }
-            ]
+            subTitle: message + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + (this.platform.is('core') || this.platform.is('cordova')) + ' ' + this.platform.platforms(),
+            buttons: [{text: 'OK'}]
         });
+    }
+
+    /**
+     * Hides the loader if it's visible
+     */
+    private hideLoader() {
+        if (this.loading) {
+            this.loading.dismiss();
+        }
     }
 }

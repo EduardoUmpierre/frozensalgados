@@ -56,6 +56,8 @@ export class LoginFormPage {
                 })
             })
             .catch((err) => {
+                console.log(err.toLocaleString());
+
                 let message = 'Algo deu errado no servidor, informe o erro ' + err.status + ' ao administrador';
 
                 if (err.status === 401) {
@@ -78,7 +80,7 @@ export class LoginFormPage {
 
                 let alert = this.alertCtrl.create({
                     title: 'Erro',
-                    subTitle: message,
+                    subTitle: err.toLocaleString(),
                     buttons: [
                         {text: 'OK'}
                     ]
