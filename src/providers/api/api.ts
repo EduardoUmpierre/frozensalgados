@@ -169,11 +169,9 @@ export class ApiProvider {
 
         return this.alertCtrl.create({
             title: title,
-            subTitle: message,
+            subTitle: message + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + this.isApp() + ' ' + this.platform.platforms(),
             buttons: [{text: 'OK'}]
         });
-
-        // + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + (this.platform.is('core') || this.platform.is('cordova')) + ' ' + this.platform.platforms()
     }
 
     /**
