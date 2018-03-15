@@ -24,7 +24,7 @@
                 <ion-item [class.ng-touched]="form.controls.cnpj && !form.controls.cnpj.untouched">
                     <ion-label stacked>CNPJ</ion-label>
                     <ion-input type="text" formControlName="cnpj"></ion-input>
-                    <button ion-button item-end (tap)="fetchCustomer()">Pesquisar</button>
+                    <button type="button" ion-button item-end (tap)="fetchCustomer()">Pesquisar</button>
                 </ion-item>
 
                 <p class="error" *ngIf="form.controls.cnpj && !form.controls.cnpj.valid && !form.controls.cnpj.untouched">
@@ -51,7 +51,7 @@
                 <ion-item [class.ng-touched]="form.controls.cep && !form.controls.cep.untouched">
                     <ion-label stacked>CEP</ion-label>
                     <ion-input type="text" formControlName="cep"></ion-input>
-                    <button ion-button item-end (tap)="fetchAddress()">Pesquisar</button>
+                    <button type="button" ion-button item-end (tap)="fetchAddress()">Pesquisar</button>
                 </ion-item>
 
                 <p class="error" *ngIf="form.controls.cep && !form.controls.cep.valid && !form.controls.cep.untouched">

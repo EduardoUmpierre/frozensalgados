@@ -86,7 +86,7 @@ export class ApiProvider {
     get(params = {}) {
         this.buildUrlParams(params);
 
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.get(this.url, {'Authorization': 'Bearer ' + res})));
+        return this.toPromise(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {'Authorization': 'Bearer ' + res})));
     }
 
     /**
@@ -151,6 +151,8 @@ export class ApiProvider {
     public promiseErrorResolver(error) {
         let title = 'Erro';
         let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador.';
+
+        console.log(error);
 
         if (error.status === 401) {
             title = 'Sessão expirada';

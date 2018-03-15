@@ -8,7 +8,6 @@ export class HttpAngularProvider {
     }
 
     /**
-     *
      * @param url
      * @param options
      * @returns {Observable<any>}
@@ -22,7 +21,6 @@ export class HttpAngularProvider {
     }
 
     /**
-     *
      * @param url
      * @param params
      * @param options
@@ -37,7 +35,6 @@ export class HttpAngularProvider {
     }
 
     /**
-     *
      * @param url
      * @param options
      * @returns {Observable<any>}
@@ -51,7 +48,6 @@ export class HttpAngularProvider {
     }
 
     /**
-     *
      * @param url
      * @param options
      * @returns {Observable<any>}

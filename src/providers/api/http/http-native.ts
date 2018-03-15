@@ -16,12 +16,11 @@ export class HttpNativeProvider {
      * @returns {Observable<HTTPResponse>}
      */
     public get(url, options: any = {}) {
-        this.platform.ready().then(() => {
-            let responseData = this.http.get(url, {}, options)
-                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
-
-            return Observable.fromPromise(responseData);
-        });
+        return Observable.fromPromise(this.platform.ready().then(() => {
+            return this.http.get(url, {}, options)
+                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
+                .catch((err) => console.log(err));
+        }));
     }
 
     /**
@@ -32,13 +31,12 @@ export class HttpNativeProvider {
      * @returns {Observable<HTTPResponse>}
      */
     public post(url, params?: any, options: any = {}) {
-        this.platform.ready().then(() => {
+        return Observable.fromPromise(this.platform.ready().then(() => {
             this.http.setDataSerializer('json');
-            let responseData = this.http.post(url, params, options)
-                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
-
-            return Observable.fromPromise(responseData);
-        });
+            return this.http.post(url, params, options)
+                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
+                .catch((err) => console.log(err));
+        }));
     }
 
     /**
@@ -49,13 +47,12 @@ export class HttpNativeProvider {
      * @returns {Observable<HTTPResponse>}
      */
     public put(url, params?: any, options: any = {}) {
-        this.platform.ready().then(() => {
+        return Observable.fromPromise(this.platform.ready().then(() => {
             this.http.setDataSerializer('json');
-            let responseData = this.http.put(url, params, options)
-                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
-
-            return Observable.fromPromise(responseData);
-        });
+            return this.http.put(url, params, options)
+                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
+                .catch((err) => console.log(err));
+        }));
     }
 
     /**
@@ -65,11 +62,10 @@ export class HttpNativeProvider {
      * @returns {Observable<HTTPResponse>}
      */
     public delete(url, options: any = {}) {
-        this.platform.ready().then(() => {
-            let responseData = this.http.delete(url, {}, options)
-                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
-
-            return Observable.fromPromise(responseData);
-        });
+        return Observable.fromPromise(this.platform.ready().then(() => {
+            return this.http.delete(url, {}, options)
+                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
+                .catch((err) => console.log(err));
+        }));
     }
 }
