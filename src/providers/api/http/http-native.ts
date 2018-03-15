@@ -16,8 +16,7 @@ export class HttpNativeProvider {
      */
     public get(url, options: any = {}) {
         let responseData = this.http.get(url, {}, options)
-            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
-            .catch(error => console.log(error));
+            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
 
         return Observable.fromPromise(responseData);
     }
@@ -32,11 +31,7 @@ export class HttpNativeProvider {
     public post(url, params?: any, options: any = {}) {
         this.http.setDataSerializer('json');
         let responseData = this.http.post(url, params, options)
-            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
-            .catch(error => {
-                console.log(error);
-                console.log(params);
-            });
+            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
 
         return Observable.fromPromise(responseData);
     }
@@ -51,8 +46,7 @@ export class HttpNativeProvider {
     public put(url, params?: any, options: any = {}) {
         this.http.setDataSerializer('json');
         let responseData = this.http.put(url, params, options)
-            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
-            .catch(error => console.log(error));
+            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
 
         return Observable.fromPromise(responseData);
     }
@@ -65,8 +59,7 @@ export class HttpNativeProvider {
      */
     public delete(url, options: any = {}) {
         let responseData = this.http.delete(url, {}, options)
-            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
-            .catch(error => console.log(error));
+            .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
 
         return Observable.fromPromise(responseData);
     }
