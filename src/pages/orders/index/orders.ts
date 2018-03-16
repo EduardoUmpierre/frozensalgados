@@ -17,7 +17,8 @@ import { OrderFormPage } from '../form/order-form';
     templateUrl: 'orders.html',
 })
 export class OrdersPage {
-    public orders;
+    orders = [];
+    loaded: boolean = false;
 
     constructor(public navCtrl: NavController, private apiProvider: ApiProvider) {
     }
@@ -26,7 +27,10 @@ export class OrdersPage {
      * Gets the order list
      */
     ionViewDidLoad() {
-        this.apiProvider.builder('orders').loader().get({order: 'desc'}).subscribe((res) => this.orders = res);
+        this.apiProvider.builder('orders').loader().get({order: 'desc'}).subscribe((res) => {
+            this.orders = res;
+            this.loaded = true;
+        });
     }
 
     /**

@@ -35,4 +35,8 @@
             </ion-row>
         </ion-grid>
     </ion-card>
+
+    <ion-card *ngIf="loaded && products.length == 0" class="list-item no-items">
+        Nenhum pedido realizado
+    </ion-card>
 </ion-content>
