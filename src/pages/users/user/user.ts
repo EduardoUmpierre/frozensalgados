@@ -4,13 +4,6 @@ import { Storage } from "@ionic/storage";
 import { LoginFormPage } from "../../login-form/login-form";
 import { UserFormPage } from "../form/user-form";
 
-/**
- * Generated class for the UserPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
     selector: 'page-user',
@@ -23,10 +16,6 @@ export class UserPage {
         this.storage.get('user').then((user) => this.user = user);
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad UserPage');
-    }
-
     /**
      * Push to user form page
      *
@@ -36,11 +25,13 @@ export class UserPage {
         this.navCtrl.push(UserFormPage, {id: this.user.id});
     }
 
+    /**
+     * Do the logout function
+     */
     logout() {
         this.storage.remove('token')
             .then(() => this.storage.remove('user')
-                .then(() => {
-                    this.navCtrl.push(LoginFormPage).then(() => this.navCtrl.setRoot(LoginFormPage));
-                }));
+                .then(() => this.navCtrl.push(LoginFormPage)
+                    .then(() => this.navCtrl.setRoot(LoginFormPage))));
     }
 }
