@@ -1,7 +1,4 @@
-import { Pro } from '@ionic/pro';
-import { NgModule, ErrorHandler, Injectable, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { HTTP } from '@ionic-native/http';
 import { MyApp } from './app.component';
@@ -37,9 +34,13 @@ import { HttpProvider } from "../providers/api/http/http"
 import { HttpAngularProvider } from "../providers/api/http/http-angular"
 import { HttpNativeProvider } from "../providers/api/http/http-native"
 
+import { Pro } from "@ionic/pro";
+import { NgModule, ErrorHandler, Injectable, Injector } from "@angular/core";
+import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
+
 Pro.init('74f2ff88', {
     appVersion: '0.0.1'
-})
+});
 
 @Injectable()
 export class MyErrorHandler implements ErrorHandler {
@@ -125,7 +126,6 @@ export class MyErrorHandler implements ErrorHandler {
         HttpNativeProvider,
         HTTP,
         IonicErrorHandler,
-        Pro,
         [{ provide: ErrorHandler, useClass: MyErrorHandler }]
     ]
 })

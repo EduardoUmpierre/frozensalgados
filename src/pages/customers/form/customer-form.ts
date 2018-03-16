@@ -82,7 +82,7 @@ export class CustomerFormPage {
      * Fetch customer data by CNPJ
      */
     fetchCustomer() {
-        this.externalProvider.getExternal('receita', '/v1/cnpj/' + this.form.controls.cnpj.value).subscribe(res => {
+        this.externalProvider.loader().getExternal('receita', '/v1/cnpj/' + this.form.controls.cnpj.value).subscribe(res => {
             this.form.controls['name'].setValue(res.nome);
             this.form.controls['phone'].setValue(res.telefone);
             this.form.controls['cep'].setValue(res.cep);
@@ -99,7 +99,7 @@ export class CustomerFormPage {
     fetchAddress() {
         console.log(this.form.controls.cep.value);
 
-        this.externalProvider.getExternal('cep', '/ws/' + this.form.controls.cep.value + '/json/').subscribe((res) => {
+        this.externalProvider.loader().getExternal('cep', '/ws/' + this.form.controls.cep.value + '/json/').subscribe((res) => {
             console.log(res);
             this.form.controls['address'].setValue(res.logradouro);
             this.form.controls['city'].setValue(res.localidade);

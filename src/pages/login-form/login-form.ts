@@ -43,7 +43,7 @@ export class LoginFormPage {
             password: this.user.password
         };
 
-        this.AuthProvider.login(data)
+        this.AuthProvider.loader('Validando dados').login(data)
             .then((res) => {
                 this.storage.set('token', res.access_token).then(() => {
                     console.log('token criado');

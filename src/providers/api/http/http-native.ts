@@ -8,7 +8,7 @@ import { Pro } from "@ionic/pro";
 
 @Injectable()
 export class HttpNativeProvider {
-    constructor(public http: HTTP, public platform: Platform, private Pro: Pro) {
+    constructor(public http: HTTP, public platform: Platform) {
     }
 
     /**
@@ -18,7 +18,7 @@ export class HttpNativeProvider {
      */
     public get(url, options: any = {}) {
         return Observable.fromPromise(this.platform.ready().then(() => {
-            Pro.monitoring.log('API get nativo: ' + url, { level: 'info' })
+            Pro.monitoring.log('API get nativo: ' + url, { level: 'info' });
 
             return this.http.get(url, {}, options)
                 .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
