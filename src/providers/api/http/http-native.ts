@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/map';
 import { Platform } from "ionic-angular";
 import { Pro } from "@ionic/pro";
 
