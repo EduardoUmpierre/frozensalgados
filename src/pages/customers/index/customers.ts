@@ -29,8 +29,6 @@ export class CustomersPage {
      * Called when the view is loaded
      */
     ionViewDidLoad() {
-        console.log('ionViewDidLoad CustomersPage');
-
         this.apiProvider.builder('customers').loader().get().subscribe((res) => {
             this.customers = res;
             this.loaded = true;
