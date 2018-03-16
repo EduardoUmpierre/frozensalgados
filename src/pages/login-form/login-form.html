@@ -5,29 +5,24 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
     <ion-navbar>
-        <ion-title>Autenticação</ion-title>
+        <ion-title>Frozen Congelados</ion-title>
     </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
-    <form (submit)="login($event)" class="list-item">
+    <form [formGroup]="form" (submit)="login($event)" class="list-item">
         <ion-list>
             <ion-item>
-                <ion-label stacked>Login</ion-label>
-                <ion-input type="text" name="username" [(ngModel)]="user.username"></ion-input>
+                <ion-input type="text" formControlName="username" placeholder="Usuário"></ion-input>
             </ion-item>
 
             <ion-item>
-                <ion-label stacked>Senha</ion-label>
-                <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
+                <ion-input type="password" formControlName="password" placeholder="Senha"></ion-input>
             </ion-item>
 
             <ion-item>
-                <button ion-button color="light" full>Acessar</button>
+                <button ion-button large color="light" full [disabled]="form && !form.valid">Login</button>
             </ion-item>
         </ion-list>
     </form>

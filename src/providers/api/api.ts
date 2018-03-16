@@ -167,7 +167,7 @@ export class ApiProvider {
         }
 
         if (error.status === 404) {
-            message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em breve.';
+            message = 'Não foi possível conectar-se ao servidor. Verifique a sua conexão ou tente novamente em breve.';
         }
 
         return this.alertCtrl.create({

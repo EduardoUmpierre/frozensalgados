@@ -1,3 +1,61 @@
 page-login-form {
+    ion-navbar {
+        color: #000000;
 
+        & > .toolbar-background {
+            background-color: #FFF;
+            border-bottom: 1px solid #a7a7aa !important;
+        }
+
+        .toolbar-title {
+            color: inherit;
+        }
+    }
+
+    ion-content {
+        background: #efeff4 !important;
+    }
+
+    .scroll-content {
+        display: flex;
+        align-items: center;
+    }
+
+    form.list-item {
+        border-top: 1px solid #cccbd0;
+        padding: 1px 0 0;
+        width: 100%;
+
+        &,
+        ion-item {
+            background-color: transparent;
+        }
+
+        ion-item {
+            margin-bottom: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+                margin-top: 2.5rem;
+            }
+
+            &.item-input {
+                > .item-inner {
+                    border-bottom: 1px solid #cccbd0 !important;
+                    -webkit-box-shadow: none !important;
+                    box-shadow: none !important;
+                }
+            }
+        }
+
+        ion-label {
+            margin: 0;
+        }
+
+        button {
+            color: #FFF;
+            font-size: 1.4rem;
+            background-color: #3b5998;
+        }
+    }
 }

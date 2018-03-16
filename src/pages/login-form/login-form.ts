@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from "../../providers/auth/auth";
-import { ApiProvider } from "../../providers/api/api";
 import { HomePage } from "../home/home";
 import { Storage } from '@ionic/storage';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 
 /**
  * Generated class for the LoginFormPage page.
@@ -18,13 +18,13 @@ import { Storage } from '@ionic/storage';
     templateUrl: 'login-form.html',
 })
 export class LoginFormPage {
-    user: any = {
-        username: null,
-        password: null
-    };
+    private form: FormGroup;
 
-    constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private ApiProvider: ApiProvider, private AuthProvider: AuthProvider, private storage: Storage) {
-
+    constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private AuthProvider: AuthProvider, private formBuilder: FormBuilder, private storage: Storage) {
+        this.form = this.formBuilder.group({
+            username: new FormControl('', Validators.required),
+            password: new FormControl('', Validators.required)
+        });
     }
 
     /**
@@ -34,17 +34,11 @@ export class LoginFormPage {
     login(e) {
         e.preventDefault();
 
-        if (!this.user.username || !this.user.password) {
-            return;
-        }
-
-        let data = {
-            username: this.user.username,
-            password: this.user.password
-        };
-
-        this.AuthProvider.loader('Validando dados').login(data)
+        this.AuthProvider.loader('Validando dados')
+            .login(this.form.value)
             .then((res) => {
+                this.AuthProvider.hideLoader();
+
                 this.storage.set('token', res.access_token).then(() => {
                     console.log('token criado');
 
@@ -56,16 +50,16 @@ export class LoginFormPage {
                 })
             })
             .catch((err) => {
-                console.log(err.toLocaleString());
+                this.AuthProvider.hideLoader();
 
-                let message = 'Algo deu errado no servidor, informe o erro ' + err.status + ' ao administrador';
+                let title = 'Erro';
+                let message = 'Erro no servidor, informe o erro ' + err.status + ' ao administrador.';
 
                 if (err.status === 401) {
-                    message = 'Você não tem permissão para ver isso, informe um usuário e senha válidos';
-
                     let error = JSON.parse(err._body) || {};
 
                     if (error.error == 'invalid_credentials') {
+                        title = 'Atenção';
                         message = 'Usuário e/ou senha inválidos';
                     }
                 }
@@ -75,12 +69,12 @@ export class LoginFormPage {
                 }
 
                 if (err.status === 404) {
-                    message = 'Impossível se conectar ao servidor, verifique sua conexão ou tente novamente em alguns minutos';
+                    message = 'Não foi possível conectar-se ao servidor. Verifique a sua conexão ou tente novamente em breve.';
                 }
 
                 let alert = this.alertCtrl.create({
-                    title: 'Erro',
-                    subTitle: err.toLocaleString(),
+                    title: title,
+                    subTitle: message,
                     buttons: [
                         {text: 'OK'}
                     ]
