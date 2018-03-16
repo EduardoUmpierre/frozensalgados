@@ -17,7 +17,7 @@ import { Observable } from "rxjs/Observable";
 export class ApiProvider {
     private url: string;
     protected urlBase = 'https://frozensalgados.herokuapp.com/';
-    private loading;
+    protected loading;
 
     constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public app: App, private storage: Storage) {
     }
@@ -86,7 +86,7 @@ export class ApiProvider {
     get(params = {}) {
         this.buildUrlParams(params);
 
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.get(this.url, {'Authorization': 'Bearer ' + res})));
+        return this.toPromise(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {'Authorization': 'Bearer ' + res})));
     }
 
     /**
@@ -96,7 +96,10 @@ export class ApiProvider {
      * @returns {any}
      */
     post(params) {
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.post(this.url, params, {'Authorization': 'Bearer ' + res})));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.post(this.url, params, {
+            'Authorization': 'Bearer ' + res,
+            'Content-Type': 'application/json'
+        })));
     }
 
     /**
@@ -106,7 +109,10 @@ export class ApiProvider {
      * @returns {any}
      */
     put(params) {
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.put(this.url, params, {'Authorization': 'Bearer ' + res})));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.put(this.url, params, {
+            'Authorization': 'Bearer ' + res,
+            'Content-Type': 'application/json'
+        })));
     }
 
     /**
@@ -142,9 +148,11 @@ export class ApiProvider {
      * @param error
      * @returns {Alert}
      */
-    private promiseErrorResolver(error) {
+    public promiseErrorResolver(error) {
         let title = 'Erro';
         let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador.';
+
+        console.log(error);
 
         if (error.status === 401) {
             title = 'Sessão expirada';
@@ -163,7 +171,7 @@ export class ApiProvider {
 
         return this.alertCtrl.create({
             title: title,
-            subTitle: message + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + (this.platform.is('core') || this.platform.is('cordova')) + ' ' + this.platform.platforms(),
+            subTitle: message + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + this.isApp() + ' ' + this.platform.platforms(),
             buttons: [{text: 'OK'}]
         });
     }
@@ -171,9 +179,16 @@ export class ApiProvider {
     /**
      * Hides the loader if it's visible
      */
-    private hideLoader() {
+    public hideLoader() {
         if (this.loading) {
             this.loading.dismiss();
         }
+    }
+
+    /**
+     * @returns {boolean}
+     */
+    public isApp() {
+        return this.platform.is('core') || this.platform.is('cordova');
     }
 }

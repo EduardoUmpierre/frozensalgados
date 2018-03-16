@@ -8,12 +8,14 @@ export class HttpProvider {
     public http;
 
     constructor(private platform: Platform, private angularHttp: HttpAngularProvider, private nativeHttp: HttpNativeProvider) {
-        let isApp = this.platform.is('core') || this.platform.is('cordova');
+        this.platform.ready().then(() => {
+            let isApp = this.platform.is('core') || this.platform.is('cordova');
 
-        console.log(this.platform.platforms());
-        console.log('IS APP?');
-        console.info(isApp);
+            console.log(this.platform.platforms());
+            console.log('IS APP?');
+            console.info(isApp);
 
-        this.http = isApp ? nativeHttp : angularHttp;
+            this.http = isApp ? nativeHttp : angularHttp;
+        });
     }
 }
