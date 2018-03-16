@@ -1,4 +1,5 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { Pro } from '@ionic/pro';
+import { NgModule, ErrorHandler, Injectable, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
@@ -35,6 +36,31 @@ import { ProductFormPage } from "../pages/products/form/product-form";
 import { HttpProvider } from "../providers/api/http/http"
 import { HttpAngularProvider } from "../providers/api/http/http-angular"
 import { HttpNativeProvider } from "../providers/api/http/http-native"
+
+Pro.init('74f2ff88', {
+    appVersion: '0.0.1'
+})
+
+@Injectable()
+export class MyErrorHandler implements ErrorHandler {
+    ionicErrorHandler: IonicErrorHandler;
+
+    constructor(injector: Injector) {
+        try {
+            this.ionicErrorHandler = injector.get(IonicErrorHandler);
+        } catch(e) {
+            // Unable to get the IonicErrorHandler provider, ensure
+            // IonicErrorHandler has been added to the providers list below
+        }
+    }
+
+    handleError(err: any): void {
+        Pro.monitoring.handleNewError(err);
+        // Remove this if you want to disable Ionic's auto exception handling
+        // in development mode.
+        this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+    }
+}
 
 @NgModule({
     declarations: [
@@ -91,14 +117,15 @@ import { HttpNativeProvider } from "../providers/api/http/http-native"
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
         ApiProvider,
         ExternalProvider,
         AuthProvider,
         HttpProvider,
         HttpAngularProvider,
         HttpNativeProvider,
-        HTTP
+        HTTP,
+        IonicErrorHandler,
+        [{ provide: ErrorHandler, useClass: MyErrorHandler }]
     ]
 })
 export class AppModule {
