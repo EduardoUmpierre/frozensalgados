@@ -10,13 +10,10 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
 import { Observable } from "rxjs/Observable";
 
-/*
-    @todo Adicionar sistema de verificação de ambiente para modificar a URL da api
- */
 @Injectable()
 export class ApiProvider {
     private url: string;
-    protected urlBase = 'https://frozensalgados.herokuapp.com/';
+    protected urlBase = this.isApp() ? 'https://frozensalgados.herokuapp.com/' : '//localhost:8000';
     protected loading;
 
     constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public app: App, private storage: Storage) {
@@ -86,7 +83,9 @@ export class ApiProvider {
     get(params = {}) {
         this.buildUrlParams(params);
 
-        return this.toPromise(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {'Authorization': 'Bearer ' + res})));
+        return this.toPromise(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {
+            'Authorization': 'Bearer ' + res
+        })));
     }
 
     /**
@@ -121,7 +120,9 @@ export class ApiProvider {
      * @returns {any}
      */
     delete() {
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.delete(this.url, {'Authorization': 'Bearer ' + res})));
+        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.delete(this.url, {
+            'Authorization': 'Bearer ' + res
+        })));
     }
 
     /**
@@ -171,7 +172,7 @@ export class ApiProvider {
 
         return this.alertCtrl.create({
             title: title,
-            subTitle: message + ' -  ' + error + ' - ' + error.toLocaleString() + ' IS APP: ' + this.isApp() + ' ' + this.platform.platforms(),
+            subTitle: message,
             buttons: [{text: 'OK'}]
         });
     }
