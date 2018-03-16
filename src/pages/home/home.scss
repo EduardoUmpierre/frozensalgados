@@ -8,6 +8,7 @@ page-home {
         height: 7.5rem !important;
         margin: 3rem 0.25rem !important;
 
+        &.button-clear-wp,
         &.button-clear-md,
         &.button-clear-ios {
             color: #FFF;
@@ -71,5 +72,10 @@ page-home {
 
     #seller-id {
         font-size: 1.3rem;
+    }
+
+    #seller-id,
+    #seller-name {
+        padding: 0 1rem;
     }
 }

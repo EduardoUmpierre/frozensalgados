@@ -43,6 +43,11 @@ ion-content {
     padding: 1em 1em 0.5em;
     width: auto;
 
+    &.no-items {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+
     &.transparent {
         background-color: transparent;
     }
@@ -190,6 +195,12 @@ ion-modal {
     .back-button {
         display: block!important
     }
+}
+
+.bar-button-default-wp,
+.bar-button-default-md,
+.bar-button-default-ios {
+    color: rgba(255, 255, 255, .8);
 }
 
 // List
