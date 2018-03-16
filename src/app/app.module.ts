@@ -125,6 +125,7 @@ export class MyErrorHandler implements ErrorHandler {
         HttpNativeProvider,
         HTTP,
         IonicErrorHandler,
+        Pro,
         [{ provide: ErrorHandler, useClass: MyErrorHandler }]
     ]
 })
