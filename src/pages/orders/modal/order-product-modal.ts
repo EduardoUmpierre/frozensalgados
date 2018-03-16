@@ -54,8 +54,6 @@ export class OrderProductModalPage {
 
         this.order = Object.assign(this.order, product);
         this.order.image = 'assets/images/placeholder-60.jpg';
-
-        console.log('value:', product);
     }
 
     /**
