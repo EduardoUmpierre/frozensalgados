@@ -3,8 +3,6 @@ import { HttpModule } from '@angular/http';
 import { HTTP } from '@ionic-native/http';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { CustomersPage } from '../pages/customers/index/customers';
 import { CustomerFormPage } from '../pages/customers/form/customer-form';
@@ -66,8 +64,6 @@ export class MyErrorHandler implements ErrorHandler {
 @NgModule({
     declarations: [
         MyApp,
-        AboutPage,
-        ContactPage,
         HomePage,
         CustomersPage,
         CustomerFormPage,
@@ -97,8 +93,6 @@ export class MyErrorHandler implements ErrorHandler {
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        AboutPage,
-        ContactPage,
         HomePage,
         CustomersPage,
         CustomerFormPage,
