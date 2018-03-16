@@ -53,7 +53,7 @@ export class OrderProductModalPage {
         const product = event.value;
 
         this.order = Object.assign(this.order, product);
-        this.order.image = 'http://www.placehold.it/60';
+        this.order.image = 'assets/images/placeholder-60.jpg';
 
         console.log('value:', product);
     }
