@@ -17,15 +17,9 @@ export class HttpNativeProvider {
      */
     public get(url, options: any = {}) {
         return Observable.fromPromise(this.platform.ready().then(() => {
-            Pro.monitoring.log('API get nativo: ' + url, { level: 'info' });
-
             return this.http.get(url, {}, options)
-                .then(resp => {
-                    Pro.monitoring.log('API get nativo response: ' + resp.toLocaleString(), { level: 'info' });
-
-                    return options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
-                })
-                .catch((err) => Pro.monitoring.log('Erro API get nativo: ' + err.toLocaleString(), { level: 'error' }));
+                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
+                .catch((err) => Pro.monitoring.log('Erro API get nativo: ' + err.toLocaleString(), {level: 'error'}));
         }));
     }
 
