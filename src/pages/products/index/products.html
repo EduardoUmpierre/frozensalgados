@@ -20,7 +20,7 @@
     <ion-list class="single-item">
         <ion-item *ngFor="let product of products; let i = index" class="list-item">
             <ion-avatar item-start>
-                <img src="http://www.placehold.it/60" alt="">
+                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
             </ion-avatar>
 
             <p class="highlight">{{ product.name }}</p>
@@ -32,7 +32,7 @@
         </ion-item>
 
         <ion-item *ngIf="loaded && products.length == 0">
-            Nenhum cliente adicionado
+            Nenhum produto adicionado
         </ion-item>
     </ion-list>
 </ion-content>
