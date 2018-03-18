@@ -62,7 +62,7 @@ ion-content {
         margin: 0;
     }
 
-    > .list-item__header {
+    .list-item__header {
         border-bottom: 1px solid #f0f0f0;
         color: #737373;
         font-size: 0.714em;
@@ -85,13 +85,13 @@ ion-content {
     }
 
     .highlight,
-    > .list-item__footer {
+    .list-item__footer {
         color: #3b5998;
         font-weight: 500;
     }
 
     > .list,
-    > .list-item__content {
+    .list-item__content {
         color: #a2a2a2;
         padding-bottom: 0.5em;
 
@@ -161,11 +161,12 @@ ion-content {
         }
     }
 
-    > .list-item__footer {
+    .list-item__footer {
         border-top: 1px solid #f0f2f7;
         margin: 0 -1em;
         padding: 0.5em 1em 0;
         width: auto;
+        white-space: normal;
 
         ion-col {
             padding: 0;
@@ -214,7 +215,7 @@ ion-list {
             padding-right: 0 !important;
 
             > .options-button {
-                margin-right: 0 !important;
+                margin: 0 !important;
 
                 > .button-inner {
                     color: #3b5998;

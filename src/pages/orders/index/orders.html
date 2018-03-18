@@ -17,26 +17,28 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let order of orders; let i = index" class="list-item" (click)="goToDetails(order.id)">
-        <div class="list-item__content">
-            <div class="highlight">Pedido: {{ order.id }}</div>
-            <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
-            <div>Status: {{ order.status }}</div>
-        </div>
+    <ion-list class="single-item">
+        <ion-item *ngFor="let order of orders; let i = index" class="list-item" (click)="goToDetails(order.id)">
+            <div class="list-item__content">
+                <div class="highlight">Pedido: {{ order.id }}</div>
+                <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
+                <div>Status: {{ order.status }}</div>
+            </div>
 
-        <ion-grid class="list-item__footer">
-            <ion-row>
-                <ion-col col-6>
-                    <div>Cliente: {{ order.customer.name }}</div>
-                </ion-col>
-                <ion-col col-6>
-                    <div>Total: R$ {{ order.total }}</div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-card>
+            <ion-grid class="list-item__footer">
+                <ion-row>
+                    <ion-col col-6>
+                        <div>Cliente: {{ order.customer.name }}</div>
+                    </ion-col>
+                    <ion-col col-6>
+                        <div>Total: R$ {{ order.total }}</div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
 
-    <ion-card *ngIf="loaded && orders.length == 0" class="list-item no-items">
-        Nenhum pedido realizado
-    </ion-card>
+        <ion-item *ngIf="loaded && orders.length == 0" class="list-item no-items">
+            Nenhum pedido realizado
+        </ion-item>
+    </ion-list>
 </ion-content>
