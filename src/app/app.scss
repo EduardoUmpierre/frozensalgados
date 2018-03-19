@@ -18,6 +18,11 @@
     content: none;
 }
 
+ion-avatar {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
 ion-navbar {
     color: #FFF;
 
@@ -38,9 +43,9 @@ ion-content {
 
 .list-item {
     background-color: #FFF;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 1em 1em 0.5em;
+    @include border-radius(0.5rem);
+    margin: 1rem;
+    padding: 1.5rem 1.5rem;
     width: auto;
 
     &.no-items {
@@ -129,6 +134,7 @@ ion-content {
                 ion-label {
                     color: inherit;
                     margin-bottom: 0;
+                    margin-right: 0;
                 }
 
                 ion-input,
@@ -213,6 +219,11 @@ ion-list {
         > .item-inner {
             color: #737373;
             padding-right: 0 !important;
+
+            .item-button {
+                height: 3.6rem;
+                font-size: 1.4rem;
+            }
 
             > .options-button {
                 margin: 0 !important;
