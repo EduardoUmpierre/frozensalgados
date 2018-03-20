@@ -6,6 +6,7 @@ import { ProductsPage } from "../products/index/products";
 import { UserPage } from "../users/user/user";
 import { Storage } from "@ionic/storage";
 import { UsersPage } from "../users/index/users";
+import { SyncProvider } from "../../providers/sync/sync";
 
 @Component({
     selector: 'page-home',
@@ -14,12 +15,15 @@ import { UsersPage } from "../users/index/users";
 export class HomePage {
     currentUser: any = {};
 
-    constructor(public navCtrl:NavController, public storage: Storage) {
+    constructor(public navCtrl:NavController, public storage: Storage, private syncProvider: SyncProvider) {
         this.storage.get('user').then((user) => this.currentUser = user);
     }
 
     // Push another page onto the history stack
     // Causing the nav controller to animate the new page in
+    ionViewDidLoad() {
+        this.syncProvider.sync();
+    }
 
     /**
      * Push to customer list page

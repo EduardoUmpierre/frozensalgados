@@ -35,6 +35,7 @@ import { HttpNativeProvider } from "../providers/api/http/http-native"
 import { Pro } from "@ionic/pro";
 import { NgModule, ErrorHandler, Injectable, Injector } from "@angular/core";
 import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
+import { SyncProvider } from '../providers/sync/sync';
 
 Pro.init('74f2ff88', {
     appVersion: '0.0.1'
@@ -120,7 +121,8 @@ export class MyErrorHandler implements ErrorHandler {
         HttpNativeProvider,
         HTTP,
         IonicErrorHandler,
-        [{ provide: ErrorHandler, useClass: MyErrorHandler }]
+        SyncProvider,
+        [{ provide: ErrorHandler, useClass: MyErrorHandler }],
     ]
 })
 export class AppModule {

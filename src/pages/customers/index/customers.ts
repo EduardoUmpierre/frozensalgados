@@ -29,8 +29,15 @@ export class CustomersPage {
      * Called when the view is loaded
      */
     ionViewDidLoad() {
-        this.apiProvider.builder('customers').loader().get().subscribe((res) => {
-            this.customers = res;
+        this.storage.get('sync').then(sync => {
+            if (sync['customers']) {
+                this.customers = sync['customers']['items'];
+            } else {
+                this.apiProvider.builder('customers').loader().get().subscribe((res) => {
+                    this.customers = res;
+                });
+            }
+
             this.loaded = true;
         });
 

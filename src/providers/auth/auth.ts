@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiProvider } from "../api/api";
+import { ApiProvider } from '../api/api';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()

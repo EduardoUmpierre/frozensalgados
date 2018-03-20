@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {
     IonicPage,
     NavController,
@@ -7,11 +7,12 @@ import {
     ActionSheetController,
     AlertController
 } from 'ionic-angular';
-import {SelectSearchable} from '../../../components/select/select';
-import {ApiProvider} from "../../../providers/api/api";
-import {OrderProductModalPage} from '../modal/order-product-modal';
-import {OrdersPage} from "../index/orders";
-import {Product} from "../../../models/Product";
+import { SelectSearchable } from '../../../components/select/select';
+import { ApiProvider } from "../../../providers/api/api";
+import { OrderProductModalPage } from '../modal/order-product-modal';
+import { OrdersPage } from "../index/orders";
+import { Product } from "../../../models/Product";
+import { Storage } from "@ionic/storage";
 
 /**
  * Generated class for the OrderFormPage page.
@@ -30,16 +31,31 @@ export class OrderFormPage {
     customer;
     lists = [];
     order: Product[] = [];
+    customers = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public storage: Storage, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
         }
+
+        this.storage.get('sync').then(sync => {
+            if (sync['all_customers']) {
+                this.customers = sync['all_customers']['items'];
+            } else {
+                this.apiProvider.builder('customers').loader().get({all: 'true'}).subscribe((res) => {
+                    sync['all_customers'] = [];
+                    sync['all_customers']['date'] = new Date().getTime();
+                    sync['all_customers']['items'] = res;
+
+                    this.storage.set('sync', sync).then(() => this.customers = res);
+                });
+            }
+
+            console.log('customers', this.customers);
+        });
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad OrderFormPage');
-
         console.log(this.order);
     }
 
@@ -54,10 +70,15 @@ export class OrderFormPage {
         event.component.isSearching = true;
         this.order = [];
 
-        this.apiProvider.builder('customers').get({id: id}).subscribe((customers) => {
-            event.component.items = customers;
+        // Do the customer search
+        if (id && id.trim() != '') {
+            event.component.items = this.customers.filter(item => {
+                return item.name.toLowerCase().indexOf(id) !== -1 ||
+                    item.id.toString().indexOf(id) !== -1;
+            });
+
             event.component.isSearching = false;
-        });
+        }
     }
 
     /**

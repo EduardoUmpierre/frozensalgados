@@ -30,8 +30,9 @@ export class UserPage {
      */
     logout() {
         this.storage.remove('token')
-            .then(() => this.storage.remove('user')
-                .then(() => this.navCtrl.push(LoginFormPage)
-                    .then(() => this.navCtrl.setRoot(LoginFormPage))));
+            .then(() => this.storage.remove('sync')
+                .then(() => this.storage.remove('user')
+                    .then(() => this.navCtrl.push(LoginFormPage)
+                        .then(() => this.navCtrl.setRoot(LoginFormPage)))));
     }
 }

@@ -26,16 +26,21 @@ export class UsersPage {
 
     ionViewDidLoad() {
         this.storage.get('user').then((user) => {
-            this.user = user;
-
-            if (this.user.role != 1) {
+            if (user.role != 1) {
                 this.navCtrl.pop();
-            } else {
-                this.apiProvider.builder('users').loader().get().subscribe((res) => {
-                    this.users = res;
-                    this.loaded = true;
-                });
             }
+
+            this.storage.get('sync').then(sync => {
+                if (sync['users']) {
+                    this.users = sync['users']['items'];
+                } else {
+                    this.apiProvider.builder('users').loader().get().subscribe((res) => {
+                        this.users = res;
+                    });
+                }
+
+                this.loaded = true;
+            });
         });
     }
 

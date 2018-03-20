@@ -12,7 +12,7 @@ import { AuthProvider } from "../providers/auth/auth";
     templateUrl: 'app.html'
 })
 export class MyApp {
-    rootPage: any = LoginFormPage;
+    rootPage: any;
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, storage: Storage, authProvider: AuthProvider) {
         platform.ready().then(() => {
@@ -22,6 +22,8 @@ export class MyApp {
                 .then((res) => {
                     if (res && res != null) {
                         this.rootPage = HomePage;
+                    } else {
+                        this.rootPage = LoginFormPage;
                     }
                 });
 

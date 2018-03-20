@@ -25,12 +25,19 @@ export class ProductsPage {
     }
 
     ionViewDidLoad() {
-        this.storage.get('user').then((user) => this.currentUser = user);
+        this.storage.get('sync').then(sync => {
+            if (sync['products']) {
+                this.products = sync['products']['items'];
+            } else {
+                this.apiProvider.builder('products').loader().get().subscribe((res) => {
+                    this.products = res;
+                });
+            }
 
-        this.apiProvider.builder('products').loader().get().subscribe((res) => {
-            this.products = res;
             this.loaded = true;
         });
+
+        this.storage.get('user').then((user) => this.currentUser = user);
     }
 
     /**
