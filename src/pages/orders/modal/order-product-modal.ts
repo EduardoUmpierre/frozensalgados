@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {SelectSearchable} from '../../../components/select/select';
-import {ApiProvider} from "../../../providers/api/api";
-import {Product} from "../../../models/Product";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { SelectSearchable } from '../../../components/select/select';
+import { ApiProvider } from "../../../providers/api/api";
+import { Product } from "../../../models/Product";
+import { Storage } from "@ionic/storage";
+import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the OrderProductModalPage page.
@@ -20,8 +22,16 @@ export class OrderProductModalPage {
     pageTitle = 'Adicionar produto';
     order: Product;
     quantity: number;
+    products: Product[] = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public viewCtrl: ViewController) {
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        public apiProvider: ApiProvider,
+        public viewCtrl: ViewController,
+        public storage: Storage,
+        public syncProvider: SyncProvider
+    ) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar produto';
             this.order = navParams.get('product');
@@ -30,6 +40,18 @@ export class OrderProductModalPage {
             this.order = new Product();
             this.quantity = 1;
         }
+
+        this.storage.get('sync').then(sync => {
+            console.log(sync)
+
+            if (sync['products']) {
+                this.products = sync['products']['items'];
+            } else {
+                // this.syncProvider.sync(['products']).then((res) => {
+                //     console.log(res);
+                // });
+            }
+        });
     }
 
     ionViewDidLoad() {

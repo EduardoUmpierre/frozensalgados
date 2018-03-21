@@ -21,8 +21,8 @@ export class HomePage {
 
     // Push another page onto the history stack
     // Causing the nav controller to animate the new page in
-    ionViewDidLoad() {
-        this.syncProvider.sync();
+    ionViewWillEnter() {
+        this.syncProvider.syncCategories();
     }
 
     /**

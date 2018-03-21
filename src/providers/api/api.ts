@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, App, Platform } from 'ionic-angular';
+import { LoadingController, AlertController, App, Platform, ToastController } from 'ionic-angular';
 import { HttpProvider } from './http/http';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/fromPromise';
 import { LoginFormPage } from "../../pages/login-form/login-form";
 import { Storage } from '@ionic/storage';
@@ -16,7 +15,15 @@ export class ApiProvider {
     protected urlBase = this.isApp() ? 'https://frozensalgados.herokuapp.com/' : 'http://localhost:8000/';
     protected loading;
 
-    constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public app: App, private storage: Storage) {
+    constructor(
+        public httpProvider: HttpProvider,
+        private platform: Platform,
+        public loadingCtrl: LoadingController,
+        public alertCtrl: AlertController,
+        public app: App,
+        private storage: Storage,
+        protected toastCtrl: ToastController
+    ) {
     }
 
     /**
@@ -55,6 +62,23 @@ export class ApiProvider {
     }
 
     /**
+     * Shows the toast
+     *
+     * @param {string} message
+     * @param {number} duration
+     */
+    toast(message: string, duration: number = 3000) {
+        let toast = this.toastCtrl.create({
+            message: message,
+            duration: duration
+        });
+
+        toast.present();
+
+        return this;
+    }
+
+    /**
      * Builds the URL parameters
      *
      * @param params
@@ -83,7 +107,7 @@ export class ApiProvider {
     get(params = {}) {
         this.buildUrlParams(params);
 
-        return this.toPromise(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {
+        return this.resolve(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {
             'Authorization': 'Bearer ' + res
         })));
     }
@@ -95,7 +119,7 @@ export class ApiProvider {
      * @returns {any}
      */
     post(params) {
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.post(this.url, params, {
+        return this.resolve(this.getApiToken().flatMap(res => this.httpProvider.http.post(this.url, params, {
             'Authorization': 'Bearer ' + res,
             'Content-Type': 'application/json'
         })));
@@ -108,7 +132,7 @@ export class ApiProvider {
      * @returns {any}
      */
     put(params) {
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.put(this.url, params, {
+        return this.resolve(this.getApiToken().flatMap(res => this.httpProvider.http.put(this.url, params, {
             'Authorization': 'Bearer ' + res,
             'Content-Type': 'application/json'
         })));
@@ -120,7 +144,7 @@ export class ApiProvider {
      * @returns {any}
      */
     delete() {
-        return this.toPromise(this.getApiToken().flatMap(res => this.httpProvider.http.delete(this.url, {
+        return this.resolve(this.getApiToken().flatMap(res => this.httpProvider.http.delete(this.url, {
             'Authorization': 'Bearer ' + res
         })));
     }
@@ -128,7 +152,7 @@ export class ApiProvider {
     /**
      * @param request
      */
-    public toPromise(request) {
+    public resolve(request) {
         return request
             .map((res) => {
                 this.hideLoader();
@@ -182,7 +206,7 @@ export class ApiProvider {
      */
     public hideLoader() {
         if (this.loading) {
-            this.loading.dismiss();
+            this.loading.dismiss().catch(() => {});
         }
     }
 

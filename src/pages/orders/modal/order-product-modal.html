@@ -28,6 +28,7 @@
                         itemValueField="id"
                         itemTextField="name"
                         title="Produto"
+                        [items]="products"
                         (onSearch)="searchProducts($event)"
                         (onChange)="updateProduct($event)"
                         [canSearch]="true">

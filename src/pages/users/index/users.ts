@@ -26,9 +26,7 @@ export class UsersPage {
 
     ionViewDidLoad() {
         this.storage.get('user').then((user) => {
-            if (user.role != 1) {
-                this.navCtrl.pop();
-            }
+            this.user = user;
 
             this.storage.get('sync').then(sync => {
                 if (sync['users']) {
@@ -42,6 +40,12 @@ export class UsersPage {
                 this.loaded = true;
             });
         });
+    }
+
+    ionViewCanEnter() {
+        if (this.user.role != 1) {
+            this.navCtrl.pop();
+        }
     }
 
     /**

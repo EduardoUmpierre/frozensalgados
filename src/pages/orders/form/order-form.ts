@@ -13,6 +13,7 @@ import { OrderProductModalPage } from '../modal/order-product-modal';
 import { OrdersPage } from "../index/orders";
 import { Product } from "../../../models/Product";
 import { Storage } from "@ionic/storage";
+import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the OrderFormPage page.
@@ -33,7 +34,16 @@ export class OrderFormPage {
     order: Product[] = [];
     customers = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider, public storage: Storage, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        public apiProvider: ApiProvider,
+        public storage: Storage,
+        public modalCtrl: ModalController,
+        public actionSheetCtrl: ActionSheetController,
+        private alertCtrl: AlertController,
+        private syncProvider: SyncProvider
+    ) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
         }
@@ -136,9 +146,11 @@ export class OrderFormPage {
         let data = {customer: this.customer.id, order: this.normalizeOrderData(this.order)};
 
         this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
-            this.navCtrl.push(OrdersPage).then(() => {
-                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-            });
+            // this.syncProvider.sync(['orders']).then((r) => {
+            //     this.navCtrl.push(OrdersPage).then(() => {
+            //         this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+            //     });
+            // }).catch(error => console.log(error));
         });
     }
 
