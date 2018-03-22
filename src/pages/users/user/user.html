@@ -14,13 +14,17 @@
     <ion-grid fixed>
         <ion-row align-items-start>
             <ion-col>
-                <ion-card class="list-item">
-                    <div class="list-item__content">
+                <ion-list class="single-item">
+                    <ion-item class="list-item">
+                        <ion-avatar item-start>
+                            <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                        </ion-avatar>
+
                         <div class="highlight" *ngIf="user && user.name">{{ user.name }}</div>
                         <div *ngIf="user && user.cpf">CPF: {{ user.cpf }}</div>
                         <div *ngIf="user && user.id">ID: {{ user.id }}</div>
-                    </div>
-                </ion-card>
+                    </ion-item>
+                </ion-list>
             </ion-col>
         </ion-row>
 

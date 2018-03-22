@@ -34,39 +34,28 @@ export class OrderFormPage {
     order: Product[] = [];
     customers = [];
 
-    constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        public apiProvider: ApiProvider,
-        public storage: Storage,
-        public modalCtrl: ModalController,
-        public actionSheetCtrl: ActionSheetController,
-        private alertCtrl: AlertController,
-        private syncProvider: SyncProvider
-    ) {
-        if (navParams.get('product')) {
-            this.pageTitle = 'Editar pedido';
-        }
-
-        this.storage.get('sync').then(sync => {
-            if (sync['all_customers']) {
-                this.customers = sync['all_customers']['items'];
-            } else {
-                this.apiProvider.builder('customers').loader().get({all: 'true'}).subscribe((res) => {
-                    sync['all_customers'] = [];
-                    sync['all_customers']['date'] = new Date().getTime();
-                    sync['all_customers']['items'] = res;
-
-                    this.storage.set('sync', sync).then(() => this.customers = res);
-                });
-            }
-
-            console.log('customers', this.customers);
-        });
+    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider,
+                public storage: Storage, public modalCtrl: ModalController, private alertCtrl: AlertController,
+                public actionSheetCtrl: ActionSheetController, private syncProvider: SyncProvider) {
     }
 
+    /**
+     *
+     */
     ionViewDidLoad() {
-        console.log(this.order);
+        if (this.navParams.get('product')) {
+            this.pageTitle = 'Editar pedido';
+        }
+    }
+
+    /**
+     * Gets the order list
+     */
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('all_customers')
+            .then(customers => this.customers = customers)
+            .catch((error) => console.log(error));
     }
 
     /**
@@ -80,11 +69,9 @@ export class OrderFormPage {
         event.component.isSearching = true;
         this.order = [];
 
-        // Do the customer search
         if (id && id.trim() != '') {
             event.component.items = this.customers.filter(item => {
-                return item.name.toLowerCase().indexOf(id) !== -1 ||
-                    item.id.toString().indexOf(id) !== -1;
+                return item.name.toLowerCase().indexOf(id) !== -1 || item.id.toString().indexOf(id) !== -1;
             });
 
             event.component.isSearching = false;
@@ -99,28 +86,23 @@ export class OrderFormPage {
     searchCustomerLists(event: { component: SelectSearchable, value: any }) {
         this.order = [];
 
-        this.apiProvider.builder('lists').get({customer: event.value.id}).subscribe((lists) => {
-            this.lists = lists;
-        });
+        this.apiProvider.builder('lists').get({customer: event.value.id}).subscribe((lists) => this.lists = lists);
     }
 
+    /**
+     *
+     * @param selectedValue
+     */
     loadList(selectedValue: any) {
-        console.log('Selected', selectedValue);
-
         this.apiProvider.builder('lists/' + selectedValue).get().subscribe((res) => {
-            console.log(res);
-
-            this.order = [];
-
             let updatedOrder = [];
+            this.order = [];
 
             res.list_product.forEach(function (e, i) {
                 updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity));
             });
 
             this.order = updatedOrder;
-
-            console.log(this.order);
         });
     }
 
@@ -146,11 +128,11 @@ export class OrderFormPage {
         let data = {customer: this.customer.id, order: this.normalizeOrderData(this.order)};
 
         this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
-            // this.syncProvider.sync(['orders']).then((r) => {
-            //     this.navCtrl.push(OrdersPage).then(() => {
-            //         this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-            //     });
-            // }).catch(error => console.log(error));
+            this.syncProvider.verifySync('customers', true).then(() => {
+                this.navCtrl.push(OrdersPage, {force: true}).then(() => {
+                    this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+                });
+            }).catch(error => console.log(error));
         });
     }
 
@@ -170,6 +152,11 @@ export class OrderFormPage {
         return data;
     }
 
+    /**
+     *
+     * @param {number} id
+     * @param {number} key
+     */
     showOptions(id: number, key: number) {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Opções',

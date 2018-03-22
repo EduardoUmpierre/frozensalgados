@@ -42,7 +42,7 @@ export class AuthProvider extends ApiProvider {
         data.grant_type = 'refresh_token';
 
         let observable = this.httpProvider.http.post(this.urlBase + 'oauth/token', data);
-        return this.toPromise(observable);
+        return this.resolve(observable);
     }
 
     /**

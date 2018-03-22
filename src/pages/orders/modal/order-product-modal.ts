@@ -24,14 +24,8 @@ export class OrderProductModalPage {
     quantity: number;
     products: Product[] = [];
 
-    constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        public apiProvider: ApiProvider,
-        public viewCtrl: ViewController,
-        public storage: Storage,
-        public syncProvider: SyncProvider
-    ) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider,
+                public viewCtrl: ViewController, public storage: Storage, public syncProvider: SyncProvider) {
         if (navParams.get('product')) {
             this.pageTitle = 'Editar produto';
             this.order = navParams.get('product');
@@ -40,25 +34,22 @@ export class OrderProductModalPage {
             this.order = new Product();
             this.quantity = 1;
         }
-
-        this.storage.get('sync').then(sync => {
-            console.log(sync)
-
-            if (sync['products']) {
-                this.products = sync['products']['items'];
-            } else {
-                // this.syncProvider.sync(['products']).then((res) => {
-                //     console.log(res);
-                // });
-            }
-        });
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad OrderProductModalPage');
-        console.log(this.order);
+    /**
+     *
+     */
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('products')
+            .then(products => this.products = products)
+            .catch((error) => console.log(error));
     }
 
+    /**
+     *
+     * @param {{component: SelectSearchable; text: string}} event
+     */
     searchProducts(event: { component: SelectSearchable, text: string }) {
         let id = event.text || '';
 
@@ -71,6 +62,10 @@ export class OrderProductModalPage {
         });
     }
 
+    /**
+     *
+     * @param {{component: SelectSearchable; value: any}} event
+     */
     updateProduct(event: { component: SelectSearchable, value: any }) {
         const product = event.value;
 
@@ -82,8 +77,6 @@ export class OrderProductModalPage {
      * Dissmiss product modal
      */
     dismiss() {
-        console.log('Order: ', this.order);
-
         if (this.validate()) {
             this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, this.order.price, this.quantity));
         }

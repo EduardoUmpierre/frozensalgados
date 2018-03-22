@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ActionSheetController, AlertController, IonicPage, NavController } from 'ionic-angular';
 import { ApiProvider } from '../../../providers/api/api';
 import { CustomerViewPage } from "../view/customer-view";
 import { Storage } from "@ionic/storage";
 import { CustomerFormPage } from "../form/customer-form";
+import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the CustomersPage page.
@@ -22,26 +23,21 @@ export class CustomersPage {
     customers = [];
     loaded: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+    constructor(private navCtrl: NavController, private apiProvider: ApiProvider,
+                private storage: Storage, private actionSheetCtrl: ActionSheetController,
+                private alertCtrl: AlertController, private syncProvider: SyncProvider) {
+        this.storage.get('user').then((user) => this.currentUser = user);
     }
 
     /**
-     * Called when the view is loaded
+     *
      */
-    ionViewDidLoad() {
-        this.storage.get('sync').then(sync => {
-            if (sync['customers']) {
-                this.customers = sync['customers']['items'];
-            } else {
-                this.apiProvider.builder('customers').loader().get().subscribe((res) => {
-                    this.customers = res;
-                });
-            }
-
-            this.loaded = true;
-        });
-
-        this.storage.get('user').then((user) => this.currentUser = user);
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('customers')
+            .then(customers => this.customers = customers)
+            .then(() => this.loaded = true)
+            .catch((error) => console.log(error));
     }
 
     /**

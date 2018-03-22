@@ -3,6 +3,7 @@ import { ActionSheetController, AlertController, IonicPage, NavController } from
 import { ApiProvider } from '../../../providers/api/api';
 import { Storage } from "@ionic/storage";
 import { ProductFormPage } from "../form/product-form";
+import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the ProductsPage page.
@@ -21,23 +22,21 @@ export class ProductsPage {
     products = [];
     loaded: boolean = false;
 
-    constructor(public navCtrl: NavController, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, private apiProvider: ApiProvider, public storage: Storage,
+                public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController,
+                private syncProvider: SyncProvider) {
+        this.storage.get('user').then((user) => this.currentUser = user);
     }
 
-    ionViewDidLoad() {
-        this.storage.get('sync').then(sync => {
-            if (sync['products']) {
-                this.products = sync['products']['items'];
-            } else {
-                this.apiProvider.builder('products').loader().get().subscribe((res) => {
-                    this.products = res;
-                });
-            }
-
-            this.loaded = true;
-        });
-
-        this.storage.get('user').then((user) => this.currentUser = user);
+    /**
+     *
+     */
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('products')
+            .then(products => this.products = products)
+            .then(() => this.loaded = true)
+            .catch((error) => console.log(error));
     }
 
     /**

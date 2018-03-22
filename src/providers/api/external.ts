@@ -30,6 +30,6 @@ export class ExternalProvider extends ApiProvider {
 
         url = this.externalApi[item][env] + url;
 
-        return this.toPromise(this.httpProvider.http.get(url, {}));
+        return this.resolve(this.httpProvider.http.get(url, {}));
     }
 }

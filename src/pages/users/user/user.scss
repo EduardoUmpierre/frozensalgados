@@ -4,6 +4,10 @@ page-user {
 
         ion-row {
             height: 50%;
+
+            .list-item {
+                margin: 0;
+            }
         }
     }
 }

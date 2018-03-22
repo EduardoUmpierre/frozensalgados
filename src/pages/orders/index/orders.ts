@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OrderViewPage } from '../view/order-view';
 import { OrderFormPage } from '../form/order-form';
-import { Storage } from "@ionic/storage";
 import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
@@ -21,24 +20,18 @@ export class OrdersPage {
     orders = [];
     loaded: boolean = false;
 
-    constructor(public navCtrl: NavController, public storage: Storage, private syncProvider: SyncProvider) {
+    constructor(public navCtrl: NavController, private navParams: NavParams, private syncProvider: SyncProvider) {
     }
 
     /**
      * Gets the order list
      */
-    ionViewDidLoad() {
-        this.storage.get('sync').then(sync => {
-            sync = sync || [];
-
-            if (sync['orders']) {
-                this.orders = sync['orders']['items'];
-            } else {
-                // this.syncProvider.sync(['orders'], 'orders').then(res => this.orders = res['items']);
-            }
-
-            this.loaded = true;
-        });
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('orders', !!this.navParams.get('force'))
+            .then(orders => this.orders = orders)
+            .then(() => this.loaded = true)
+            .catch((error) => console.log(error));
     }
 
     /**

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ActionSheetController, AlertController, IonicPage, NavController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { ApiProvider } from "../../../providers/api/api";
 import { UserFormPage } from "../form/user-form";
+import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the SellersPage page.
@@ -21,31 +22,33 @@ export class UsersPage {
     users = [];
     loaded: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public storage: Storage, public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+    constructor(private navCtrl: NavController, private apiProvider: ApiProvider, private storage: Storage,
+                private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController,
+                private syncProvider: SyncProvider) {
     }
 
-    ionViewDidLoad() {
+    /**
+     *
+     */
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('users')
+            .then(users => this.users = users)
+            .then(() => this.loaded = true)
+            .catch((error) => console.log(error));
+    }
+
+    /**
+     *
+     */
+    ionViewCanEnter() {
         this.storage.get('user').then((user) => {
             this.user = user;
 
-            this.storage.get('sync').then(sync => {
-                if (sync['users']) {
-                    this.users = sync['users']['items'];
-                } else {
-                    this.apiProvider.builder('users').loader().get().subscribe((res) => {
-                        this.users = res;
-                    });
-                }
-
-                this.loaded = true;
-            });
+            if (this.user.role != 1) {
+                this.navCtrl.pop();
+            }
         });
-    }
-
-    ionViewCanEnter() {
-        if (this.user.role != 1) {
-            this.navCtrl.pop();
-        }
     }
 
     /**
@@ -109,8 +112,8 @@ export class UsersPage {
      * @param {number} key
      */
     remove(key: number) {
-        if (this.users[key]) {
+        this.syncProvider.verifySync('users', true).then(() => {
             this.users.splice(key, 1);
-        }
+        }).catch(error => console.log(error));
     }
 }
