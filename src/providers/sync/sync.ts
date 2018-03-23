@@ -43,7 +43,7 @@ export class SyncProvider {
                     let promise;
 
                     if (category == 'all_customers') {
-                        promise = this.getCategoryData(category, 'customers', {all: true});
+                        promise = this.getCategoryData(category, true, 'customers', {all: true});
                     } else {
                         promise = this.getCategoryData(category);
                     }
@@ -66,10 +66,14 @@ export class SyncProvider {
         let promiseChain: Promise<any> = Promise.resolve();
         categories = categories || [];
 
-        categories.forEach(category => {
+        categories.forEach((category, index) => {
             this.storage.get('sync_' + category).then(sync => {
                 if ((sync && !this.isSyncTimeValid(sync['date'])) || !sync || force) {
-                    promiseChain = promiseChain.then(() => this.getCategoryData(category));
+                    if (index == 0) {
+                        this.toast('Atualizando dados da aplicação');
+                    }
+
+                    promiseChain = promiseChain.then(() => this.getCategoryData(category, (categories.length - 1 == index)));
                 }
             });
         });
@@ -81,17 +85,22 @@ export class SyncProvider {
      * Updates the category sync data
      *
      * @param category
+     * @param {boolean} showToast
      * @param storageName
-     * @param {Object} params
+     * @param {object} params
      * @returns {Promise<any>}
      */
-    private getCategoryData(category: any, storageName: any = category, params: object = null): Promise<any> {
+    private getCategoryData(category: any, showToast: boolean = true, storageName: any = category, params: object = null): Promise<any> {
         return this.apiProvider
             .builder(storageName)
             .get(params).toPromise().then((data) => {
                 let syncData = {date: new Date().getTime(), items: data};
 
-                this.storage.set('sync_' + category, syncData).then(() => this.toast());
+                this.storage.set('sync_' + category, syncData).then(() => {
+                    if (showToast) {
+                        this.toast();
+                    }
+                });
 
                 return data;
             });
