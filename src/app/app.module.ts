@@ -48,7 +48,7 @@ export class MyErrorHandler implements ErrorHandler {
     constructor(injector: Injector) {
         try {
             this.ionicErrorHandler = injector.get(IonicErrorHandler);
-        } catch(e) {
+        } catch (e) {
             // Unable to get the IonicErrorHandler provider, ensure
             // IonicErrorHandler has been added to the providers list below
         }
@@ -84,7 +84,7 @@ export class MyErrorHandler implements ErrorHandler {
     imports: [
         BrowserModule,
         HttpModule,
-        IonicModule.forRoot(MyApp),
+        IonicModule.forRoot(MyApp, {scrollAssist: false, autoFocusAssist: false}),
         SelectSearchableModule,
         IonicStorageModule.forRoot({
             name: '__mydb',
@@ -122,7 +122,7 @@ export class MyErrorHandler implements ErrorHandler {
         HTTP,
         IonicErrorHandler,
         SyncProvider,
-        [{ provide: ErrorHandler, useClass: MyErrorHandler }],
+        [{provide: ErrorHandler, useClass: MyErrorHandler}],
     ]
 })
 export class AppModule {
