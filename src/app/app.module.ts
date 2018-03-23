@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { HTTP } from '@ionic-native/http';
+import { Keyboard } from '@ionic-native/keyboard';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
@@ -120,6 +121,7 @@ export class MyErrorHandler implements ErrorHandler {
         HttpAngularProvider,
         HttpNativeProvider,
         HTTP,
+        Keyboard,
         IonicErrorHandler,
         SyncProvider,
         [{provide: ErrorHandler, useClass: MyErrorHandler}],
