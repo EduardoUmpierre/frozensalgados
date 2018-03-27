@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController, IonicPage, NavController } from 'ionic-angular';
+import { ActionSheetController, AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../../providers/api/api';
 import { Storage } from "@ionic/storage";
 import { ProductFormPage } from "../form/product-form";
@@ -24,7 +24,7 @@ export class ProductsPage {
 
     constructor(public navCtrl: NavController, private apiProvider: ApiProvider, public storage: Storage,
                 public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController,
-                private syncProvider: SyncProvider) {
+                private syncProvider: SyncProvider, private navParams: NavParams) {
         this.storage.get('user').then((user) => this.currentUser = user);
     }
 
@@ -33,7 +33,7 @@ export class ProductsPage {
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('products')
+            .verifySync('products', !!this.navParams.get('force'))
             .then(products => this.products = products)
             .then(() => this.loaded = true)
             .catch((error) => console.log(error));
