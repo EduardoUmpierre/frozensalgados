@@ -32,23 +32,26 @@ export class UserFormPage {
 
     constructor(private navCtrl: NavController, private navParams: NavParams, private apiProvider: ApiProvider,
                 private formBuilder: FormBuilder, private storage: Storage, private syncProvider: SyncProvider) {
-        if (navParams.get('id')) {
-            this.pageTitle = 'Editar usuário';
-            this.id = navParams.get('id');
-        }
-
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
             email: new FormControl('', Validators.required),
             cpf: new FormControl('', Validators.required),
-            role: new FormControl('2', Validators.required),
-            password: new FormControl('', Validators.required),
-            passwordRepeat: new FormControl('', Validators.required)
-        }, {validator: this.passwordsMatch});
+            role: new FormControl('2', Validators.required)
+        });
+
+        if (navParams.get('id')) {
+            this.pageTitle = 'Editar usuário';
+            this.id = navParams.get('id');
+            this.form.addControl('password', new FormControl(''));
+            this.form.addControl('passwordRepeat', new FormControl(''));
+        } else {
+            this.form.addControl('password', new FormControl('', Validators.required));
+            this.form.addControl('passwordRepeat', new FormControl('', Validators.required));
+            this.form.setValidators(this.passwordsMatch)
+        }
     }
 
     /**
-     *
      * @param {FormGroup} cg
      * @returns {{[p: string]: any}}
      */
