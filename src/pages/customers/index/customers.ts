@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController, IonicPage, NavController } from 'ionic-angular';
+import { ActionSheetController, AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../../providers/api/api';
 import { CustomerViewPage } from "../view/customer-view";
 import { Storage } from "@ionic/storage";
@@ -23,7 +23,7 @@ export class CustomersPage {
     customers = [];
     loaded: boolean = false;
 
-    constructor(private navCtrl: NavController, private apiProvider: ApiProvider,
+    constructor(private navCtrl: NavController, private navParams: NavParams, private apiProvider: ApiProvider,
                 private storage: Storage, private actionSheetCtrl: ActionSheetController,
                 private alertCtrl: AlertController, private syncProvider: SyncProvider) {
         this.storage.get('user').then((user) => this.currentUser = user);
@@ -34,7 +34,7 @@ export class CustomersPage {
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('customers')
+            .verifySync('customers', !!this.navParams.get('force'))
             .then(customers => this.customers = customers)
             .then(() => this.loaded = true)
             .catch((error) => console.log(error));
