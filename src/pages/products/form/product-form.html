@@ -33,7 +33,7 @@
                 <!-- Price -->
                 <ion-item [class.ng-touched]="form.controls.price && !form.controls.price.untouched">
                     <ion-label stacked>Preço</ion-label>
-                    <ion-input type="text" formControlName="price"></ion-input>
+                    <ion-input type="text" formControlName="price" [brmasker]="{money: true, decimal: 2}"></ion-input>
                 </ion-item>
 
                 <p class="error" *ngIf="form.controls.price && !form.controls.price.valid && !form.controls.price.untouched">
