@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiProvider } from "./api";
+import { AlertController } from "ionic-angular";
 
 @Injectable()
 export class ExternalProvider extends ApiProvider {
@@ -31,5 +32,22 @@ export class ExternalProvider extends ApiProvider {
         url = this.externalApi[item][env] + url;
 
         return this.resolve(this.httpProvider.http.get(url, {}));
+    }
+
+    /**
+     * Shows a custom alert
+     *
+     * @param {string} message
+     */
+    showAlert(message: string) {
+        let alert = this.alertCtrl.create({
+            title: 'Aviso',
+            message: message,
+            buttons: [
+                {text: 'OK'}
+            ]
+        });
+
+        alert.present();
     }
 }
