@@ -34,9 +34,15 @@ import { HttpAngularProvider } from "../providers/api/http/http-angular"
 import { HttpNativeProvider } from "../providers/api/http/http-native"
 
 import { Pro } from "@ionic/pro";
-import { NgModule, ErrorHandler, Injectable, Injector } from "@angular/core";
+import { NgModule, ErrorHandler, Injectable, Injector, LOCALE_ID } from "@angular/core";
 import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
 import { SyncProvider } from '../providers/sync/sync';
+import { BrMaskerModule } from 'brmasker-ionic-3';
+import { CurrencyPipe, DecimalPipe, registerLocaleData } from "@angular/common";
+
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 Pro.init('74f2ff88', {
     appVersion: '0.0.1'
@@ -87,6 +93,7 @@ export class MyErrorHandler implements ErrorHandler {
         HttpModule,
         IonicModule.forRoot(MyApp, {scrollAssist: false, autoFocusAssist: false}),
         SelectSearchableModule,
+        BrMaskerModule,
         IonicStorageModule.forRoot({
             name: '__mydb',
             driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -124,6 +131,9 @@ export class MyErrorHandler implements ErrorHandler {
         Keyboard,
         IonicErrorHandler,
         SyncProvider,
+        CurrencyPipe,
+        DecimalPipe,
+        {provide: LOCALE_ID, useValue: "pt-BR"},
         [{provide: ErrorHandler, useClass: MyErrorHandler}],
     ]
 })
