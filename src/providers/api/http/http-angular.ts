@@ -36,15 +36,16 @@ export class HttpAngularProvider {
 
     /**
      * @param url
+     * @param params
      * @param options
      * @returns {Observable<any>}
      */
-    public put(url, options: any = {}) {
+    public put(url, params: any, options: any = {}) {
         let requestOptions = new RequestOptions();
         requestOptions.withCredentials = true;
         requestOptions.headers = options;
 
-        return this.http.put(url, requestOptions).map(resp => options.responseType == 'text' ? resp.text() : resp.json());
+        return this.http.put(url, params, requestOptions).map(resp => options.responseType == 'text' ? resp.text() : resp.json());
     }
 
     /**
