@@ -162,6 +162,10 @@ ion-content {
 
                 &:last-child > .item-inner {
                     border-bottom: 0;
+
+                    .ion-label {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
@@ -170,7 +174,7 @@ ion-content {
     .list-item__footer {
         border-top: 1px solid #f0f2f7;
         margin: 0 -1em;
-        padding: 0.5em 1em 0;
+        padding: 1em 1em 0;
         width: auto;
         white-space: normal;
 
@@ -276,6 +280,8 @@ ion-list {
         > ion-item {
 
             > .item-inner {
+                border-bottom: 0 !important;
+                box-shadow: none !important;
 
                 > button {
                     height: 3.3rem !important;
