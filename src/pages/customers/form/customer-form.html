@@ -23,11 +23,16 @@
                 <!-- CNPJ -->
                 <ion-item [class.ng-touched]="form.controls.cnpj && !form.controls.cnpj.untouched">
                     <ion-label stacked>CNPJ</ion-label>
-                    <ion-input type="text" formControlName="cnpj"></ion-input>
-                    <button type="button" ion-button item-end (tap)="fetchCustomer()">Pesquisar</button>
+                    <ion-input type="text" formControlName="cnpj"
+                               [brmasker]="{mask:'00.000.000/0000-00', len:18, type:'num'}"></ion-input>
+                    <button [disabled]="!form.controls.cnpj.valid" type="button" ion-button item-end
+                            (tap)="fetchCustomer()">
+                        Pesquisar
+                    </button>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.cnpj && !form.controls.cnpj.valid && !form.controls.cnpj.untouched">
+                <p class="error"
+                   *ngIf="form.controls.cnpj && !form.controls.cnpj.valid && !form.controls.cnpj.untouched">
                     O campo é obrigatório.
                 </p>
 
@@ -37,24 +42,29 @@
                     <ion-input type="text" formControlName="name"></ion-input>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched">
+                <p class="error"
+                   *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched">
                     O campo é obrigatório.
                 </p>
 
                 <!-- Phone -->
                 <ion-item [class.ng-touched]="form.controls.phone && !form.controls.phone.untouched">
                     <ion-label stacked>Telefone</ion-label>
-                    <ion-input type="text" formControlName="phone"></ion-input>
+                    <ion-input type="text" [brmasker]="{phone: true}" formControlName="phone"></ion-input>
                 </ion-item>
 
                 <!-- Cep -->
                 <ion-item [class.ng-touched]="form.controls.cep && !form.controls.cep.untouched">
                     <ion-label stacked>CEP</ion-label>
-                    <ion-input type="text" formControlName="cep"></ion-input>
-                    <button type="button" ion-button item-end (tap)="fetchAddress()">Pesquisar</button>
+                    <ion-input type="text" formControlName="cep"
+                               [brmasker]="{mask:'00.000-000', len:10, type:'num'}"></ion-input>
+                    <button [disabled]="!form.controls.cep.valid" type="button" ion-button item-end
+                            (tap)="fetchAddress()">
+                        Pesquisar
+                    </button>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.cep && !form.controls.cep.valid && !form.controls.cep.untouched">
+                <p class="error" *ngIf="form.controls.cep && !form.controls.cep.valid && !form.controls.cep.untouched && form.controls.errors.required">
                     O campo é obrigatório.
                 </p>
 
@@ -64,7 +74,8 @@
                     <ion-input type="text" formControlName="city"></ion-input>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.city && !form.controls.city.valid && !form.controls.city.untouched">
+                <p class="error"
+                   *ngIf="form.controls.city && !form.controls.city.valid && !form.controls.city.untouched">
                     O campo é obrigatório.
                 </p>
 
@@ -74,7 +85,8 @@
                     <ion-input type="text" formControlName="district"></ion-input>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.district && !form.controls.district.valid && !form.controls.district.untouched">
+                <p class="error"
+                   *ngIf="form.controls.district && !form.controls.district.valid && !form.controls.district.untouched">
                     O campo é obrigatório.
                 </p>
 
@@ -84,7 +96,8 @@
                     <ion-input type="text" formControlName="address"></ion-input>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.address && !form.controls.address.valid && !form.controls.address.untouched">
+                <p class="error"
+                   *ngIf="form.controls.address && !form.controls.address.valid && !form.controls.address.untouched">
                     O campo é obrigatório.
                 </p>
 
@@ -94,7 +107,8 @@
                     <ion-input type="text" formControlName="address_number"></ion-input>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.address_number && !form.controls.address_number.valid && !form.controls.address_number.untouched">
+                <p class="error"
+                   *ngIf="form.controls.address_number && !form.controls.address_number.valid && !form.controls.address_number.untouched">
                     O campo é obrigatório.
                 </p>
             </form>
