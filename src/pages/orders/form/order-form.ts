@@ -98,9 +98,7 @@ export class OrderFormPage {
             let updatedOrder = [];
             this.order = [];
 
-            res.list_product.forEach(function (e, i) {
-                updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity));
-            });
+            res.list_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity)));
 
             this.order = updatedOrder;
         });
