@@ -31,7 +31,7 @@
                         <div>Cliente: {{ order.customer.name }}</div>
                     </ion-col>
                     <ion-col col-6>
-                        <div>Total: R$ {{ order.total }}</div>
+                        <div>Total: {{ order.total | currency:'BRL':'R$' }}</div>
                     </ion-col>
                 </ion-row>
             </ion-grid>

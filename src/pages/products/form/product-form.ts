@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
 import { ProductsPage } from "../index/products";
 import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { SyncProvider } from "../../../providers/sync/sync";
+import { DecimalPipe } from "@angular/common";
 
 /**
  * Generated class for the ProductFormPage page.
@@ -21,7 +23,8 @@ export class ProductFormPage {
     private form: FormGroup;
     private id: number = null;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private formBuilder: FormBuilder) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
+                private formBuilder: FormBuilder, private syncProvider: SyncProvider, private decimalPipe: DecimalPipe) {
         if (navParams.get('id')) {
             this.pageTitle = 'Editar produto';
             this.id = navParams.get('id');
@@ -40,7 +43,7 @@ export class ProductFormPage {
         if (this.id) {
             this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
                 this.form.controls['name'].setValue(res.name);
-                this.form.controls['price'].setValue(res.price);
+                this.form.controls['price'].setValue(this.decimalPipe.transform(res.price, '1.2-2', 'pt-BR'));
             });
         }
     }
@@ -60,8 +63,10 @@ export class ProductFormPage {
      *
      */
     redirect() {
-        this.navCtrl.push(ProductsPage).then(() => {
-            this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-        });
+        this.syncProvider.verifySync('products', true).then(() => {
+            this.navCtrl.push(ProductsPage, {force: true}).then(() => {
+                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+            });
+        }).catch(error => console.log(error));
     }
 }

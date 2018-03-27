@@ -37,13 +37,13 @@
 
                 <p class="highlight">{{ order_product.product.name }}</p>
                 <p>Quantidade: {{ order_product.quantity }}</p>
-                <p>Preço Un: R$ {{ order_product.unit_price }}</p>
-                <p>Preço Total: R$ {{ order_product.unit_price * order_product.quantity }}</p>
+                <p>Preço Un: {{ order_product.unit_price | currency:'BRL':'R$' }}</p>
+                <p>Preço Total: {{ order_product.unit_price * order_product.quantity | currency:'BRL':'R$' }}</p>
             </ion-item>
         </ion-list>
 
         <ion-grid class="list-item__footer centered">
-            <div>Valor total: R$ {{ order.total }}</div>
+            <div>Valor total: {{ order.total | currency:'BRL':'R$' }}</div>
         </ion-grid>
     </div>
 </ion-content>

@@ -36,7 +36,7 @@
             <ion-item *ngFor="let list of customer.lists; let i = index">
                 <p class="highlight">{{ list.title }}</p>
                 <p>Produtos: {{ list.product_count }}</p>
-                <p>Preço Total: R$ {{ list.total }}</p>
+                <p>Preço Total: {{ list.total | currency:'BRL':'R$' }}</p>
             </ion-item>
 
             <ion-item *ngIf="customer.lists.length == 0">

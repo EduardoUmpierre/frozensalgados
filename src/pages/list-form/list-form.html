@@ -37,8 +37,8 @@
 
                 <p class="highlight">{{ product.name || product.product.name }}</p>
                 <p>Quantidade: {{ product.quantity }}</p>
-                <p>Preço Un: R$ {{ product.unit_price || product.price }}</p>
-                <p>Preço Total: R$ {{ ( product.unit_price || product.price ) * product.quantity }}</p>
+                <p>Preço Un: {{ product.unit_price || product.price | currency:'BRL':'R$' }}</p>
+                <p>Preço Total: {{ (product.unit_price || product.price) * product.quantity | currency:'BRL':'R$' }}</p>
             </ion-item>
 
             <ion-item *ngIf="list.order.length == 0">
