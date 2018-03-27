@@ -4,6 +4,7 @@ import { ApiProvider } from "../../../providers/api/api";
 import { CustomersPage } from "../index/customers";
 import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ExternalProvider } from "../../../providers/api/external";
+import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the CustomerFormPage page.
@@ -22,7 +23,9 @@ export class CustomerFormPage {
     private form: FormGroup;
     private id: number = null;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private formBuilder: FormBuilder, private externalProvider: ExternalProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
+                private formBuilder: FormBuilder, private externalProvider: ExternalProvider,
+                private syncProvider: SyncProvider) {
         if (navParams.get('id')) {
             this.pageTitle = 'Editar cliente';
             this.id = navParams.get('id');
@@ -30,9 +33,15 @@ export class CustomerFormPage {
 
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
-            cnpj: new FormControl('', Validators.required),
+            cnpj: new FormControl('', Validators.compose([
+                Validators.minLength(18),
+                Validators.required
+            ])),
             phone: new FormControl(''),
-            cep: new FormControl('', Validators.required),
+            cep: new FormControl('', Validators.compose([
+                Validators.minLength(10),
+                Validators.required
+            ])),
             address: new FormControl('', Validators.required),
             address_number: new FormControl('', Validators.required),
             city: new FormControl('', Validators.required),
@@ -73,23 +82,29 @@ export class CustomerFormPage {
      *
      */
     redirect() {
-        this.navCtrl.push(CustomersPage).then(() => {
-            this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-        });
+        this.syncProvider.verifySync('all_customers', true).then(() => {
+            this.navCtrl.push(CustomersPage).then(() => {
+                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+            });
+        }).catch(error => console.log(error));
     }
 
     /**
      * Fetch customer data by CNPJ
      */
     fetchCustomer() {
-        this.externalProvider.loader().getExternal('receita', '/v1/cnpj/' + this.form.controls.cnpj.value).subscribe(res => {
-            this.form.controls['name'].setValue(res.nome);
-            this.form.controls['phone'].setValue(res.telefone);
-            this.form.controls['cep'].setValue(res.cep);
-            this.form.controls['address'].setValue(res.logradouro);
-            this.form.controls['address_number'].setValue(res.numero);
-            this.form.controls['city'].setValue(res.municipio);
-            this.form.controls['district'].setValue(res.bairro);
+        this.externalProvider.loader().getExternal('receita', '/v1/cnpj/' + this.form.controls.cnpj.value.replace(/[^a-zA-Z0-9]/g, "")).subscribe(res => {
+            if (res.status != "OK") {
+                this.externalProvider.showAlert(res.message);
+            } else {
+                this.form.controls['name'].setValue(res.nome);
+                this.form.controls['phone'].setValue(res.telefone);
+                this.form.controls['cep'].setValue(res.cep);
+                this.form.controls['address'].setValue(res.logradouro);
+                this.form.controls['address_number'].setValue(res.numero);
+                this.form.controls['city'].setValue(res.municipio);
+                this.form.controls['district'].setValue(res.bairro);
+            }
         });
     }
 
@@ -97,13 +112,14 @@ export class CustomerFormPage {
      * Fetch address by CEP
      */
     fetchAddress() {
-        console.log(this.form.controls.cep.value);
-
-        this.externalProvider.loader().getExternal('cep', '/ws/' + this.form.controls.cep.value + '/json/').subscribe((res) => {
-            console.log(res);
-            this.form.controls['address'].setValue(res.logradouro);
-            this.form.controls['city'].setValue(res.localidade);
-            this.form.controls['district'].setValue(res.bairro);
+        this.externalProvider.loader().getExternal('cep', '/ws/' + this.form.controls.cep.value.replace(/[^a-zA-Z0-9]/g, "") + '/json/').subscribe((res) => {
+            if (res.erro) {
+                this.externalProvider.showAlert('CEP inválido');
+            } else {
+                this.form.controls['address'].setValue(res.logradouro);
+                this.form.controls['city'].setValue(res.localidade);
+                this.form.controls['district'].setValue(res.bairro);
+            }
         });
     }
 }
