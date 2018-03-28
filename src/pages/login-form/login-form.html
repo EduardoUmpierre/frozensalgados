@@ -11,19 +11,25 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="form" (submit)="login($event)" class="list-item">
-        <ion-list>
-            <ion-item>
-                <ion-input type="text" formControlName="username" placeholder="Usuário"></ion-input>
-            </ion-item>
+    <ion-grid>
+        <ion-row align-items-center>
+            <ion-col>
+                <form [formGroup]="form" (submit)="login($event)" class="list-item">
+                    <ion-list>
+                        <ion-item>
+                            <ion-input type="text" formControlName="username" placeholder="Usuário"></ion-input>
+                        </ion-item>
 
-            <ion-item>
-                <ion-input type="password" formControlName="password" placeholder="Senha"></ion-input>
-            </ion-item>
+                        <ion-item>
+                            <ion-input type="password" formControlName="password" placeholder="Senha"></ion-input>
+                        </ion-item>
 
-            <ion-item>
-                <button ion-button large color="light" full [disabled]="form && !form.valid">Login</button>
-            </ion-item>
-        </ion-list>
-    </form>
+                        <ion-item>
+                            <button ion-button large color="light" full [disabled]="form && !form.valid">Login</button>
+                        </ion-item>
+                    </ion-list>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
