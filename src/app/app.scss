@@ -39,6 +39,11 @@ ion-navbar {
 ion-content {
     background: url("../assets/images/background.jpg") center no-repeat;
     background-size: cover;
+
+    > .scroll-content {
+        background-color: transparent !important;
+        border-top: none !important;
+    }
 }
 
 .list-item {
