@@ -94,7 +94,7 @@ export class MyErrorHandler implements ErrorHandler {
         IonicModule.forRoot(MyApp, {
             scrollPadding: false,
             scrollAssist: true,
-            autoFocusAssist: false
+            autoFocusAssist: true
         }),
         SelectSearchableModule,
         BrMaskerModule,

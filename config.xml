@@ -22,7 +22,7 @@
     <preference name="loadUrlTimeoutValue" value="700000" />
     <platform name="android">
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
-            <activity windowSoftInputMode="adjustPan" />
+            <activity windowSoftInputMode="adjustResize" />
         </edit-config>
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
