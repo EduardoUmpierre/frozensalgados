@@ -2,7 +2,7 @@
   "name": "Frozen Congelados",
   "description": "Aplicação para controle de pedidos desenvolvida em Ionic",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Eduardo Umpierre",
   "scripts": {
     "clean": "ionic-app-scripts clean",
