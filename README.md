@@ -1,4 +1,4 @@
-# Frozen Congelados
+# Frozen Salgados
 
 Aplicação de controle de pedidos e clientes desenvolvida em Ionic 3.
 
