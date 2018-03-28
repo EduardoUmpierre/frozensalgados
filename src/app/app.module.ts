@@ -91,7 +91,11 @@ export class MyErrorHandler implements ErrorHandler {
     imports: [
         BrowserModule,
         HttpModule,
-        IonicModule.forRoot(MyApp, {scrollAssist: false, autoFocusAssist: false}),
+        IonicModule.forRoot(MyApp, {
+            scrollPadding: false,
+            scrollAssist: true,
+            autoFocusAssist: false
+        }),
         SelectSearchableModule,
         BrMaskerModule,
         IonicStorageModule.forRoot({
