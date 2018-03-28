@@ -70,9 +70,7 @@ export class OrderFormPage {
         this.order = [];
 
         if (id && id.trim() != '') {
-            event.component.items = this.customers.filter(item => {
-                return item.name.toLowerCase().indexOf(id) !== -1 || item.id.toString().indexOf(id) !== -1;
-            });
+            event.component.items = this.customers.filter(item => item.name.toLowerCase().indexOf(id.toLowerCase()) !== -1 || item.id.toString().indexOf(id) !== -1);
 
             event.component.isSearching = false;
         }

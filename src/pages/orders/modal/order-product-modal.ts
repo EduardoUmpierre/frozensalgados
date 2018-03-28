@@ -55,11 +55,11 @@ export class OrderProductModalPage {
 
         event.component.isSearching = true;
 
-        this.apiProvider.builder('products').get({id: id}).subscribe((products) => {
-            event.component.items = products;
+        if (id && id.trim() != '') {
+            event.component.items = this.products.filter(item => item.name.toLowerCase().indexOf(id.toLowerCase()) !== -1 || item.id.toString().indexOf(id) !== -1);
 
             event.component.isSearching = false;
-        });
+        }
     }
 
     /**
