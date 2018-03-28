@@ -1,8 +1,8 @@
 {
-  "name": "Frozen Congelados",
+  "name": "Frozen Salgados",
   "description": "Aplicação para controle de pedidos desenvolvida em Ionic",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Eduardo Umpierre",
   "scripts": {
     "clean": "ionic-app-scripts clean",
