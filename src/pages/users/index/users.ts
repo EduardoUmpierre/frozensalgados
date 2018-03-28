@@ -116,4 +116,17 @@ export class UsersPage {
             this.users.splice(key, 1);
         }).catch(error => console.log(error));
     }
+
+    /**
+     * Updates the user with the refresher
+     *
+     * @param refresher
+     */
+    doRefresh(refresher) {
+        this.syncProvider
+            .verifySync('users', true, false)
+            .then(users => this.users = users)
+            .then(() => refresher.complete())
+            .catch((error) => console.log(error));
+    }
 }

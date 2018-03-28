@@ -54,7 +54,7 @@ export class CustomerFormPage {
      */
     ionViewDidLoad() {
         if (this.id) {
-            this.apiProvider.builder('customers/' + this.id).loader().get({'lists': 0}).subscribe((res) => {
+            this.apiProvider.builder('customers/' + this.id).loader().get().subscribe((res) => {
                 this.form.controls['name'].setValue(res.name);
                 this.form.controls['cnpj'].setValue(res.cnpj);
                 this.form.controls['phone'].setValue(res.phone);

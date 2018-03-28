@@ -16,8 +16,16 @@
     </ion-navbar>
 </ion-header>
 
-
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="Puxe para atualizar"
+                refreshingSpinner="circles"
+                refreshingText="Atualizando...">
+        </ion-refresher-content>
+    </ion-refresher>
+
     <ion-list class="single-item">
         <ion-item *ngFor="let item of users; let i = index" class="list-item">
             <ion-avatar item-start>

@@ -25,10 +25,7 @@ export class CustomerViewPage {
      * Gets one item by id
      */
     ionViewDidLoad() {
-        this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().get().subscribe((res) => {
-            this.customer = res;
-            console.log(res);
-        });
+        this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().get({'lists': true}).subscribe((res) => this.customer = res);
     }
 
     /**

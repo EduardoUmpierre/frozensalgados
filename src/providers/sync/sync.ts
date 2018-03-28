@@ -5,7 +5,7 @@ import { ToastController } from 'ionic-angular';
 
 @Injectable()
 export class SyncProvider {
-    private categories = ['customers', 'orders', 'products', 'users'];
+    private categories = ['all_customers', 'customers', 'orders', 'products', 'users'];
     private syncDelay = (3600 * 5 * 1000);
 
     constructor(private storage: Storage, private apiProvider: ApiProvider, private toastCtrl: ToastController) {
@@ -18,9 +18,9 @@ export class SyncProvider {
      * @param {boolean} force
      * @returns {Promise<any>}
      */
-    syncCategories(categories: string[] = this.categories, force: boolean = false): Promise<any> {
+    syncCategories(categories: string[] = this.categories, force: boolean = false, toast: boolean = true): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.updateCategoriesData(categories, force).then(() => resolve())
+            this.updateCategoriesData(categories, force, toast).then(() => resolve())
                 .catch((error) => reject(error));
         });
     }
@@ -32,7 +32,7 @@ export class SyncProvider {
      * @param {boolean} force
      * @returns {Promise<any>}
      */
-    verifySync(category: string, force: boolean = false): Promise<any> {
+    verifySync(category: string, force: boolean = false, toast: boolean = true): Promise<any> {
         return new Promise((resolve, reject) => {
             this.storage.get('sync_' + category).then(sync => {
                 sync = sync || [];
@@ -43,9 +43,9 @@ export class SyncProvider {
                     let promise;
 
                     if (category == 'all_customers') {
-                        promise = this.getCategoryData(category, true, 'customers', {all: true});
+                        promise = this.getCategoryData(category, true && toast, 'customers', {all: true});
                     } else {
-                        promise = this.getCategoryData(category);
+                        promise = this.getCategoryData(category, toast);
                     }
 
                     promise.then((data) => resolve(data))
@@ -62,18 +62,24 @@ export class SyncProvider {
      * @param {Boolean} force
      * @returns {Promise<any>}
      */
-    private updateCategoriesData(categories: Array<any>, force: Boolean = false): Promise<any> {
+    private updateCategoriesData(categories: Array<any>, force: boolean = false, toast: boolean = true): Promise<any> {
         let promiseChain: Promise<any> = Promise.resolve();
         categories = categories || [];
 
         categories.forEach((category, index) => {
             this.storage.get('sync_' + category).then(sync => {
                 if ((sync && !this.isSyncTimeValid(sync['date'])) || !sync || force) {
-                    if (index == 0) {
+                    if (index == 0 && toast) {
                         this.toast('Atualizando dados da aplicação');
                     }
 
-                    promiseChain = promiseChain.then(() => this.getCategoryData(category, (categories.length - 1 == index)));
+                    promiseChain = promiseChain.then(() => {
+                        if (category == 'all_customers') {
+                            return this.getCategoryData(category, (categories.length - 1 == index) && toast, 'customers', {all: true});
+                        }
+
+                        return this.getCategoryData(category, (categories.length - 1 == index) && toast);
+                    });
                 }
             });
         });

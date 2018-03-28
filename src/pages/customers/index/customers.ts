@@ -114,4 +114,17 @@ export class CustomersPage {
             this.customers.splice(key, 1);
         }
     }
+
+    /**
+     * Updates the customer with the refresher
+     *
+     * @param refresher
+     */
+    doRefresh(refresher) {
+        this.syncProvider
+            .verifySync('customers', true, false)
+            .then(customers => this.customers = customers)
+            .then(() => refresher.complete())
+            .catch((error) => console.log(error));
+    }
 }

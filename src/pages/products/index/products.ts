@@ -104,4 +104,17 @@ export class ProductsPage {
             this.products.splice(key, 1);
         }
     }
+
+    /**
+     * Updates the products with the refresher
+     *
+     * @param refresher
+     */
+    doRefresh(refresher) {
+        this.syncProvider
+            .verifySync('products', true, false)
+            .then(products => this.products = products)
+            .then(() => refresher.complete())
+            .catch((error) => console.log(error));
+    }
 }

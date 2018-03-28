@@ -59,4 +59,16 @@ export class HomePage {
     goToUsers() {
         this.navCtrl.push(UsersPage);
     }
+
+    /**
+     * Updates all the categories with the refresher
+     *
+     * @param refresher
+     */
+    doRefresh(refresher) {
+        this.syncProvider
+            .syncCategories(['all_customers', 'customers', 'orders', 'products', 'users'], true, false)
+            .then(() => refresher.complete())
+            .catch((error) => console.log(error));
+    }
 }

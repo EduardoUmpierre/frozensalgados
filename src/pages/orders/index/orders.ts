@@ -49,4 +49,17 @@ export class OrdersPage {
     goToForm() {
         this.navCtrl.push(OrderFormPage);
     }
+
+    /**
+     * Updates the orders with the refresher
+     *
+     * @param refresher
+     */
+    doRefresh(refresher) {
+        this.syncProvider
+            .verifySync('orders', true, false)
+            .then(orders => this.orders = orders)
+            .then(() => refresher.complete())
+            .catch((error) => console.log(error));
+    }
 }
