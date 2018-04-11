@@ -1,3 +1,11 @@
 page-order-form {
+    .toolbar-background {
+        background-color: transparent !important;
+        border: none !important;
+    }
 
+    .toolbar-title-md,
+    .segment-md .segment-button {
+        color: #FFF;
+    }
 }

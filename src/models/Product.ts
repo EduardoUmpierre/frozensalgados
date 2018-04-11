@@ -2,10 +2,10 @@ export class Product {
     private _id: number;
     private _name: string;
     private _image: string;
-    private _price: string;
+    private _price: number;
     private _quantity: number;
 
-    constructor(id?: number, name?: string, image?: string, price?: string, quantity?: number) {
+    constructor(id?: number, name?: string, image?: string, price?: number, quantity?: number) {
         this._id = id;
         this._name = name;
         this._image = image;
@@ -37,11 +37,11 @@ export class Product {
         this._image = image;
     }
 
-    get price(): string {
+    get price(): number {
         return this._price;
     }
 
-    set price(price: string) {
+    set price(price: number) {
         this._price = price;
     }
 

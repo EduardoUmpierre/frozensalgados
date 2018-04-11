@@ -94,7 +94,16 @@ export class MyErrorHandler implements ErrorHandler {
         IonicModule.forRoot(MyApp, {
             scrollPadding: false,
             scrollAssist: true,
-            autoFocusAssist: true
+            autoFocusAssist: true,
+            monthNames: [
+                'Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro',
+                'Outubro', 'Novembro', 'Dezembro'
+            ],
+            monthShortNames: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: [
+                'Domingo', 'Segunda-feira', 'Ter\u00e7a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
+            ],
+            dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
         }),
         SelectSearchableModule,
         BrMaskerModule,

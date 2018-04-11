@@ -14,6 +14,9 @@ import { OrdersPage } from "../index/orders";
 import { Product } from "../../../models/Product";
 import { Storage } from "@ionic/storage";
 import { SyncProvider } from "../../../providers/sync/sync";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
 
 /**
  * Generated class for the OrderFormPage page.
@@ -28,24 +31,36 @@ import { SyncProvider } from "../../../providers/sync/sync";
     templateUrl: 'order-form.html',
 })
 export class OrderFormPage {
-    pageTitle = 'Criar pedido';
-    customer;
-    lists = [];
-    order: Product[] = [];
-    customers = [];
+    private form: FormGroup;
+    private pageTitle: String = 'Criar pedido';
+    private lists = [];
+    private customers = [];
+    private customer;
+    private order: Product[] = [];
+
+    tab: string = 'info';
+    order_total: number = 0.00;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider,
                 public storage: Storage, public modalCtrl: ModalController, private alertCtrl: AlertController,
-                public actionSheetCtrl: ActionSheetController, private syncProvider: SyncProvider) {
-    }
-
-    /**
-     *
-     */
-    ionViewDidLoad() {
+                public actionSheetCtrl: ActionSheetController, private syncProvider: SyncProvider,
+                private formBuilder: FormBuilder) {
         if (this.navParams.get('product')) {
             this.pageTitle = 'Editar pedido';
         }
+
+        moment.locale('pt-BR');
+
+        console.log(moment().format());
+
+        this.form = this.formBuilder.group({
+            customer: new FormControl('', Validators.required),
+            payment_method: new FormControl('', Validators.required),
+            comments: new FormControl(''),
+            payment_date: new FormControl('', Validators.required),
+            delivery_date: new FormControl(moment().format(), Validators.required),
+            installments: new FormControl('', Validators.required)
+        });
     }
 
     /**
@@ -99,6 +114,7 @@ export class OrderFormPage {
             res.list_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity)));
 
             this.order = updatedOrder;
+            this.updateTotal();
         });
     }
 
@@ -111,6 +127,7 @@ export class OrderFormPage {
         productModal.onDidDismiss(data => {
             if (data instanceof Product) {
                 this.order.push(data);
+                this.updateTotal();
             }
         });
 
@@ -141,7 +158,7 @@ export class OrderFormPage {
     normalizeOrderData(order) {
         let data = [];
 
-        order.forEach(function (e, i) {
+        order.forEach((e, i) => {
             data.push({id: e.id, qnt: e.quantity});
         });
 
@@ -165,6 +182,7 @@ export class OrderFormPage {
                         productModal.onDidDismiss(data => {
                             if (data instanceof Product) {
                                 this.order[key] = data;
+                                this.updateTotal();
                             }
                         });
 
@@ -213,6 +231,15 @@ export class OrderFormPage {
     removeFromOrder(key: number) {
         if (this.order[key]) {
             this.order.splice(key, 1);
+            this.updateTotal();
         }
+    }
+
+    /**
+     *
+     */
+    updateTotal() {
+        this.order_total = 0;
+        this.order.forEach((e, i) => this.order_total += e.price * e.quantity);
     }
 }
