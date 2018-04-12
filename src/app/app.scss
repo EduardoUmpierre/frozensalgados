@@ -123,8 +123,8 @@ ion-content {
         margin-bottom: 0;
         padding-bottom: 0;
 
-        > .item,
-        > form > .item {
+        .item,
+        form > .item {
             color: #737373;
             padding-left: 0;
 
@@ -148,6 +148,11 @@ ion-content {
                 ion-datetime {
                     background-color: #efefef;
                     padding-left: 16px;
+                }
+
+                ion-datetime {
+                    padding-bottom: 8px;
+                    padding-top: 8px;
                 }
             }
         }

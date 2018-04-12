@@ -33,13 +33,14 @@ import 'moment/locale/pt-br';
 export class OrderFormPage {
     private form: FormGroup;
     private pageTitle: String = 'Criar pedido';
-    private lists = [];
     private customers = [];
     private customer;
     private order: Product[] = [];
+    private orders = [];
 
     tab: string = 'info';
     order_total: number = 0.00;
+    currentOrder: number = 0;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider,
                 public storage: Storage, public modalCtrl: ModalController, private alertCtrl: AlertController,
@@ -51,15 +52,15 @@ export class OrderFormPage {
 
         moment.locale('pt-BR');
 
-        console.log(moment().format());
+        const today = moment().format();
 
         this.form = this.formBuilder.group({
             customer: new FormControl('', Validators.required),
             payment_method: new FormControl('', Validators.required),
-            comments: new FormControl(''),
-            payment_date: new FormControl('', Validators.required),
-            delivery_date: new FormControl(moment().format(), Validators.required),
-            installments: new FormControl('', Validators.required)
+            payment_date: new FormControl(today, Validators.required),
+            installments: new FormControl(1, Validators.required),
+            delivery_date: new FormControl(today, Validators.required),
+            comments: new FormControl('')
         });
     }
 
@@ -83,6 +84,7 @@ export class OrderFormPage {
 
         event.component.isSearching = true;
         this.order = [];
+        this.currentOrder = 0;
 
         if (id && id.trim() != '') {
             event.component.items = this.customers.filter(item => item.name.toLowerCase().indexOf(id.toLowerCase()) !== -1 || item.id.toString().indexOf(id) !== -1);
@@ -92,26 +94,38 @@ export class OrderFormPage {
     }
 
     /**
-     * Loads the customer's order lists
+     * Loads the customer's orders
      *
      * @param event
      */
-    searchCustomerLists(event: { component: SelectSearchable, value: any }) {
+    searchCustomerOrders(event: { component: SelectSearchable, value: any }) {
         this.order = [];
 
-        this.apiProvider.builder('lists').get({customer: event.value.id}).subscribe((lists) => this.lists = lists);
+        this.apiProvider.builder('orders/customer/' + event.value.id).get().subscribe((orders) => {
+            console.log(orders);
+
+            orders.forEach((e, i) => {
+               e.created_at = moment(e.created_at).format('DD/MM/YYYY H:m:s');
+
+               orders[i] = e;
+            });
+
+            this.orders = orders;
+        });
     }
 
     /**
      *
      * @param selectedValue
      */
-    loadList(selectedValue: any) {
-        this.apiProvider.builder('lists/' + selectedValue).get().subscribe((res) => {
+    loadOrder(selectedValue: any) {
+        this.currentOrder = selectedValue;
+
+        this.apiProvider.builder('orders/' + selectedValue + '/products').get().subscribe((res) => {
             let updatedOrder = [];
             this.order = [];
 
-            res.list_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity)));
+            res.order_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity)));
 
             this.order = updatedOrder;
             this.updateTotal();

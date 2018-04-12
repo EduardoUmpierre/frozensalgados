@@ -43,7 +43,7 @@
                                 title="Cliente"
                                 [items]="customers"
                                 (onSearch)="searchCustomers($event)"
-                                (onChange)="searchCustomerLists($event)"
+                                (onChange)="searchCustomerOrders($event)"
                                 [canSearch]="true">
                         </select-searchable>
                     </ion-item>
@@ -51,9 +51,14 @@
                     <!-- Listas -->
                     <ion-item>
                         <ion-label stacked>Carregar pedido</ion-label>
-                        <ion-select (ionChange)="loadList($event)" [disabled]="lists.length == 0">
-                            <ion-option value="{{ list.id }}" *ngFor="let list of lists">{{ list.title }}</ion-option>
-                            <ion-option *ngIf="lists.length == 0" selected>Nenhum pedido recente</ion-option>
+                        <ion-select (ionChange)="loadOrder($event)" [disabled]="orders.length == 0">
+                            <ion-option value="{{ order.id }}" [selected]="currentOrder == order.id"
+                                        *ngFor="let order of orders">
+                                {{ order.created_at }}
+                            </ion-option>
+                            <ion-option [selected]="currentOrder == 0" *ngIf="orders.length == 0">
+                                Nenhum pedido recente
+                            </ion-option>
                         </ion-select>
                     </ion-item>
 
@@ -71,8 +76,28 @@
                     <!-- Data de entrega -->
                     <ion-item>
                         <ion-label stacked>Data de entrega</ion-label>
-                        <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY" formControlName="delivery_date"></ion-datetime>
+                        <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
+                                      formControlName="delivery_date"></ion-datetime>
                     </ion-item>
+
+                    <!-- Data de pagamento -->
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-8>
+                                <ion-item>
+                                    <ion-label stacked>Data de pagamento</ion-label>
+                                    <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
+                                                  formControlName="payment_date"></ion-datetime>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col col-4>
+                                <ion-item>
+                                    <ion-label stacked>Prestações</ion-label>
+                                    <ion-input type="number" formControlName="installments" min="1" max="3"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
 
                     <!-- Observações -->
                     <ion-item>

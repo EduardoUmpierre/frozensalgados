@@ -8,4 +8,21 @@ page-order-form {
     .segment-md .segment-button {
         color: #FFF;
     }
+
+    .grid {
+        padding: 0;
+
+        .col {
+            padding-bottom: 0;
+            padding-top: 0;
+
+            &:nth-child(1) {
+                padding-left: 0;
+            }
+
+            &:nth-child(2) {
+                padding-right: 0;
+            }
+        }
+    }
 }
