@@ -152,7 +152,7 @@ export class OrderFormPage {
      * Creates the order and redirects to the orders page
      */
     create() {
-        let data = {customer: this.customer.id, order: this.normalizeOrderData(this.order)};
+        let data = Object.assign({}, {order: this.normalizeOrderData(this.order)}, this.form.value)
 
         this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
             this.syncProvider.verifySync('customers', true).then(() => {

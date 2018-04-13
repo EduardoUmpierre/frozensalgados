@@ -22,26 +22,27 @@
 
         <div class="list-item__content">
             <p class="highlight">Cliente {{ customer.name }}</p>
-            <p>CNPJ: 123456789</p>
+            <p>CNPJ: {{ customer.cnpj }}</p>
             <p>Telefone: {{ customer.phone }}</p>
             <p>Cidade: {{ customer.city }}</p>
             <p>Bairro: {{ customer.district }}</p>
             <p>CEP: {{ customer.cep }}</p>
             <p>Endereço: {{ customer.address }}</p>
+            <p>Número: {{ customer.address_number }}</p>
         </div>
 
-        <div class="list-item__header list__header">Listas</div>
+        <!--<div class="list-item__header list__header">Listas</div>-->
 
-        <ion-list class="product-list">
-            <ion-item *ngFor="let list of customer.lists; let i = index">
-                <p class="highlight">{{ list.title }}</p>
-                <p>Produtos: {{ list.product_count }}</p>
-                <p>Preço Total: {{ list.total | currency:'BRL':'R$' }}</p>
-            </ion-item>
+        <!--<ion-list class="product-list">-->
+            <!--<ion-item *ngFor="let list of customer.lists; let i = index">-->
+                <!--<p class="highlight">{{ list.title }}</p>-->
+                <!--<p>Produtos: {{ list.product_count }}</p>-->
+                <!--<p>Preço Total: {{ list.total | currency:'BRL':'R$' }}</p>-->
+            <!--</ion-item>-->
 
-            <ion-item *ngIf="customer.lists.length == 0">
-                <p>Nenhuma lista adicionada</p>
-            </ion-item>
-        </ion-list>
+            <!--<ion-item *ngIf="customer.lists.length == 0">-->
+                <!--<p>Nenhuma lista adicionada</p>-->
+            <!--</ion-item>-->
+        <!--</ion-list>-->
     </div>
 </ion-content>

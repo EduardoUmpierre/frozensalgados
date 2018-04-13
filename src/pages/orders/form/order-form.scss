@@ -25,4 +25,12 @@ page-order-form {
             }
         }
     }
+
+    .product-list {
+        > ion-item {
+            ion-label {
+                margin-top: 0 !important;
+            }
+        }
+    }
 }

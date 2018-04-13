@@ -15,15 +15,13 @@ export class ApiProvider {
     protected urlBase = this.isApp() ? 'https://frozensalgados.herokuapp.com/' : 'http://localhost:8000/';
     protected loading;
 
-    constructor(
-        public httpProvider: HttpProvider,
-        private platform: Platform,
-        public loadingCtrl: LoadingController,
-        public alertCtrl: AlertController,
-        public app: App,
-        private storage: Storage,
-        protected toastCtrl: ToastController
-    ) {
+    constructor(public httpProvider: HttpProvider,
+                private platform: Platform,
+                public loadingCtrl: LoadingController,
+                public alertCtrl: AlertController,
+                public app: App,
+                private storage: Storage,
+                protected toastCtrl: ToastController) {
     }
 
     /**
@@ -187,7 +185,20 @@ export class ApiProvider {
         }
 
         if (error.status === 422) {
-            message = 'Falha de validação, verifique os campos.';
+            title = 'Atenção';
+            message = '<p>Falha de validação, verifique os campos.</p>';
+
+            let body = JSON.parse(error._body) || {};
+
+            if (body) {
+                message += '<ul>';
+                for (let item in body) {
+                    if (body[item].indexOf('validation.unique') !== -1) {
+                        message += '<li>O ' + item + ' já está cadastrado.</li>';
+                    }
+                }
+                message += '</ul>';
+            }
         }
 
         if (error.status === 404) {

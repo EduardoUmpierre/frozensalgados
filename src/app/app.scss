@@ -329,3 +329,14 @@ form {
 .scroll-content {
     padding-bottom:0!important;
 }
+
+.alert-sub-title {
+    > ul {
+        margin-bottom: 0;
+
+        > li {
+            font-size: 1.5rem;
+            line-height: 1.5em;
+        }
+    }
+}
