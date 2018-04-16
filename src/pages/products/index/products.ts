@@ -64,7 +64,7 @@ export class ProductsPage {
      * @param {number} id
      */
     goToForm(id: number = null) {
-        if (this.tab == 'products') {
+        if (this.isProduct()) {
             this.navCtrl.push(ProductFormPage, {id: id});
         } else {
             this.navCtrl.push(CategoryFormPage, {id: id});
@@ -98,7 +98,11 @@ export class ProductsPage {
                                 {
                                     text: 'Remover',
                                     handler: () => {
-                                        this.apiProvider.builder('products/' + id).loader().delete().subscribe((res) => this.remove(key));
+                                        if (this.isProduct()) {
+                                            this.apiProvider.builder('products/' + id).loader().delete().subscribe((res) => this.remove(key));
+                                        } else {
+                                            this.apiProvider.builder('categories/' + id).loader().delete().subscribe((res) => this.remove(key));
+                                        }
                                     }
                                 }
                             ]
@@ -123,8 +127,14 @@ export class ProductsPage {
      * @param {number} key
      */
     remove(key: number) {
-        if (this.products[key]) {
-            this.products.splice(key, 1);
+        if (this.isProduct()) {
+            if (this.products[key]) {
+                this.products.splice(key, 1);
+            }
+        } else {
+            if (this.categories[key]) {
+                this.categories.splice(key, 1);
+            }
         }
     }
 
@@ -134,7 +144,7 @@ export class ProductsPage {
      * @param refresher
      */
     doRefresh(refresher) {
-        if (this.tab == 'products') {
+        if (this.isProduct()) {
             this.syncProvider
                 .verifySync('products', true, false)
                 .then(products => this.products = products)
@@ -163,5 +173,13 @@ export class ProductsPage {
      */
     updatePageTitle(tab) {
         this.pageTitle = tab == 'products' ? 'Produtos' : 'Categorias';
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    isProduct() {
+        return this.tab == 'products';
     }
 }

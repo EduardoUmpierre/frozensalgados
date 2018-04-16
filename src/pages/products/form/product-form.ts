@@ -46,7 +46,10 @@ export class ProductFormPage {
             this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
                 this.form.controls['name'].setValue(res.name);
                 this.form.controls['price'].setValue(this.decimalPipe.transform(res.price, '1.2-2', 'pt-BR'));
-                this.form.controls['category_id'].setValue(res.category.id);
+
+                if (res.category) {
+                    this.form.controls['category_id'].setValue(res.category.id);
+                }
             });
         }
 
