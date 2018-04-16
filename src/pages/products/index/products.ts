@@ -3,6 +3,7 @@ import { ActionSheetController, AlertController, IonicPage, NavController, NavPa
 import { ApiProvider } from '../../../providers/api/api';
 import { Storage } from "@ionic/storage";
 import { ProductFormPage } from "../form/product-form";
+import { CategoryFormPage } from "../../categories/form/category-form";
 import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
@@ -23,12 +24,20 @@ export class ProductsPage {
     categories = [];
     loaded: boolean = false;
     tab: string = 'products';
-    pageTitle: string = this.tab == 'products' ? 'Produtos' : 'Categorias';
+    pageTitle: string;
 
     constructor(public navCtrl: NavController, private apiProvider: ApiProvider, public storage: Storage,
                 public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController,
                 private syncProvider: SyncProvider, private navParams: NavParams) {
         this.storage.get('user').then((user) => this.currentUser = user);
+
+        let tab = this.navParams.get('tab');
+
+        if (tab) {
+            this.tab = tab;
+        }
+
+        this.updatePageTitle(this.tab);
     }
 
     /**
@@ -58,7 +67,7 @@ export class ProductsPage {
         if (this.tab == 'products') {
             this.navCtrl.push(ProductFormPage, {id: id});
         } else {
-
+            this.navCtrl.push(CategoryFormPage, {id: id});
         }
     }
 
@@ -125,11 +134,19 @@ export class ProductsPage {
      * @param refresher
      */
     doRefresh(refresher) {
-        this.syncProvider
-            .verifySync('products', true, false)
-            .then(products => this.products = products)
-            .then(() => refresher.complete())
-            .catch((error) => console.log(error));
+        if (this.tab == 'products') {
+            this.syncProvider
+                .verifySync('products', true, false)
+                .then(products => this.products = products)
+                .then(() => refresher.complete())
+                .catch((error) => console.log(error));
+        } else {
+            this.syncProvider
+                .verifySync('categories', true, false)
+                .then(categories => this.categories = categories)
+                .then(() => refresher.complete())
+                .catch((error) => console.log(error));
+        }
     }
 
     /**
@@ -137,6 +154,14 @@ export class ProductsPage {
      * @param event
      */
     segmentChanged(event) {
-        this.pageTitle = event.value == 'products' ? 'Produtos' : 'Categorias';
+        this.updatePageTitle(event.value);
+    }
+
+    /**
+     *
+     * @param tab
+     */
+    updatePageTitle(tab) {
+        this.pageTitle = tab == 'products' ? 'Produtos' : 'Categorias';
     }
 }

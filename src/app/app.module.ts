@@ -41,6 +41,7 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { CurrencyPipe, DecimalPipe, registerLocaleData } from "@angular/common";
 
 import localePt from '@angular/common/locales/pt';
+import { CategoryFormPage } from "../pages/categories/form/category-form";
 
 registerLocaleData(localePt);
 
@@ -78,6 +79,7 @@ export class MyErrorHandler implements ErrorHandler {
         OrdersPage,
         ProductsPage,
         ProductFormPage,
+        CategoryFormPage,
         OrderViewPage,
         OrderFormPage,
         OrderProductModalPage,
@@ -121,6 +123,7 @@ export class MyErrorHandler implements ErrorHandler {
         OrdersPage,
         ProductsPage,
         ProductFormPage,
+        CategoryFormPage,
         OrderViewPage,
         OrderFormPage,
         OrderProductModalPage,

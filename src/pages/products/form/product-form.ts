@@ -41,7 +41,7 @@ export class ProductFormPage {
     /**
      *
      */
-    ionViewDidLoad() {
+    ionViewWillEnter() {
         if (this.id) {
             this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
                 this.form.controls['name'].setValue(res.name);
@@ -49,12 +49,7 @@ export class ProductFormPage {
                 this.form.controls['category_id'].setValue(res.category.id);
             });
         }
-    }
 
-    /**
-     *
-     */
-    ionViewWillEnter() {
         this.syncProvider
             .verifySync('categories', !!this.navParams.get('force'))
             .then(categories => this.categories = categories)
