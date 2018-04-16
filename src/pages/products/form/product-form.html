@@ -20,6 +20,20 @@
     <div class="list-item">
         <ion-list>
             <form [formGroup]="form" (ngSubmit)="submit()">
+                <!-- Category -->
+                <ion-item [class.ng-touched]="form.controls.category && !form.controls.category.untouched">
+                    <ion-label stacked>Categoria</ion-label>
+                    <ion-select formControlName="category_id">
+                        <ion-option value="{{ category.id }}" *ngFor="let category of categories">
+                            {{ category.name }}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.category && !form.controls.category.valid && !form.controls.category.untouched">
+                    O campo é obrigatório.
+                </p>
+
                 <!-- Name -->
                 <ion-item [class.ng-touched]="form.controls.name && !form.controls.name.untouched">
                     <ion-label stacked>Nome</ion-label>

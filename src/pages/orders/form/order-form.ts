@@ -34,7 +34,6 @@ export class OrderFormPage {
     private form: FormGroup;
     private pageTitle: String = 'Criar pedido';
     private customers = [];
-    private customer;
     private order: Product[] = [];
     private orders = [];
 
@@ -102,12 +101,9 @@ export class OrderFormPage {
         this.order = [];
 
         this.apiProvider.builder('orders/customer/' + event.value.id).get().subscribe((orders) => {
-            console.log(orders);
-
             orders.forEach((e, i) => {
-               e.created_at = moment(e.created_at).format('DD/MM/YYYY H:m:s');
-
-               orders[i] = e;
+                e.created_at = moment(e.created_at).format('DD/MM/YYYY HH:mm:ss');
+                orders[i] = e;
             });
 
             this.orders = orders;
@@ -152,15 +148,32 @@ export class OrderFormPage {
      * Creates the order and redirects to the orders page
      */
     create() {
-        let data = Object.assign({}, {order: this.normalizeOrderData(this.order)}, this.form.value)
+        if (this.order.length > 0) {
+            let data = Object.assign({}, {order: this.normalizeOrderData(this.order)}, this.form.value)
 
-        this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
-            this.syncProvider.verifySync('customers', true).then(() => {
-                this.navCtrl.push(OrdersPage, {force: true}).then(() => {
-                    this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-                });
-            }).catch(error => console.log(error));
-        });
+            this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
+                this.syncProvider.verifySync('customers', true).then(() => {
+                    this.navCtrl.push(OrdersPage, {force: true}).then(() => {
+                        this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+                    });
+                }).catch(error => console.log(error));
+            });
+        } else {
+            let alert = this.alertCtrl.create({
+                title: 'Atenção',
+                message: 'É necessário adicionar no mínimo um produto.',
+                buttons: [
+                    {
+                        text: 'Ok',
+                        handler: () =>  {
+                            this.tab = 'products'
+                        }
+                    }
+                ]
+            });
+
+            alert.present();
+        }
     }
 
     /**

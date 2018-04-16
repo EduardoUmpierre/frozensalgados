@@ -217,7 +217,8 @@ export class ApiProvider {
      */
     public hideLoader() {
         if (this.loading) {
-            this.loading.dismiss().catch(() => {});
+            this.loading.dismiss().catch(() => {
+            });
         }
     }
 

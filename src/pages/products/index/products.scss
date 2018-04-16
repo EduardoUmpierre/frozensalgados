@@ -1,2 +1,10 @@
 page-products {
+
+    #categories {
+
+        > .list-item:not(.no-items) {
+            padding-bottom: 0;
+            padding-top: 0;
+        }
+    }
 }

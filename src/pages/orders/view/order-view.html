@@ -24,7 +24,7 @@
             <p class="highlight">Cliente {{ order.customer.name }}</p>
             <p>CNPJ: {{ order.customer.cnpj }}</p>
             <p>Endereço: {{ order.customer.address }}</p>
-            <p>Data do pedido: {{ order.created_at | date: 'dd/MM/y' }}</p>
+            <p>Data do pedido: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</p>
             <p>Data de entrega: {{ order.delivery_date | date: 'dd/MM/y' }}</p>
             <p>Comentários: {{ order.comments }}</p>
         </div>

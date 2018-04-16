@@ -22,6 +22,7 @@ export class ProductFormPage {
     private pageTitle = 'Novo produto';
     private form: FormGroup;
     private id: number = null;
+    private categories = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
                 private formBuilder: FormBuilder, private syncProvider: SyncProvider, private decimalPipe: DecimalPipe) {
@@ -32,7 +33,8 @@ export class ProductFormPage {
 
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
-            price: new FormControl('', Validators.required)
+            price: new FormControl('', Validators.required),
+            category_id: new FormControl('', Validators.required)
         });
     }
 
@@ -44,8 +46,19 @@ export class ProductFormPage {
             this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
                 this.form.controls['name'].setValue(res.name);
                 this.form.controls['price'].setValue(this.decimalPipe.transform(res.price, '1.2-2', 'pt-BR'));
+                this.form.controls['category_id'].setValue(res.category.id);
             });
         }
+    }
+
+    /**
+     *
+     */
+    ionViewWillEnter() {
+        this.syncProvider
+            .verifySync('categories', !!this.navParams.get('force'))
+            .then(categories => this.categories = categories)
+            .catch((error) => console.log(error));
     }
 
     /**

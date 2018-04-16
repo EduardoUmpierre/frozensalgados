@@ -103,7 +103,7 @@ export class MyErrorHandler implements ErrorHandler {
             dayNames: [
                 'Domingo', 'Segunda-feira', 'Ter\u00e7a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
             ],
-            dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+            dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
         }),
         SelectSearchableModule,
         BrMaskerModule,

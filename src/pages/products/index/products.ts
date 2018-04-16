@@ -20,7 +20,10 @@ import { SyncProvider } from "../../../providers/sync/sync";
 export class ProductsPage {
     currentUser: any = {};
     products = [];
+    categories = [];
     loaded: boolean = false;
+    tab: string = 'products';
+    pageTitle: string = this.tab == 'products' ? 'Produtos' : 'Categorias';
 
     constructor(public navCtrl: NavController, private apiProvider: ApiProvider, public storage: Storage,
                 public actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController,
@@ -34,8 +37,15 @@ export class ProductsPage {
     ionViewWillEnter() {
         this.syncProvider
             .verifySync('products', !!this.navParams.get('force'))
-            .then(products => this.products = products)
-            .then(() => this.loaded = true)
+            .then(products => {
+                this.products = products;
+
+                this.syncProvider
+                    .verifySync('categories', !!this.navParams.get('force'))
+                    .then(categories => this.categories = categories)
+                    .then(() => this.loaded = true)
+                    .catch((error) => console.log(error));
+            })
             .catch((error) => console.log(error));
     }
 
@@ -45,7 +55,11 @@ export class ProductsPage {
      * @param {number} id
      */
     goToForm(id: number = null) {
-        this.navCtrl.push(ProductFormPage, {id: id});
+        if (this.tab == 'products') {
+            this.navCtrl.push(ProductFormPage, {id: id});
+        } else {
+
+        }
     }
 
     /**
@@ -116,5 +130,13 @@ export class ProductsPage {
             .then(products => this.products = products)
             .then(() => refresher.complete())
             .catch((error) => console.log(error));
+    }
+
+    /**
+     *
+     * @param event
+     */
+    segmentChanged(event) {
+        this.pageTitle = event.value == 'products' ? 'Produtos' : 'Categorias';
     }
 }

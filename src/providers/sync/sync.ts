@@ -5,7 +5,7 @@ import { ToastController } from 'ionic-angular';
 
 @Injectable()
 export class SyncProvider {
-    private categories = ['all_customers', 'customers', 'orders', 'products', 'users'];
+    private categories = ['all_customers', 'customers', 'orders', 'products', 'users', 'categories'];
     private syncDelay = (3600 * 5 * 1000);
 
     constructor(private storage: Storage, private apiProvider: ApiProvider, private toastCtrl: ToastController) {
@@ -30,6 +30,7 @@ export class SyncProvider {
      *
      * @param {string} category
      * @param {boolean} force
+     * @param {boolean} toast
      * @returns {Promise<any>}
      */
     verifySync(category: string, force: boolean = false, toast: boolean = true): Promise<any> {
@@ -43,7 +44,7 @@ export class SyncProvider {
                     let promise;
 
                     if (category == 'all_customers') {
-                        promise = this.getCategoryData(category, true && toast, 'customers', {all: true});
+                        promise = this.getCategoryData(category, toast, 'customers', {all: true});
                     } else {
                         promise = this.getCategoryData(category, toast);
                     }
@@ -59,7 +60,8 @@ export class SyncProvider {
      * Loops through the categories and verify if it's need to be updated
      *
      * @param {Array<any>} categories
-     * @param {Boolean} force
+     * @param {boolean} force
+     * @param {boolean} toast
      * @returns {Promise<any>}
      */
     private updateCategoriesData(categories: Array<any>, force: boolean = false, toast: boolean = true): Promise<any> {

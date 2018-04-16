@@ -30,8 +30,8 @@
         <ion-item *ngFor="let order of orders; let i = index" class="list-item" (click)="goToDetails(order.id)">
             <div class="list-item__content">
                 <div class="highlight">Pedido: {{ order.id }}</div>
-                <div>Data: {{ order.created_at | date: 'dd/MM/y' }}</div>
-                <div>Status: {{ order.status }}</div>
+                <div>Data: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</div>
+                <!--<div>Status: {{ order.status }}</div>-->
             </div>
 
             <ion-grid class="list-item__footer">
