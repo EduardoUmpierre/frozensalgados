@@ -45,7 +45,9 @@ export class CustomerFormPage {
             address: new FormControl('', Validators.required),
             address_number: new FormControl('', Validators.required),
             city: new FormControl('', Validators.required),
-            district: new FormControl('', Validators.required)
+            district: new FormControl('', Validators.required),
+            ie: new FormControl(''),
+            ie_exempt: new FormControl({value: 0, disabled: false})
         });
     }
 
@@ -63,6 +65,8 @@ export class CustomerFormPage {
                 this.form.controls['address_number'].setValue(res.address_number);
                 this.form.controls['city'].setValue(res.city);
                 this.form.controls['district'].setValue(res.district);
+                this.form.controls['ie'].setValue(res.ie);
+                this.form.controls['ie_exempt'].setValue(res.ie_exempt);
             });
         }
     }
@@ -121,5 +125,16 @@ export class CustomerFormPage {
                 this.form.controls['district'].setValue(res.bairro);
             }
         });
+    }
+
+    /**
+     *
+     */
+    updateCheckbox() {
+        if (this.form.controls['ie_exempt'].value) {
+        //
+        } else {
+        //
+        }
     }
 }

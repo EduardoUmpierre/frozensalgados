@@ -36,6 +36,24 @@
                     O campo é obrigatório.
                 </p>
 
+                <!-- Inscrição estadual -->
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-8>
+                            <ion-item>
+                                <ion-label stacked>Inscrição Estadual</ion-label>
+                                <ion-input type="text" formControlName="ie"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col col-4>
+                            <ion-item>
+                                <ion-label stacked>Isento</ion-label>
+                                <ion-checkbox formControlName="ie_exempt" (ionChange)="updateCheckbox()"></ion-checkbox>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+
                 <!-- Name -->
                 <ion-item [class.ng-touched]="form.controls.name && !form.controls.name.untouched">
                     <ion-label stacked>Nome</ion-label>
@@ -64,7 +82,8 @@
                     </button>
                 </ion-item>
 
-                <p class="error" *ngIf="form.controls.cep && !form.controls.cep.valid && !form.controls.cep.untouched && form.controls.errors.required">
+                <p class="error"
+                   *ngIf="form.controls.cep && !form.controls.cep.valid && !form.controls.cep.untouched && form.controls.errors.required">
                     O campo é obrigatório.
                 </p>
 
