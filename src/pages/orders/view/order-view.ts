@@ -34,11 +34,11 @@ export class OrderViewPage {
     /**
      * Push to list form page
      */
-    goToForm() {
-        this.navCtrl.push(ListFormPage, {
-            customer: this.order.customer.id,
-            orderId: this.id,
-            order: this.order.order_product
-        });
-    }
+    // goToForm() {
+    //     this.navCtrl.push(ListFormPage, {
+    //         customer: this.order.customer.id,
+    //         orderId: this.id,
+    //         order: this.order.order_product
+    //     });
+    // }
 }
