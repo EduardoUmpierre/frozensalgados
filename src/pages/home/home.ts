@@ -67,7 +67,7 @@ export class HomePage {
      */
     doRefresh(refresher) {
         this.syncProvider
-            .syncCategories(['all_customers', 'customers', 'orders', 'products', 'users'], true, false)
+            .syncCategories(['customers', 'orders', 'products', 'users'], true, false)
             .then(() => refresher.complete())
             .catch((error) => console.log(error));
     }

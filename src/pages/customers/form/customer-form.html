@@ -20,6 +20,16 @@
     <div class="list-item">
         <ion-list>
             <form [formGroup]="form" (ngSubmit)="submit()">
+                <!-- Vendedor -->
+                <ion-item [hidden]="user && user.role != 1">
+                    <ion-label stacked>Vendedor</ion-label>
+                    <ion-select formControlName="user_id">
+                        <ion-option value="{{ seller.id }}" *ngFor="let seller of sellers">
+                            {{ seller.name }}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+
                 <!-- CNPJ -->
                 <ion-item [class.ng-touched]="form.controls.cnpj && !form.controls.cnpj.untouched">
                     <ion-label stacked>CNPJ</ion-label>

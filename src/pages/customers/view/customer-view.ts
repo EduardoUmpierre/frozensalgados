@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
-import { ListFormPage } from "../../list-form/list-form";
 
 /**
  * Generated class for the CustomerViewPage page.
@@ -25,13 +24,13 @@ export class CustomerViewPage {
      * Gets one item by id
      */
     ionViewDidLoad() {
-        this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().get({'lists': true}).subscribe((res) => this.customer = res);
+        this.apiProvider.builder('customers/' + this.navParams.get('id')).loader().get().subscribe((res) => this.customer = res);
     }
 
     /**
-     * Push to list form page
+     * Push to order form page
      */
-    goToForm() {
-        this.navCtrl.push(ListFormPage, {customer: this.customer.id, order: []});
-    }
+    // goToForm() {
+    //     this.navCtrl.push(OrderFormPage, {customer: {id: this.customer.id, name: this.customer.name}});
+    // }
 }

@@ -5,7 +5,7 @@ import { ToastController } from 'ionic-angular';
 
 @Injectable()
 export class SyncProvider {
-    private categories = ['all_customers', 'customers', 'orders', 'products', 'users', 'categories'];
+    private categories = ['customers', 'orders', 'products', 'users', 'categories'];
     private syncDelay = (3600 * 5 * 1000);
 
     constructor(private storage: Storage, private apiProvider: ApiProvider, private toastCtrl: ToastController) {
@@ -16,6 +16,7 @@ export class SyncProvider {
      *
      * @param {string[]} categories
      * @param {boolean} force
+     * @param {boolean} toast
      * @returns {Promise<any>}
      */
     syncCategories(categories: string[] = this.categories, force: boolean = false, toast: boolean = true): Promise<any> {
@@ -41,15 +42,7 @@ export class SyncProvider {
                 if (sync && this.isSyncTimeValid(sync['date']) && !force) {
                     resolve(sync['items']);
                 } else {
-                    let promise;
-
-                    if (category == 'all_customers') {
-                        promise = this.getCategoryData(category, toast, 'customers', {all: true});
-                    } else {
-                        promise = this.getCategoryData(category, toast);
-                    }
-
-                    promise.then((data) => resolve(data))
+                    this.getCategoryData(category, toast).then((data) => resolve(data))
                         .catch((error) => reject(error));
                 }
             }).catch((error) => reject(error));
@@ -75,13 +68,7 @@ export class SyncProvider {
                         this.toast('Atualizando dados da aplicação');
                     }
 
-                    promiseChain = promiseChain.then(() => {
-                        if (category == 'all_customers') {
-                            return this.getCategoryData(category, (categories.length - 1 == index) && toast, 'customers', {all: true});
-                        }
-
-                        return this.getCategoryData(category, (categories.length - 1 == index) && toast);
-                    });
+                    promiseChain = promiseChain.then(() => this.getCategoryData(category, (categories.length - 1 == index) && toast));
                 }
             });
         });

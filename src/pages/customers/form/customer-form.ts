@@ -5,6 +5,7 @@ import { CustomersPage } from "../index/customers";
 import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ExternalProvider } from "../../../providers/api/external";
 import { SyncProvider } from "../../../providers/sync/sync";
+import { Storage } from "@ionic/storage";
 
 /**
  * Generated class for the CustomerFormPage page.
@@ -22,16 +23,19 @@ export class CustomerFormPage {
     private pageTitle = 'Novo cliente';
     private form: FormGroup;
     private id: number = null;
+    private sellers = [];
+    private user;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
                 private formBuilder: FormBuilder, private externalProvider: ExternalProvider,
-                private syncProvider: SyncProvider) {
+                private syncProvider: SyncProvider, private storage: Storage) {
         if (navParams.get('id')) {
             this.pageTitle = 'Editar cliente';
             this.id = navParams.get('id');
         }
 
         this.form = this.formBuilder.group({
+            user_id: new FormControl(''),
             name: new FormControl('', Validators.required),
             cnpj: new FormControl('', Validators.compose([
                 Validators.minLength(18),
@@ -55,8 +59,19 @@ export class CustomerFormPage {
      *
      */
     ionViewDidLoad() {
+        this.storage.get('user').then((user) => {
+            this.user = user;
+
+            if (user.role != 1) {
+                this.form.controls['user_id'].setValue(user.id);
+            } else {
+                this.syncProvider.verifySync('users').then((sellers) => this.sellers = sellers);
+            }
+        });
+
         if (this.id) {
             this.apiProvider.builder('customers/' + this.id).loader().get().subscribe((res) => {
+                this.form.controls['user_id'].setValue(res.user_id);
                 this.form.controls['name'].setValue(res.name);
                 this.form.controls['cnpj'].setValue(res.cnpj);
                 this.form.controls['phone'].setValue(res.phone);
@@ -86,7 +101,7 @@ export class CustomerFormPage {
      *
      */
     redirect() {
-        this.syncProvider.verifySync('all_customers', true).then(() => {
+        this.syncProvider.verifySync('customers', true).then(() => {
             this.navCtrl.push(CustomersPage).then(() => {
                 this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
             });

@@ -46,7 +46,7 @@ import { CategoryFormPage } from "../pages/categories/form/category-form";
 registerLocaleData(localePt);
 
 Pro.init('74f2ff88', {
-    appVersion: '0.0.1'
+    appVersion: '1.2.0'
 });
 
 @Injectable()

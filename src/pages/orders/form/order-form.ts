@@ -45,10 +45,6 @@ export class OrderFormPage {
                 public storage: Storage, public modalCtrl: ModalController, private alertCtrl: AlertController,
                 public actionSheetCtrl: ActionSheetController, private syncProvider: SyncProvider,
                 private formBuilder: FormBuilder) {
-        if (this.navParams.get('product')) {
-            this.pageTitle = 'Editar pedido';
-        }
-
         moment.locale('pt-BR');
 
         const today = moment().format();
@@ -63,12 +59,22 @@ export class OrderFormPage {
         });
     }
 
+    ionViewDidLoad() {
+        if (this.navParams.get('product')) {
+            this.pageTitle = 'Editar pedido';
+        }
+
+        if (this.navParams.get('customer')) {
+            this.form.controls['customer'] = this.navParams.get('customer');
+        }
+    }
+
     /**
      * Gets the order list
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('all_customers')
+            .verifySync('customers')
             .then(customers => this.customers = customers)
             .catch((error) => console.log(error));
     }
