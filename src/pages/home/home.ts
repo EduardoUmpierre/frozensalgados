@@ -7,6 +7,7 @@ import { UserPage } from "../users/user/user";
 import { Storage } from "@ionic/storage";
 import { UsersPage } from "../users/index/users";
 import { SyncProvider } from "../../providers/sync/sync";
+import { ReportsPage } from "../reports/index/reports";
 
 @Component({
     selector: 'page-home',
@@ -15,7 +16,7 @@ import { SyncProvider } from "../../providers/sync/sync";
 export class HomePage {
     currentUser: any = {};
 
-    constructor(public navCtrl:NavController, public storage: Storage, private syncProvider: SyncProvider) {
+    constructor(public navCtrl: NavController, public storage: Storage, private syncProvider: SyncProvider) {
         this.storage.get('user').then((user) => this.currentUser = user);
     }
 
@@ -58,6 +59,13 @@ export class HomePage {
      */
     goToUsers() {
         this.navCtrl.push(UsersPage);
+    }
+
+    /**
+     * Push to reports page
+     */
+    goToReports() {
+        this.navCtrl.push(ReportsPage);
     }
 
     /**

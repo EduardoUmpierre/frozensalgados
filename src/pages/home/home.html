@@ -39,6 +39,11 @@
                     <ion-icon name="briefcase"></ion-icon>
                     Usuários
                 </button>
+
+                <button ion-button (click)="goToReports()" clear full *ngIf="currentUser.role == 1">
+                    <ion-icon name="pie"></ion-icon>
+                    Relatórios
+                </button>
             </ion-col>
 
             <ion-col col-7>

@@ -42,6 +42,9 @@ import { CurrencyPipe, DecimalPipe, registerLocaleData } from "@angular/common";
 
 import localePt from '@angular/common/locales/pt';
 import { CategoryFormPage } from "../pages/categories/form/category-form";
+import { ReportsPage } from "../pages/reports/index/reports";
+import { ReportsViewPage } from "../pages/reports/view/reports-view";
+import { ReportsDetailPage } from "../pages/reports/detail/reports-detail";
 
 registerLocaleData(localePt);
 
@@ -88,7 +91,10 @@ export class MyErrorHandler implements ErrorHandler {
         LoginFormPage,
         UserPage,
         UsersPage,
-        UserFormPage
+        UserFormPage,
+        ReportsPage,
+        ReportsViewPage,
+        ReportsDetailPage
     ],
     imports: [
         BrowserModule,
@@ -132,7 +138,10 @@ export class MyErrorHandler implements ErrorHandler {
         LoginFormPage,
         UserPage,
         UsersPage,
-        UserFormPage
+        UserFormPage,
+        ReportsPage,
+        ReportsViewPage,
+        ReportsDetailPage
     ],
     providers: [
         StatusBar,
