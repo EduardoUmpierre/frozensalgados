@@ -1,0 +1,20 @@
+<!--
+  Generated template for the ReportsViewPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Listagem</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list class="single-item">
+        <ion-item *ngFor="let report of reports; let i = index" class="list-item" (click)="goToDetails(report.id)">
+            <div class="highlight">{{ report.name }}</div>
+            <div>Total: {{ report.total | currency:'BRL':'R$' }}</div>
+        </ion-item>
+    </ion-list>
+</ion-content>
