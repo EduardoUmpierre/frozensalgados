@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
+import { ReportsDetailPage } from "../detail/reports-detail";
 
 /**
  * Generated class for the ReportsViewPage page.
@@ -22,8 +23,19 @@ export class ReportsViewPage {
         this.category = this.navParams.get('category');
     }
 
-    ionViewDidLoad() {
+    /**
+     *
+     */
+    ionViewWillEnter() {
         this.apiProvider.builder('reports/' + this.category).loader().get()
             .subscribe((res) => this.reports = res);
+    }
+
+    /**
+     *
+     * @param {number} id
+     */
+    goToDetails(id: number) {
+        this.navCtrl.push(ReportsDetailPage, {'id': id, 'category': this.category});
     }
 }

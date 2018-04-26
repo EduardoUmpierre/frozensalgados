@@ -10,6 +10,20 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <ion-list class="single-item" *ngIf="report">
+        <ion-item class="list-item">
+            <div class="highlight">{{ report.name }}</div>
+            <div>Total: {{ report.total | currency:'BRL':'R$' }}</div>
+        </ion-item>
 
+        <ion-item *ngFor="let item of report.list" class="list-item">
+            <ion-avatar item-start>
+                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+            </ion-avatar>
+
+            <p class="highlight">{{ item.name }}</p>
+            <p>Preço Un: {{ item.total | currency:'BRL':'R$' }}</p>
+        </ion-item>
+    </ion-list>
 </ion-content>

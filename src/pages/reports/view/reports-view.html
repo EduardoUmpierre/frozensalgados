@@ -12,7 +12,7 @@
 
 <ion-content>
     <ion-list class="single-item">
-        <ion-item *ngFor="let report of reports; let i = index" class="list-item" (click)="goToDetails(report.id)">
+        <ion-item *ngFor="let report of reports" class="list-item" (click)="goToDetails(report.id)">
             <div class="highlight">{{ report.name }}</div>
             <div>Total: {{ report.total | currency:'BRL':'R$' }}</div>
         </ion-item>
