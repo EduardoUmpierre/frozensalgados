@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
+import { ReportPopoverComponent } from "../../../components/report-popover/report-popover";
 
 /**
  * Generated class for the ReportsDetailPage page.
@@ -18,19 +21,88 @@ export class ReportsDetailPage {
     private id;
     private category;
     private report;
+    private pageTitle;
+    private listTitle;
+    private period;
+    private periodTitle;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
+                public popoverCtrl: PopoverController) {
+        moment.locale('pt-BR');
+
         this.id = this.navParams.get('id');
         this.category = this.navParams.get('category');
+
+        let categoryName;
+
+        switch (this.category) {
+            case 'categories':
+                categoryName = 'categoria';
+                this.listTitle = 'Lista de produtos';
+                break;
+            case 'sellers':
+                categoryName = 'vendedor';
+                this.listTitle = 'Lista de pedidos';
+                break;
+            case 'products':
+                categoryName = 'produto';
+                this.listTitle = 'Lista de pedidos';
+                break;
+            default:
+                this.listTitle = 'Listagem';
+        }
+
+        this.pageTitle = 'Relatório de ' + categoryName;
+
+        this.updatePeriod(this.navParams.get('period'));
     }
 
     /**
      *
+     * @param myEvent
      */
-    ionViewWillEnter() {
-        console.log('will enter');
+    presentPopover(myEvent) {
+        let popover = this.popoverCtrl.create(ReportPopoverComponent, {period: this.period});
+        popover.present();
+        popover.onDidDismiss(data => {
+            if (data) {
+                this.updatePeriod([data.from, data.to]);
+            }
+        });
+    }
 
-        this.apiProvider.builder('reports/' + this.category + '/' + this.id).loader().get()
-            .subscribe((res) => this.report = res);
+    /**
+     * @param period
+     */
+    updatePeriod(period) {
+        if (period && period[0] && period[1]) {
+            this.period = [period[0], period[1]];
+            this.periodTitle = moment(period[0]).format('DD/MM/YYYY') + ' - ' + moment(period[1]).format('DD/MM/YYYY');
+
+            this.apiProvider.builder('reports/' + this.category + '/' + this.id + '/' + period[0] + '/' + period[1]).loader().get()
+                .subscribe((res) => this.updateListDate(res));
+        } else {
+            this.period = [];
+            this.periodTitle = 'Sempre';
+
+            this.apiProvider.builder('reports/' + this.category + '/' + this.id).loader().get()
+                .subscribe((res) => this.updateListDate(res));
+        }
+    }
+
+    /**
+     *
+     * @param res
+     */
+    updateListDate(res) {
+        if (res.list && res.list.length > 0) {
+            res.list.forEach((e, i) => {
+                if (e.created_at) {
+                    res.list[i].created_at = moment(e.created_at).format('DD/MM/YYYY HH:mm:ss')
+                }
+            });
+        }
+
+        this.report = res;
     }
 }

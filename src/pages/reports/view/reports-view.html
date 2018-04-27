@@ -6,15 +6,35 @@
 -->
 <ion-header>
     <ion-navbar>
-        <ion-title>Listagem</ion-title>
+        <ion-title>{{ pageTitle }}</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
+
+    <ion-toolbar>
+        <ion-title *ngIf="loaded">Total: {{ reports.total | currency:'BRL':'R$' }}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-list class="single-item">
-        <ion-item *ngFor="let report of reports" class="list-item" (click)="goToDetails(report.id)">
+    <ion-list class="single-item" *ngIf="loaded">
+        <ion-item *ngFor="let report of reports.list" class="list-item" (click)="goToDetails(report.id)">
+            <ion-avatar item-start>
+                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+            </ion-avatar>
+
             <div class="highlight">{{ report.name }}</div>
             <div>Total: {{ report.total | currency:'BRL':'R$' }}</div>
         </ion-item>
     </ion-list>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-title>Período: {{ periodTitle }}</ion-title>
+    </ion-toolbar>
+</ion-footer>

@@ -6,24 +6,49 @@
 -->
 <ion-header>
     <ion-navbar>
-        <ion-title>Detalhes</ion-title>
+        <ion-title>{{ pageTitle }}</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-list class="single-item" *ngIf="report">
-        <ion-item class="list-item">
+    <div class="list-item" *ngIf="report">
+        <div class="list-item__header">Informações</div>
+
+        <div class="list-item__content">
             <div class="highlight">{{ report.name }}</div>
             <div>Total: {{ report.total | currency:'BRL':'R$' }}</div>
-        </ion-item>
+        </div>
 
-        <ion-item *ngFor="let item of report.list" class="list-item">
-            <ion-avatar item-start>
-                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-            </ion-avatar>
+        <div class="list-item__header list__header">{{ listTitle }}</div>
 
-            <p class="highlight">{{ item.name }}</p>
-            <p>Preço Un: {{ item.total | currency:'BRL':'R$' }}</p>
-        </ion-item>
-    </ion-list>
+        <ion-list class="product-list" *ngIf="report.list && report.list.length > 0">
+            <ion-item *ngFor="let item of report.list">
+                <ion-avatar item-start>
+                    <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                </ion-avatar>
+
+                <p class="highlight" *ngIf="item.created_at">{{ item.created_at }}</p>
+                <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
+                <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
+            </ion-item>
+        </ion-list>
+
+        <ion-list class="product-list" *ngIf="!report.list || (report.list && report.list.length == 0)">
+            <ion-item class="no-items">
+                <p>Nenhum item encontrado</p>
+            </ion-item>
+        </ion-list>
+    </div>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-title>Período: {{ periodTitle }}</ion-title>
+    </ion-toolbar>
+</ion-footer>

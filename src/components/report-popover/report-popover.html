@@ -1,0 +1,16 @@
+<!-- Generated template for the ReportPopoverComponent component -->
+<div>
+    <ion-list no-lines>
+        <ion-list-header>Período</ion-list-header>
+        <ion-item>
+            <ion-label>De</ion-label>
+            <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="from"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Até</ion-label>
+            <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="to"></ion-datetime>
+        </ion-item>
+        <button ion-item (click)="clear()">Limpar filtro</button>
+        <button ion-item (click)="save()">Salvar</button>
+    </ion-list>
+</div>
