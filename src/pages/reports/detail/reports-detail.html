@@ -35,6 +35,7 @@
 
                 <p class="highlight" *ngIf="item.created_at">{{ item.created_at }}</p>
                 <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
+                <div *ngIf="item.quantity">Quantidade: {{ item.quantity }}</div>
                 <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
             </ion-item>
         </ion-list>

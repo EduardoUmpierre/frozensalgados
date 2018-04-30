@@ -28,7 +28,8 @@
             </ion-avatar>
 
             <div class="highlight">{{ report.name }}</div>
-            <div>Total: {{ report.total | currency:'BRL':'R$' }}</div>
+            <div *ngIf="report.quantity">Quantidade: {{ report.quantity }}</div>
+            <div>Preço Total: {{ report.total | currency:'BRL':'R$' }}</div>
         </ion-item>
     </ion-list>
 </ion-content>
