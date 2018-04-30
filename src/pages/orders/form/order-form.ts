@@ -172,7 +172,7 @@ export class OrderFormPage {
                 buttons: [
                     {
                         text: 'Ok',
-                        handler: () =>  {
+                        handler: () => {
                             this.tab = 'products'
                         }
                     }
@@ -293,7 +293,7 @@ export class OrderFormPage {
      */
     updatePaymentDays(event: any) {
         let dd = moment(this.form.controls['delivery_date'].value);
-        let ed = moment([event.year, event.month-1, event.day]);
+        let ed = moment([event.year, event.month - 1, event.day]);
 
         this.paymentDays = ed.diff(dd, 'days') + 1;
     }
