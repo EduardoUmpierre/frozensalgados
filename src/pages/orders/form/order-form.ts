@@ -17,6 +17,7 @@ import { SyncProvider } from "../../../providers/sync/sync";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import { Category } from "../../../models/Category";
 
 /**
  * Generated class for the OrderFormPage page.
@@ -36,6 +37,7 @@ export class OrderFormPage {
     private customers = [];
     private order: Product[] = [];
     private orders = [];
+    private paymentDays = 1;
 
     tab: string = 'info';
     order_total: number = 0.00;
@@ -91,11 +93,9 @@ export class OrderFormPage {
         this.order = [];
         this.currentOrder = 0;
 
-        if (id && id.trim() != '') {
-            event.component.items = this.customers.filter(item => item.name.toLowerCase().indexOf(id.toLowerCase()) !== -1 || item.id.toString().indexOf(id) !== -1);
+        event.component.items = this.customers.filter(item => item.name.toLowerCase().indexOf(id.toLowerCase()) !== -1 || item.id.toString().indexOf(id) !== -1);
 
-            event.component.isSearching = false;
-        }
+        event.component.isSearching = false;
     }
 
     /**
@@ -105,6 +105,7 @@ export class OrderFormPage {
      */
     searchCustomerOrders(event: { component: SelectSearchable, value: any }) {
         this.order = [];
+        this.updateTotal();
 
         this.apiProvider.builder('orders/customer/' + event.value.id).get().subscribe((orders) => {
             orders.forEach((e, i) => {
@@ -127,7 +128,7 @@ export class OrderFormPage {
             let updatedOrder = [];
             this.order = [];
 
-            res.order_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity)));
+            res.order_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity, new Category(e.product.category.id, e.product.category.name))));
 
             this.order = updatedOrder;
             this.updateTotal();
@@ -274,5 +275,26 @@ export class OrderFormPage {
     updateTotal() {
         this.order_total = 0;
         this.order.forEach((e, i) => this.order_total += e.price * e.quantity);
+    }
+
+    /**
+     * @param event
+     */
+    updatePaymentDate(event: any) {
+        let days = event.target.value;
+
+        let newDate = moment(this.form.controls['delivery_date'].value).add(days, 'days').format();
+
+        this.form.controls['payment_date'].setValue(newDate);
+    }
+
+    /**
+     * @param event
+     */
+    updatePaymentDays(event: any) {
+        let dd = moment(this.form.controls['delivery_date'].value);
+        let ed = moment([event.year, event.month-1, event.day]);
+
+        this.paymentDays = ed.diff(dd, 'days') + 1;
     }
 }

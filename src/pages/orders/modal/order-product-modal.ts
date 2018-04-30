@@ -5,6 +5,7 @@ import { ApiProvider } from "../../../providers/api/api";
 import { Product } from "../../../models/Product";
 import { Storage } from "@ionic/storage";
 import { SyncProvider } from "../../../providers/sync/sync";
+import { Category } from "../../../models/Category";
 
 /**
  * Generated class for the OrderProductModalPage page.
@@ -24,25 +25,40 @@ export class OrderProductModalPage {
     quantity: number;
     products: Product[] = [];
 
+    category: Category;
+    categories: Category[] = [];
+    filteredProducts: Product[] = [];
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider,
                 public viewCtrl: ViewController, public storage: Storage, public syncProvider: SyncProvider) {
-        if (navParams.get('product')) {
-            this.pageTitle = 'Editar produto';
-            this.order = navParams.get('product');
-            this.quantity = this.order.quantity;
-        } else {
-            this.order = new Product();
-            this.quantity = 1;
-        }
-    }
-
-    /**
-     *
-     */
-    ionViewWillEnter() {
         this.syncProvider
-            .verifySync('products')
-            .then(products => this.products = products)
+            .verifySync('categories')
+            .then(categories => {
+                categories.unshift({id: 0, name: 'Todas as categorias'});
+                this.categories = categories;
+                this.category = this.categories[0];
+
+                this.syncProvider
+                    .verifySync('products')
+                    .then(products => {
+                        this.products = products;
+                        this.filteredProducts = this.products;
+
+                        if (navParams.get('product')) {
+                            this.pageTitle = 'Editar produto';
+                            this.order = navParams.get('product');
+                            this.quantity = this.order.quantity;
+                            this.category = this.order.category;
+
+                            console.log(this.order);
+                            console.log(this.category);
+                        } else {
+                            this.order = new Product();
+                            this.quantity = 1;
+                        }
+                    })
+                    .catch((error) => console.log(error));
+            })
             .catch((error) => console.log(error));
     }
 
@@ -63,7 +79,6 @@ export class OrderProductModalPage {
     }
 
     /**
-     *
      * @param {{component: SelectSearchable; value: any}} event
      */
     updateProduct(event: { component: SelectSearchable, value: any }) {
@@ -74,11 +89,27 @@ export class OrderProductModalPage {
     }
 
     /**
-     * Dissmiss product modal
+     * @param {{component: SelectSearchable; value: any}} event
+     */
+    updateCategory(event: { component: SelectSearchable, value: any }) {
+        const category = event.value;
+        const products = this.products;
+
+        this.order = null;
+
+        if (category.id == 0) {
+            this.filteredProducts = products;
+        } else {
+            this.filteredProducts = products.filter(item => item.category.id.toString().indexOf(category.id) !== -1);
+        }
+    }
+
+    /**
+     * Dismiss product modal
      */
     dismiss() {
         if (this.validate()) {
-            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, this.order.price, this.quantity));
+            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, this.order.price, this.quantity, new Category(this.order.category.id, this.order.category.name)));
         }
     }
 

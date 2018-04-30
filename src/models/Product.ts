@@ -1,16 +1,20 @@
+import { Category } from "./Category";
+
 export class Product {
     private _id: number;
     private _name: string;
     private _image: string;
     private _price: number;
     private _quantity: number;
+    private _category: Category;
 
-    constructor(id?: number, name?: string, image?: string, price?: number, quantity?: number) {
+    constructor(id?: number, name?: string, image?: string, price?: number, quantity?: number, category?: Category) {
         this._id = id;
         this._name = name;
         this._image = image;
         this._price = price;
         this._quantity = quantity;
+        this._category = category;
     }
 
     get id(): number {
@@ -51,6 +55,14 @@ export class Product {
 
     set quantity(quantity: number) {
         this._quantity = quantity;
+    }
+
+    get category(): Category {
+        return this._category;
+    }
+
+    set category(category: Category) {
+        this._category = category;
     }
 
     validate() {

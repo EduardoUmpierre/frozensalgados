@@ -21,6 +21,20 @@
     <div class="list-item">
         <ion-list>
             <ion-item>
+                <div class="field-form-label">Categoria</div>
+
+                <select-searchable
+                        [(ngModel)]="category"
+                        itemValueField="id"
+                        itemTextField="name"
+                        title="Categoria"
+                        [items]="categories"
+                        (onChange)="updateCategory($event)"
+                        [canSearch]="true">
+                </select-searchable>
+            </ion-item>
+
+            <ion-item>
                 <div class="field-form-label">Produto</div>
 
                 <select-searchable
@@ -28,8 +42,7 @@
                         itemValueField="id"
                         itemTextField="name"
                         title="Produto"
-                        [items]="products"
-                        (onSearch)="searchProducts($event)"
+                        [items]="filteredProducts"
                         (onChange)="updateProduct($event)"
                         [canSearch]="true">
                 </select-searchable>

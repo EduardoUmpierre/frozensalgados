@@ -42,7 +42,6 @@
                                 itemTextField="name"
                                 title="Cliente"
                                 [items]="customers"
-                                (onSearch)="searchCustomers($event)"
                                 (onChange)="searchCustomerOrders($event)"
                                 [canSearch]="true">
                         </select-searchable>
@@ -80,6 +79,13 @@
                                       formControlName="delivery_date"></ion-datetime>
                     </ion-item>
 
+                    <!-- Quantidade de dias para o primeiro pagamento -->
+                    <ion-item>
+                        <ion-label stacked>Qnt. de dias para o primeiro pagamento</ion-label>
+                        <ion-input type="number" min="1" (keyup)="updatePaymentDate($event)"
+                                   [(ngModel)]="paymentDays" [ngModelOptions]="{standalone: true}"></ion-input>
+                    </ion-item>
+
                     <!-- Data de pagamento -->
                     <ion-grid>
                         <ion-row>
@@ -87,7 +93,8 @@
                                 <ion-item>
                                     <ion-label stacked>Data de pagamento</ion-label>
                                     <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
-                                                  formControlName="payment_date"></ion-datetime>
+                                                  formControlName="payment_date"
+                                                  (ionChange)="updatePaymentDays($event)"></ion-datetime>
                                 </ion-item>
                             </ion-col>
                             <ion-col col-4>
