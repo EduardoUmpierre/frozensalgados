@@ -158,6 +158,8 @@ ion-content {
         }
 
         &.product-list {
+            margin-bottom: 1rem;
+
             > .item {
                 > ion-avatar {
                     margin-bottom: 0;
@@ -172,11 +174,13 @@ ion-content {
                     border-bottom: 1px solid #f6f7fa;
                 }
 
-                &:last-child > .item-inner {
-                    border-bottom: 0;
+                &:last-child {
+                    > .item-inner {
+                        border-bottom: 0;
 
-                    .ion-label {
-                        margin-bottom: 0;
+                        ion-label {
+                            margin-bottom: 0;
+                        }
                     }
                 }
             }

@@ -116,13 +116,11 @@
 
             <!-- Produtos -->
             <div class="list-item" *ngSwitchCase="'products'">
-                <ion-list class="product-list">
-                    <ion-item>
-                        <button ion-button type="button" color="blue" full (click)="loadProductModal()">
-                            Adicionar Produto
-                        </button>
-                    </ion-item>
+                <button ion-button type="button" color="blue" full (click)="loadProductModal()" class="add-product-button">
+                    Adicionar Produto
+                </button>
 
+                <ion-list class="product-list">
                     <ion-item *ngFor="let product of order; let i = index">
                         <ion-avatar item-start>
                             <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
