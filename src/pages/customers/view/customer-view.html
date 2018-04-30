@@ -23,10 +23,21 @@
         <div class="list-item__content">
             <p class="highlight">Cliente {{ customer.name }}</p>
             <p>CNPJ: {{ customer.cnpj }}</p>
+            <p>Inscrição Estadual: {{ customer.ie_exempt ? 'Isento' : customer.ie }}</p>
+        </div>
+
+        <div class="list-item__header">Contato</div>
+
+        <div class="list-item__content">
             <p>Telefone: {{ customer.phone }}</p>
+        </div>
+
+        <div class="list-item__header">Endereço</div>
+
+        <div class="list-item__content">
+            <p>CEP: {{ customer.cep }}</p>
             <p>Cidade: {{ customer.city }}</p>
             <p>Bairro: {{ customer.district }}</p>
-            <p>CEP: {{ customer.cep }}</p>
             <p>Endereço: {{ customer.address }}</p>
             <p>Número: {{ customer.address_number }}</p>
         </div>
