@@ -82,7 +82,7 @@
                     <!-- Quantidade de dias para o primeiro pagamento -->
                     <ion-item>
                         <ion-label stacked>Qnt. de dias para o primeiro pagamento</ion-label>
-                        <ion-input type="number" min="1" (keyup)="updatePaymentDate($event)"
+                        <ion-input type="number" min="0" (keyup)="updatePaymentDate($event)"
                                    [(ngModel)]="paymentDays" [ngModelOptions]="{standalone: true}"></ion-input>
                     </ion-item>
 

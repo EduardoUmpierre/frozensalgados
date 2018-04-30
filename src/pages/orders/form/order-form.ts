@@ -283,9 +283,11 @@ export class OrderFormPage {
     updatePaymentDate(event: any) {
         let days = event.target.value;
 
-        let newDate = moment(this.form.controls['delivery_date'].value).add(days, 'days').format();
+        if (days && days > 0 && days.trim() !== '') {
+            let newDate = moment(this.form.controls['delivery_date'].value).add(days, 'days').format();
 
-        this.form.controls['payment_date'].setValue(newDate);
+            this.form.controls['payment_date'].setValue(newDate);
+        }
     }
 
     /**
