@@ -42,6 +42,9 @@ export class ReportsViewPage {
             case 'products':
                 categoryName = 'produtos';
                 break;
+            case 'customers':
+                categoryName = 'clientes';
+                break;
         }
 
         this.pageTitle = 'Relatório de ' + categoryName;
@@ -63,7 +66,7 @@ export class ReportsViewPage {
      */
     presentPopover(myEvent) {
         let popover = this.popoverCtrl.create(ReportPopoverComponent, {period: this.period});
-        popover.present();
+        popover.present({ev: myEvent});
         popover.onDidDismiss(data => {
             if (data) {
                 this.updatePeriod([data.from, data.to]);
@@ -76,11 +79,16 @@ export class ReportsViewPage {
      */
     updatePeriod(period) {
         if (period && period[0] && period[1]) {
-            this.period = [period[0], period[1]];
+            this.period = period = [
+                this.toIso(period[0]),
+                this.toIso(period[1])
+            ];
+
             this.periodTitle = moment(period[0]).format('DD/MM/YYYY') + ' - ' + moment(period[1]).format('DD/MM/YYYY');
 
-            this.apiProvider.builder('reports/' + this.category + '/' + period[0] + '/' + period[1]).loader().get()
-                .subscribe((res) => {
+            this.apiProvider
+                .builder('reports/' + this.category + '/' + moment(period[0]).format('YYYY-MM-DD') + '/' + moment(period[1]).format('YYYY-MM-DD'))
+                .loader().get().subscribe((res) => {
                     this.reports = res;
                     this.loaded = true;
                 });
@@ -94,5 +102,13 @@ export class ReportsViewPage {
                     this.loaded = true;
                 });
         }
+    }
+
+    /**
+     * @param date
+     * @returns {string}
+     */
+    toIso(date) {
+        return new Date(date).toISOString();
     }
 }
