@@ -52,6 +52,10 @@ export class ReportsDetailPage {
                 categoryName = 'cliente';
                 this.listTitle = 'Lista de pedidos';
                 break;
+            case 'orders':
+                categoryName = 'pedido';
+                this.listTitle = 'Lista de produtos';
+                break;
             default:
                 this.listTitle = 'Listagem';
         }
@@ -81,8 +85,8 @@ export class ReportsDetailPage {
     updatePeriod(period) {
         if (period && period[0] && period[1]) {
             this.period = period = [
-                this.toIso(period[0]),
-                this.toIso(period[1])
+                period[0],
+                period[1]
             ];
 
             this.periodTitle = moment(period[0]).format('DD/MM/YYYY') + ' - ' + moment(period[1]).format('DD/MM/YYYY');
@@ -112,13 +116,5 @@ export class ReportsDetailPage {
         }
 
         this.report = res;
-    }
-
-    /**
-     * @param date
-     * @returns {string}
-     */
-    toIso(date) {
-        return new Date(date).toISOString();
     }
 }

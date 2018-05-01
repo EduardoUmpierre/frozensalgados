@@ -46,6 +46,7 @@ import { ReportsPage } from "../pages/reports/index/reports";
 import { ReportsViewPage } from "../pages/reports/view/reports-view";
 import { ReportsDetailPage } from "../pages/reports/detail/reports-detail";
 import { ReportPopoverComponent } from "../components/report-popover/report-popover";
+import { ReportPeriodPage } from "../pages/reports/period/report-period";
 
 registerLocaleData(localePt);
 
@@ -96,7 +97,8 @@ export class MyErrorHandler implements ErrorHandler {
         ReportsPage,
         ReportsViewPage,
         ReportsDetailPage,
-        ReportPopoverComponent
+        ReportPopoverComponent,
+        ReportPeriodPage
     ],
     imports: [
         BrowserModule,
@@ -144,7 +146,8 @@ export class MyErrorHandler implements ErrorHandler {
         ReportsPage,
         ReportsViewPage,
         ReportsDetailPage,
-        ReportPopoverComponent
+        ReportPopoverComponent,
+        ReportPeriodPage
     ],
     providers: [
         StatusBar,

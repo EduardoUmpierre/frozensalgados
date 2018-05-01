@@ -1,0 +1,28 @@
+page-report-period {
+    ion-list.product-list {
+        margin-bottom: 0 !important;
+
+        ion-item {
+            font-size: 1.4rem !important;
+
+            .item-inner {
+                border-bottom: 1px solid #dedede !important;
+
+                ion-label {
+                    margin-bottom: 1rem !important;
+                    margin-top: 1rem !important;
+                }
+            }
+
+            &:last-child {
+                .item-inner {
+                    border-bottom: 0 !important;
+
+                    ion-label {
+                        margin-bottom: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}

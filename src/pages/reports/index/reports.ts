@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ReportsViewPage } from "../view/reports-view";
+import { ReportPeriodPage } from "../period/report-period";
 
 /**
  * Generated class for the ReportsPage page.
@@ -19,9 +20,13 @@ export class ReportsPage {
     }
 
     /**
-     * @param category
+     * @param {string} category
      */
-    goToReportView(category) {
+    goToReportView(category: string) {
         this.navCtrl.push(ReportsViewPage, {'category': category});
+    }
+
+    goToReportPeriod() {
+        this.navCtrl.push(ReportPeriodPage);
     }
 }

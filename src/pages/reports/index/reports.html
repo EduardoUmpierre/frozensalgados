@@ -11,9 +11,19 @@
 </ion-header>
 
 <ion-content>
+    <button ion-button (click)="goToReportPeriod()" full clear icon-left large>
+        <ion-icon name="calendar"></ion-icon>
+        Período
+    </button>
+
     <button ion-button (click)="goToReportView('customers')" full clear icon-left large>
         <ion-icon name="people"></ion-icon>
         Clientes
+    </button>
+
+    <button ion-button (click)="goToReportView('orders')" full clear icon-left large>
+        <ion-icon name="clipboard"></ion-icon>
+        Pedidos
     </button>
 
     <button ion-button (click)="goToReportView('products')" full clear icon-left large>
