@@ -53,7 +53,6 @@ export class ReportsViewPage {
     }
 
     /**
-     *
      * @param {number} id
      */
     goToDetails(id: number) {
@@ -61,7 +60,6 @@ export class ReportsViewPage {
     }
 
     /**
-     *
      * @param myEvent
      */
     presentPopover(myEvent) {
@@ -89,9 +87,9 @@ export class ReportsViewPage {
             this.apiProvider
                 .builder('reports/' + this.category + '/' + moment(period[0]).format('YYYY-MM-DD') + '/' + moment(period[1]).format('YYYY-MM-DD'))
                 .loader().get().subscribe((res) => {
-                    this.reports = res;
-                    this.loaded = true;
-                });
+                this.reports = res;
+                this.loaded = true;
+            });
         } else {
             this.period = [];
             this.periodTitle = 'Sempre';

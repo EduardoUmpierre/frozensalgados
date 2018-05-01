@@ -12,10 +12,9 @@ export class HttpProvider {
             let isApp = this.platform.is('core') || this.platform.is('cordova');
 
             console.log(this.platform.platforms());
-            console.log('IS APP?');
-            console.info(isApp);
+            console.log('IS APP?', isApp);
 
-            this.http = isApp ? nativeHttp : angularHttp;
+            this.http = isApp ? this.nativeHttp : this.angularHttp;
         });
     }
 }

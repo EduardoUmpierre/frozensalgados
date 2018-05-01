@@ -15,12 +15,8 @@ export class ApiProvider {
     protected urlBase = this.isApp() ? 'https://frozensalgados.herokuapp.com/' : 'http://localhost:8000/';
     protected loading;
 
-    constructor(public httpProvider: HttpProvider,
-                private platform: Platform,
-                public loadingCtrl: LoadingController,
-                public alertCtrl: AlertController,
-                public app: App,
-                private storage: Storage,
+    constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController,
+                public alertCtrl: AlertController, public app: App, private storage: Storage,
                 protected toastCtrl: ToastController) {
     }
 
