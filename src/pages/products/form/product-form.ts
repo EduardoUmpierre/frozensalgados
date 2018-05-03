@@ -42,20 +42,22 @@ export class ProductFormPage {
      *
      */
     ionViewWillEnter() {
-        if (this.id) {
-            this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
-                this.form.controls['name'].setValue(res.name);
-                this.form.controls['price'].setValue(this.decimalPipe.transform(res.price, '1.2-2', 'pt-BR'));
-
-                if (res.category) {
-                    this.form.controls['category_id'].setValue(res.category.id);
-                }
-            });
-        }
-
         this.syncProvider
             .verifySync('categories', !!this.navParams.get('force'))
-            .then(categories => this.categories = categories)
+            .then(categories => {
+                this.categories = categories;
+
+                if (this.id) {
+                    this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
+                        this.form.controls['name'].setValue(res.name);
+                        this.form.controls['price'].setValue(this.decimalPipe.transform(res.price, '1.2-2', 'pt-BR'));
+
+                        if (res.category) {
+                            this.form.controls['category_id'].setValue(res.category.id);
+                        }
+                    });
+                }
+            })
             .catch((error) => console.log(error));
     }
 
