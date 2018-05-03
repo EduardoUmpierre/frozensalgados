@@ -31,7 +31,7 @@
             <div class="list-item__content">
                 <div class="highlight">Pedido: {{ order.id }}</div>
                 <div>Data: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</div>
-                <!--<div>Status: {{ order.status }}</div>-->
+                <div>Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}</div>
             </div>
 
             <ion-grid class="list-item__footer">
