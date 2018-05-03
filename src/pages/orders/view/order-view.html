@@ -18,21 +18,38 @@
 
 <ion-content>
     <div class="list-item" *ngIf="order">
-        <div class="list-item__header">Informações</div>
+        <div class="list-item__header">Cliente</div>
 
         <div class="list-item__content">
             <p class="highlight">Cliente {{ order.customer.name }}</p>
             <p>CNPJ: {{ order.customer.cnpj }}</p>
             <p>Endereço: {{ order.customer.address }}</p>
+        </div>
+
+        <div class="list-item__header">Pedido</div>
+
+        <div class="list-item__content">
+            <p class="highlight">Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}</p>
             <p>Data do pedido: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</p>
             <p>Data de entrega: {{ order.delivery_date | date: 'dd/MM/y' }}</p>
-            <p>Comentários: {{ order.comments }}</p>
+            <p>Observações: {{ order.comments ? order.comments : 'Nenhuma' }}</p>
         </div>
 
         <div class="list-item__header">Pagamento</div>
 
         <div class="list-item__content">
             <p>Data de pagamento: {{ order.payment_date | date: 'dd/MM/y' }}</p>
+            <p>
+                Forma de pagamento:
+
+                <span [ngSwitch]="order.payment_method">
+                    <span *ngSwitchDefault>Boleto</span>
+                    <span *ngSwitchCase="'2'">Cheque</span>
+                    <span *ngSwitchCase="'3'">Dinheiro</span>
+                    <span *ngSwitchCase="'4'">Voucher</span>
+                </span>
+            </p>
+
             <p>Prestações: {{ order.installments }}</p>
         </div>
 
