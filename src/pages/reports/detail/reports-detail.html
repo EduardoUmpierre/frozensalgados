@@ -35,9 +35,10 @@
 
                 <p class="highlight" *ngIf="item.created_at">{{ item.created_at }}</p>
                 <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
-                <div *ngIf="item.quantity">Quantidade: {{ item.quantity }}</div>
-                <div *ngIf="item.seller">Vendedor: {{ item.seller }}</div>
-                <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
+                <p *ngIf="item.quantity">Quantidade: {{ item.quantity }}</p>
+                <p *ngIf="item.seller">Vendedor: {{ item.seller }}</p>
+                <p *ngIf="item.unit_price">Preço Un: {{ item.unit_price | currency:'BRL':'R$' }}</p>
+                <p>Preço Total: {{ item.total | currency:'BRL':'R$' }}</p>
             </ion-item>
         </ion-list>
 
