@@ -61,6 +61,16 @@
                         </ion-select>
                     </ion-item>
 
+                    <!-- Status -->
+                    <ion-item>
+                        <ion-label stacked>Status</ion-label>
+                        <ion-select formControlName="status">
+                            <ion-option value="1">Pedido</ion-option>
+                            <ion-option value="2">Bonificação</ion-option>
+                            <ion-option value="3">Troca</ion-option>
+                        </ion-select>
+                    </ion-item>
+
                     <!-- Forma de pagamento -->
                     <ion-item>
                         <ion-label stacked>Forma de pagamento</ion-label>
@@ -76,7 +86,7 @@
                     <ion-item>
                         <ion-label stacked>Data de entrega</ion-label>
                         <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
-                                      formControlName="delivery_date"></ion-datetime>
+                                      formControlName="delivery_date" (ionChange)="updateDeliveryDate($event)"></ion-datetime>
                     </ion-item>
 
                     <!-- Quantidade de dias para o primeiro pagamento -->

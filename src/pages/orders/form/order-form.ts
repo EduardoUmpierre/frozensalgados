@@ -49,14 +49,15 @@ export class OrderFormPage {
                 private formBuilder: FormBuilder) {
         moment.locale('pt-BR');
 
-        const today = moment().format();
+        let today = moment();
 
         this.form = this.formBuilder.group({
             customer: new FormControl('', Validators.required),
+            status: new FormControl('', Validators.required),
+            delivery_date: new FormControl(today.format(), Validators.required),
             payment_method: new FormControl('', Validators.required),
-            payment_date: new FormControl(today, Validators.required),
+            payment_date: new FormControl(today.add(1, 'days').format(), Validators.required),
             installments: new FormControl(1, Validators.required),
-            delivery_date: new FormControl(today, Validators.required),
             comments: new FormControl('')
         });
     }
@@ -193,7 +194,7 @@ export class OrderFormPage {
         let data = [];
 
         order.forEach((e, i) => {
-            data.push({id: e.id, qnt: e.quantity});
+            data.push({id: e.id, qnt: e.quantity, price: e.price});
         });
 
         return data;
@@ -280,6 +281,15 @@ export class OrderFormPage {
     /**
      * @param event
      */
+    updateDeliveryDate(event: any) {
+        let deliveryDate = moment([event.year, event.month - 1, event.day]);
+
+        this.form.controls['payment_date'].setValue(deliveryDate.add(this.paymentDays, 'days').format());
+    }
+
+    /**
+     * @param event
+     */
     updatePaymentDate(event: any) {
         let days = event.target.value;
 
@@ -294,9 +304,9 @@ export class OrderFormPage {
      * @param event
      */
     updatePaymentDays(event: any) {
-        let dd = moment(this.form.controls['delivery_date'].value);
-        let ed = moment([event.year, event.month - 1, event.day]);
+        let deliveryDate = moment(this.form.controls['delivery_date'].value);
+        let paymentDate = moment([event.year, event.month - 1, event.day]);
 
-        this.paymentDays = ed.diff(dd, 'days') + 1;
+        this.paymentDays = paymentDate.diff(deliveryDate, 'days') + 1;
     }
 }
