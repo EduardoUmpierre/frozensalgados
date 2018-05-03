@@ -6,6 +6,7 @@ import { Product } from "../../../models/Product";
 import { Storage } from "@ionic/storage";
 import { SyncProvider } from "../../../providers/sync/sync";
 import { Category } from "../../../models/Category";
+import { DecimalPipe } from "@angular/common";
 
 /**
  * Generated class for the OrderProductModalPage page.
@@ -23,6 +24,8 @@ export class OrderProductModalPage {
     pageTitle = 'Adicionar produto';
     order: Product;
     quantity: number;
+    price: string;
+    priceText: string;
     products: Product[] = [];
 
     category: Category;
@@ -30,7 +33,8 @@ export class OrderProductModalPage {
     filteredProducts: Product[] = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public apiProvider: ApiProvider,
-                public viewCtrl: ViewController, public storage: Storage, public syncProvider: SyncProvider) {
+                public viewCtrl: ViewController, public storage: Storage, public syncProvider: SyncProvider,
+                private decimalPipe: DecimalPipe) {
         this.syncProvider
             .verifySync('categories')
             .then(categories => {
@@ -50,11 +54,13 @@ export class OrderProductModalPage {
                             this.quantity = this.order.quantity;
                             this.category = this.order.category;
 
-                            console.log(this.order);
-                            console.log(this.category);
+                            console.log(this.order.price);
+
+                            this.price = this.decimalPipe.transform(this.order.price, '1.2-2', 'pt-BR');
                         } else {
                             this.order = new Product();
                             this.quantity = 1;
+                            this.price = this.decimalPipe.transform(0, '1.2-2', 'pt-BR');
                         }
                     })
                     .catch((error) => console.log(error));
@@ -86,6 +92,8 @@ export class OrderProductModalPage {
 
         this.order = Object.assign(this.order, product);
         this.order.image = 'assets/images/placeholder-60.jpg';
+
+        this.price = this.decimalPipe.transform(this.order.price, '1.2-2', 'pt-BR');
     }
 
     /**
@@ -109,7 +117,7 @@ export class OrderProductModalPage {
      */
     dismiss() {
         if (this.validate()) {
-            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, this.order.price, this.quantity, new Category(this.order.category.id, this.order.category.name)));
+            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, parseFloat(this.price), this.quantity, new Category(this.order.category.id, this.order.category.name)));
         }
     }
 
@@ -118,5 +126,14 @@ export class OrderProductModalPage {
      */
     validate() {
         return this.order.name !== null && this.quantity > 0;
+    }
+
+    /**
+     * @returns {number}
+     */
+    showTotalPrice() {
+        console.log(this.price);
+
+        return this.price ? parseFloat(this.price.replace(/,/g, '.')) * this.quantity : 0;
     }
 }

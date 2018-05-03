@@ -48,11 +48,21 @@
                 </select-searchable>
             </ion-item>
 
+            <!-- Price -->
+            <ion-item>
+                <ion-label stacked>Preço</ion-label>
+                <ion-input type="text" [(ngModel)]="price" [brmasker]="{money: true, decimal: 2}"></ion-input>
+            </ion-item>
+
             <ion-item>
                 <ion-label stacked>Quantidade</ion-label>
                 <ion-input type="number" placeholder="Quantidade" min="0" required
                            [(ngModel)]="quantity"></ion-input>
             </ion-item>
         </ion-list>
+
+        <div class="list-item__footer">
+            <div>Total: {{ showTotalPrice() | currency:'BRL':'R$' }}</div>
+        </div>
     </div>
 </ion-content>
