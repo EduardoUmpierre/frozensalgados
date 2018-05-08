@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../api/api';
-import { ToastController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class SyncProvider {
     private categories = ['customers', 'orders', 'products', 'users', 'categories'];
     private syncDelay = (3600 * 5 * 1000);
+    private loading;
 
-    constructor(private storage: Storage, private apiProvider: ApiProvider, private toastCtrl: ToastController) {
+    constructor(private storage: Storage, private apiProvider: ApiProvider, private loadingCtrl: LoadingController) {
     }
 
     /**
@@ -65,10 +66,10 @@ export class SyncProvider {
             this.storage.get('sync_' + category).then(sync => {
                 if ((sync && !this.isSyncTimeValid(sync['date'])) || !sync || force) {
                     if (index == 0 && toast) {
-                        this.toast('Atualizando dados da aplicação');
+                        this.loader();
                     }
 
-                    promiseChain = promiseChain.then(() => this.getCategoryData(category, (categories.length - 1 == index) && toast));
+                    promiseChain = promiseChain.then(() => this.getCategoryData(category, (categories.length - 1 == index) && toast, (categories.length - 1 == index)));
                 }
             });
         });
@@ -81,19 +82,23 @@ export class SyncProvider {
      *
      * @param category
      * @param {boolean} showToast
+     * @param {boolean} lastCategory
      * @param storageName
-     * @param {object} params
+     * @param {Object} params
      * @returns {Promise<any>}
      */
-    private getCategoryData(category: any, showToast: boolean = true, storageName: any = category, params: object = null): Promise<any> {
+    private getCategoryData(category: any, showToast: boolean = true, lastCategory: boolean = false, storageName: any = category, params: object = null): Promise<any> {
         return this.apiProvider
             .builder(storageName)
             .get(params).toPromise().then((data) => {
                 let syncData = {date: new Date().getTime(), items: data};
 
                 this.storage.set('sync_' + category, syncData).then(() => {
-                    if (showToast) {
-                        this.toast();
+                    if (showToast && lastCategory) {
+                        if (this.loading) {
+                            this.loading.dismiss().catch(() => {
+                            });
+                        }
                     }
                 });
 
@@ -102,13 +107,12 @@ export class SyncProvider {
     }
 
     /**
-     * Shows the toast
-     *
+     * Shows the loader
      * @param {string} message
-     * @param {number} duration
      */
-    private toast(message: string = 'Dados atualizados com sucesso', duration: number = 3000) {
-        this.toastCtrl.create({message: message, duration: duration}).present();
+    private loader(message: string = 'Atualizando os dados da aplicação') {
+        this.loading = this.loadingCtrl.create({content: message});
+        this.loading.present();
     }
 
     /**
