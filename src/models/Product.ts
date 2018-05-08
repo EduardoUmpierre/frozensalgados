@@ -5,14 +5,16 @@ export class Product {
     private _name: string;
     private _image: string;
     private _price: number;
+    private _weight: number;
     private _quantity: number;
     private _category: Category;
 
-    constructor(id?: number, name?: string, image?: string, price?: number, quantity?: number, category?: Category) {
+    constructor(id?: number, name?: string, image?: string, price?: number, quantity?: number, weight?: number, category?: Category) {
         this._id = id;
         this._name = name;
         this._image = image;
         this._price = price;
+        this._weight = weight;
         this._quantity = quantity;
         this._category = category;
     }
@@ -47,6 +49,14 @@ export class Product {
 
     set price(price: number) {
         this._price = price;
+    }
+
+    get weight(): number {
+        return this._weight;
+    }
+
+    set weight(weight: number) {
+        this._weight = weight;
     }
 
     get quantity(): number {

@@ -53,6 +53,16 @@
                 <p class="error" *ngIf="form.controls.price && !form.controls.price.valid && !form.controls.price.untouched">
                     O campo é obrigatório.
                 </p>
+
+                <!-- Peso -->
+                <ion-item [class.ng-touched]="form.controls.weight && !form.controls.weight.untouched">
+                    <ion-label stacked>Peso (kg)</ion-label>
+                    <ion-input type="text" formControlName="weight" [brmasker]="{money: true, decimal: 3}"></ion-input>
+                </ion-item>
+
+                <p class="error" *ngIf="form.controls.weight && !form.controls.weight.valid && !form.controls.weight.untouched">
+                    O campo é obrigatório.
+                </p>
             </form>
         </ion-list>
     </div>

@@ -129,7 +129,7 @@ export class OrderFormPage {
             let updatedOrder = [];
             this.order = [];
 
-            res.order_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity, new Category(e.product.category.id, e.product.category.name))));
+            res.order_product.forEach((e) => updatedOrder.push(new Product(e.product.id, e.product.name, '', e.product.price, e.quantity, e.product.weight, new Category(e.product.category.id, e.product.category.name))));
 
             this.order = updatedOrder;
             this.updateTotal();

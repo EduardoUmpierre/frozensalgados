@@ -117,7 +117,7 @@ export class OrderProductModalPage {
      */
     dismiss() {
         if (this.validate()) {
-            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, parseFloat(this.price), this.quantity, new Category(this.order.category.id, this.order.category.name)));
+            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, parseFloat(this.price), this.quantity, this.order.weight, new Category(this.order.category.id, this.order.category.name)));
         }
     }
 

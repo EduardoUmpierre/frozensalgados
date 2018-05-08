@@ -34,6 +34,7 @@ export class ProductFormPage {
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
             price: new FormControl('', Validators.required),
+            weight: new FormControl('', Validators.required),
             category_id: new FormControl('', Validators.required)
         });
     }
@@ -43,13 +44,14 @@ export class ProductFormPage {
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('categories', !!this.navParams.get('force'))
+            .verifySync('categories', this.navParams.get('force'))
             .then(categories => {
                 this.categories = categories;
 
                 if (this.id) {
                     this.apiProvider.builder('products/' + this.id).loader().get().subscribe(res => {
                         this.form.controls['name'].setValue(res.name);
+                        this.form.controls['weight'].setValue(this.decimalPipe.transform(res.weight, '1.3-3', 'pt-BR'));
                         this.form.controls['price'].setValue(this.decimalPipe.transform(res.price, '1.2-2', 'pt-BR'));
 
                         if (res.category) {
@@ -76,10 +78,8 @@ export class ProductFormPage {
      *
      */
     redirect() {
-        this.syncProvider.verifySync('products', true).then(() => {
-            this.navCtrl.push(ProductsPage, {force: true}).then(() => {
-                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-            });
-        }).catch(error => console.log(error));
+        this.navCtrl.push(ProductsPage, {force: true}).then(() => {
+            this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+        });
     }
 }
