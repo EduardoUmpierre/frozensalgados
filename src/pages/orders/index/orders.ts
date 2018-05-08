@@ -28,7 +28,7 @@ export class OrdersPage {
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('orders', !!this.navParams.get('force'))
+            .verifySync('orders', this.navParams.get('force'))
             .then(orders => this.orders = orders)
             .then(() => this.loaded = true)
             .catch((error) => console.log(error));

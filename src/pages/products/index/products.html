@@ -47,8 +47,9 @@
                     </ion-avatar>
 
                     <p class="highlight">{{ product.name }}</p>
-                    <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
                     <p>Categoria: {{ product.category ? product.category.name : 'Sem categoria' }}</p>
+                    <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
+                    <p>Peso (kg): {{ product.weight | number:'1.3-3' }}</p>
 
                     <button ion-button clear item-end icon-only large class="options-button"
                             (click)="showOptions(product.id, i)" *ngIf="currentUser.role == 1">

@@ -45,12 +45,12 @@ export class ProductsPage {
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('products', !!this.navParams.get('force'))
+            .verifySync('products', this.navParams.get('force'))
             .then(products => {
                 this.products = products;
 
                 this.syncProvider
-                    .verifySync('categories', !!this.navParams.get('force'))
+                    .verifySync('categories', this.navParams.get('force'))
                     .then(categories => this.categories = categories)
                     .then(() => this.loaded = true)
                     .catch((error) => console.log(error));

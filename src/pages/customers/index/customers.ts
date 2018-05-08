@@ -34,7 +34,7 @@ export class CustomersPage {
      */
     ionViewWillEnter() {
         this.syncProvider
-            .verifySync('customers', !!this.navParams.get('force'))
+            .verifySync('customers', this.navParams.get('force'))
             .then(customers => this.customers = customers)
             .then(() => this.loaded = true)
             .catch((error) => console.log(error));

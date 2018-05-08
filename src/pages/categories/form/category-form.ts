@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ApiProvider } from "../../../providers/api/api";
 import { ProductsPage } from "../../products/index/products";
-import { SyncProvider } from "../../../providers/sync/sync";
 
 /**
  * Generated class for the CategoryFormPage page.
@@ -23,7 +22,7 @@ export class CategoryFormPage {
     private form: FormGroup;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
-                private apiProvider: ApiProvider, private syncProvider: SyncProvider) {
+                private apiProvider: ApiProvider) {
         if (navParams.get('id')) {
             this.pageTitle = 'Editar categoria';
             this.id = navParams.get('id');
@@ -58,10 +57,8 @@ export class CategoryFormPage {
      *
      */
     redirect() {
-        this.syncProvider.verifySync('categories', true).then(() => {
-            this.navCtrl.push(ProductsPage, {force: true, tab: 'categories'}).then(() => {
-                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-            });
-        }).catch(error => console.log(error));
+        this.navCtrl.push(ProductsPage, {force: true, tab: 'categories'}).then(() => {
+            this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+        });
     }
 }

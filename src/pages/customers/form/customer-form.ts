@@ -101,11 +101,9 @@ export class CustomerFormPage {
      *
      */
     redirect() {
-        this.syncProvider.verifySync('customers', true).then(() => {
-            this.navCtrl.push(CustomersPage).then(() => {
-                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-            });
-        }).catch(error => console.log(error));
+        this.navCtrl.push(CustomersPage, {force: true}).then(() => {
+            this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+        });
     }
 
     /**
@@ -147,9 +145,9 @@ export class CustomerFormPage {
      */
     updateCheckbox() {
         if (this.form.controls['ie_exempt'].value) {
-        //
+            //
         } else {
-        //
+            //
         }
     }
 }
