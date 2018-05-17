@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../../providers/api/api';
 import { ListFormPage } from "../../list-form/list-form";
+import { DownloadProvider } from "../../../providers/download/download";
 
 /**
  * Generated class for the OrderViewPage page.
@@ -19,7 +20,8 @@ export class OrderViewPage {
     public order;
     private id;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
+                private downloadProvider: DownloadProvider) {
     }
 
     /**
@@ -41,4 +43,10 @@ export class OrderViewPage {
     //         order: this.order.order_product
     //     });
     // }
+
+    download() {
+        console.log('Download');
+
+        this.downloadProvider.download('orders/' + this.id + '/download');
+    }
 }

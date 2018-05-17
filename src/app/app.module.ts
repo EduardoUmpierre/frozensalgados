@@ -47,6 +47,9 @@ import { ReportsViewPage } from "../pages/reports/view/reports-view";
 import { ReportsDetailPage } from "../pages/reports/detail/reports-detail";
 import { ReportPopoverComponent } from "../components/report-popover/report-popover";
 import { ReportPeriodPage } from "../pages/reports/period/report-period";
+import { DownloadProvider } from '../providers/download/download';
+import { FileTransfer } from "@ionic-native/file-transfer";
+import { File } from "@ionic-native/file";
 
 registerLocaleData(localePt);
 
@@ -159,6 +162,9 @@ export class MyErrorHandler implements ErrorHandler {
         HttpAngularProvider,
         HttpNativeProvider,
         HTTP,
+        DownloadProvider,
+        FileTransfer,
+        File,
         Keyboard,
         IonicErrorHandler,
         SyncProvider,
@@ -166,6 +172,7 @@ export class MyErrorHandler implements ErrorHandler {
         DecimalPipe,
         {provide: LOCALE_ID, useValue: "pt-BR"},
         [{provide: ErrorHandler, useClass: MyErrorHandler}],
+    DownloadProvider,
     ]
 })
 export class AppModule {
