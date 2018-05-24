@@ -75,6 +75,11 @@
                 <p class="error" *ngIf="form.errors && form.errors.passwordMismatch && !form.controls.passwordRepeat.untouched">
                     As senhas não conferem.
                 </p>
+
+                <ion-item>
+                    <ion-label>Usuário ativo</ion-label>
+                    <ion-checkbox formControlName="is_active"></ion-checkbox>
+                </ion-item>
             </form>
         </ion-list>
     </div>

@@ -36,7 +36,8 @@ export class UserFormPage {
             name: new FormControl('', Validators.required),
             email: new FormControl('', Validators.required),
             cpf: new FormControl('', Validators.required),
-            role: new FormControl('2', Validators.required)
+            role: new FormControl('2', Validators.required),
+            is_active: new FormControl(true, Validators.required)
         });
 
         if (navParams.get('id')) {
@@ -81,6 +82,7 @@ export class UserFormPage {
                 this.form.controls['email'].setValue(res.email);
                 this.form.controls['cpf'].setValue(res.cpf);
                 this.form.controls['role'].setValue(res.role);
+                this.form.controls['is_active'].setValue(res.is_active);
             });
         }
     }

@@ -27,7 +27,7 @@
     </ion-refresher>
 
     <ion-list class="single-item">
-        <ion-item *ngFor="let item of users; let i = index" class="list-item">
+        <ion-item *ngFor="let item of users; let i = index" class="list-item" [ngClass]="{'deleted': !item.is_active}">
             <ion-avatar item-start>
                 <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
             </ion-avatar>
