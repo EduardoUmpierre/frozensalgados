@@ -139,13 +139,37 @@ export class OrderFormPage {
     /**
      * Loads the product modal
      */
-    loadProductModal() {
-        let productModal = this.modalCtrl.create(OrderProductModalPage);
+    loadProductModal(data = {}) {
+        let productModal = this.modalCtrl.create(OrderProductModalPage, data);
 
         productModal.onDidDismiss(data => {
             if (data instanceof Product) {
-                this.order.push(data);
-                this.updateTotal();
+                console.log(data);
+                console.log(this.order);
+
+                let products = this.order.filter(item => item.id == data.id);
+
+                console.log(products);
+
+                if (products.length > 0) {
+                    let alert = this.alertCtrl.create({
+                        title: 'Item duplicado',
+                        message: 'Este produto já consta no pedido',
+                        buttons: [
+                            {
+                                text: 'OK',
+                                handler: () => {
+                                    this.loadProductModal({product: data});
+                                }
+                            }
+                        ]
+                    });
+
+                    alert.present();
+                } else {
+                    this.order.push(data);
+                    this.updateTotal();
+                }
             }
         });
 

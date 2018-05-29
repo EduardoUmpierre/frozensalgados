@@ -27,6 +27,7 @@ export class OrderProductModalPage {
     price: string;
     priceText: string;
     products: Product[] = [];
+    totalPrice: number = 0;
 
     category: Category;
     categories: Category[] = [];
@@ -53,10 +54,9 @@ export class OrderProductModalPage {
                             this.order = navParams.get('product');
                             this.quantity = this.order.quantity;
                             this.category = this.order.category;
-
-                            console.log(this.order.price);
-
                             this.price = this.decimalPipe.transform(this.order.price, '1.2-2', 'pt-BR');
+
+                            this.updateTotalPrice();
                         } else {
                             this.order = new Product();
                             this.quantity = 1;
@@ -94,6 +94,8 @@ export class OrderProductModalPage {
         this.order.image = 'assets/images/placeholder-60.jpg';
 
         this.price = this.decimalPipe.transform(this.order.price, '1.2-2', 'pt-BR');
+
+        this.updateTotalPrice();
     }
 
     /**
@@ -108,7 +110,7 @@ export class OrderProductModalPage {
         if (category.id == 0) {
             this.filteredProducts = products;
         } else {
-            this.filteredProducts = products.filter(item => item.category.id.toString().indexOf(category.id) !== -1);
+            this.filteredProducts = products.filter(item => item.category.id == category.id);
         }
     }
 
@@ -117,7 +119,7 @@ export class OrderProductModalPage {
      */
     dismiss() {
         if (this.validate()) {
-            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, parseFloat(this.price.replace(/,/g, '.')), this.quantity, this.order.weight, new Category(this.order.category.id, this.order.category.name)));
+            this.viewCtrl.dismiss(new Product(this.order.id, this.order.name, this.order.image, this.fixPrice(this.price), this.quantity, this.order.weight, new Category(this.order.category.id, this.order.category.name)));
         }
     }
 
@@ -125,13 +127,25 @@ export class OrderProductModalPage {
      * @returns {boolean}
      */
     validate() {
-        return this.order.name !== null && this.quantity > 0;
+        return this.order.name && this.quantity > 0 && this.fixPrice(this.price) > 0;
     }
 
     /**
+     *
+     * @param {any} event
+     */
+    updateTotalPrice(event = null) {
+        setTimeout(() => {
+            this.totalPrice = this.price ? this.fixPrice(this.price) * this.quantity : 0;
+        }, 150);
+    }
+
+    /**
+     *
+     * @param {string} price
      * @returns {number}
      */
-    showTotalPrice() {
-        return this.price ? parseFloat(this.price.replace(/,/g, '.')) * this.quantity : 0;
+    fixPrice(price: string) {
+        return parseFloat(price.replace(/\./g, '').replace(/,/g, '.'))
     }
 }
