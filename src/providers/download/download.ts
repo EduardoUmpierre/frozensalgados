@@ -34,28 +34,30 @@ export class DownloadProvider {
     }
 
     public download(url: string) {
-        this.platform.ready().then(() => {
-            const fileTransfer: FileTransferObject = this.transfer.create();
+        if (this.apiProvider.isApp()) {
+            this.platform.ready().then(() => {
+                const fileTransfer: FileTransferObject = this.transfer.create();
 
-            this.apiProvider.loader('Baixando arquivo');
+                this.apiProvider.loader('Baixando arquivo');
 
-            this.apiProvider.getApiToken().subscribe(res => {
-                let options = {
-                    headers: {
+                console.log(url);
+
+                this.apiProvider.getApiToken().subscribe(res => {
+                    console.log(res);
+
+                    fileTransfer.download(this.apiProvider.urlBase + 'api/v1/' + url, this.storageDirectory + 'file.pdf', true, {
                         'Authorization': 'Bearer ' + res
-                    }
-                };
-
-                console.log(options);
-
-                fileTransfer.download(this.apiProvider.urlBase + 'api/v1/' + url, this.storageDirectory + 'file.pdf', true, options).then((entry) => {
-                    console.log('download complete: ' + entry.toURL());
-                    this.apiProvider.hideLoader();
-                }, (error) => {
-                    this.apiProvider.hideLoader();
-                    console.log(error);
+                    }).then((entry) => {
+                        console.log('download complete: ' + entry.toURL());
+                        this.apiProvider.hideLoader();
+                    }, (error) => {
+                        console.log(error);
+                        this.apiProvider.hideLoader();
+                    });
                 });
             });
-        });
-    }
+        } else {
+            
+        }
+    };
 }

@@ -47,6 +47,6 @@ export class OrderViewPage {
     download() {
         console.log('Download');
 
-        // this.downloadProvider.download('orders/' + this.id + '/download');
+        this.downloadProvider.download('orders/' + this.id + '/download');
     }
 }
