@@ -1,18 +1,18 @@
 {
-    "name": "frozen",
-    "app_id": "74f2ff88",
-    "type": "ionic-angular",
-    "integrations": {
-        "cordova": {}
+  "name": "frozen",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/cep",
+      "proxyUrl": "https://viacep.com.br"
     },
-    "proxies": [
-        {
-            "path": "/cep",
-            "proxyUrl": "https://viacep.com.br"
-        },
-        {
-            "path": "/receita",
-            "proxyUrl": "https://www.receitaws.com.br"
-        }
-    ]
+    {
+      "path": "/receita",
+      "proxyUrl": "https://www.receitaws.com.br"
+    }
+  ],
+  "pro_id": "74f2ff88"
 }

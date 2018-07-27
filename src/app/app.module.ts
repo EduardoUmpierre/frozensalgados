@@ -50,6 +50,8 @@ import { ReportPeriodPage } from "../pages/reports/period/report-period";
 import { DownloadProvider } from '../providers/download/download';
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
+import { AndroidPermissions } from "@ionic-native/android-permissions";
+import { FileOpener } from "@ionic-native/file-opener";
 
 registerLocaleData(localePt);
 
@@ -170,6 +172,8 @@ export class MyErrorHandler implements ErrorHandler {
         SyncProvider,
         CurrencyPipe,
         DecimalPipe,
+        AndroidPermissions,
+        FileOpener,
         {provide: LOCALE_ID, useValue: "pt-BR"},
         [{provide: ErrorHandler, useClass: MyErrorHandler}],
     DownloadProvider,
