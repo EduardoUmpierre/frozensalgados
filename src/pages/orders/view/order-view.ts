@@ -44,9 +44,10 @@ export class OrderViewPage {
     //     });
     // }
 
+    /**
+     * Calls the download method
+     */
     download() {
-        console.log('Download');
-
-        this.downloadProvider.download('orders/' + this.id + '/download');
+        this.downloadProvider.download('orders/' + this.id + '/download', 'pedido-' + this.id);
     }
 }
