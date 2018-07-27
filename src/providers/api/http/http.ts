@@ -7,14 +7,24 @@ import { HttpNativeProvider } from './http-native';
 export class HttpProvider {
     public http;
 
-    constructor(private platform: Platform, private angularHttp: HttpAngularProvider, private nativeHttp: HttpNativeProvider) {
+    constructor(private platform: Platform, private angularHttp: HttpAngularProvider,
+                private nativeHttp: HttpNativeProvider) {
         this.platform.ready().then(() => {
-            let isApp = this.platform.is('core') || this.platform.is('cordova');
+            let isApp = this.isApp();
 
             console.log(this.platform.platforms());
             console.log('IS APP?', isApp);
 
             this.http = isApp ? this.nativeHttp : this.angularHttp;
         });
+    }
+
+    /**
+     * Verify if the platform is an app
+     *
+     * @returns {boolean}
+     */
+    public isApp() {
+        return this.platform.is('cordova');
     }
 }

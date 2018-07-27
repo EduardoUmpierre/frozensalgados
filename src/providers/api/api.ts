@@ -222,6 +222,6 @@ export class ApiProvider {
      * @returns {boolean}
      */
     public isApp() {
-        return this.platform.is('core') || this.platform.is('cordova');
+        return this.httpProvider.isApp();
     }
 }
