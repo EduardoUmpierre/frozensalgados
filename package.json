@@ -2,7 +2,7 @@
   "name": "frozen-salgados",
   "description": "Aplicação para controle de pedidos desenvolvida em Ionic",
   "license": "MIT",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "author": "Eduardo Umpierre",
   "scripts": {
     "clean": "ionic-app-scripts clean",
