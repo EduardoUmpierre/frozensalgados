@@ -1,9 +1,3 @@
-<!--
-  Generated template for the OrderFormPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
     <ion-navbar>
         <ion-title>{{ pageTitle }}</ion-title>
@@ -86,7 +80,8 @@
                     <ion-item>
                         <ion-label stacked>Data de entrega</ion-label>
                         <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
-                                      formControlName="delivery_date" (ionChange)="updateDeliveryDate($event)"></ion-datetime>
+                                      formControlName="delivery_date"
+                                      (ionChange)="updateDeliveryDate($event)"></ion-datetime>
                     </ion-item>
 
                     <!-- Quantidade de dias para o primeiro pagamento -->
@@ -126,31 +121,36 @@
 
             <!-- Produtos -->
             <div class="list-item" *ngSwitchCase="'products'">
-                <button ion-button type="button" color="blue" full (click)="loadProductModal()" class="add-product-button">
+                <button ion-button type="button" color="blue" full (click)="loadProductModal()"
+                        class="add-product-button">
                     Adicionar Produto
                 </button>
 
-                <ion-list class="product-list">
-                    <ion-item *ngFor="let product of order; let i = index">
-                        <ion-avatar item-start>
-                            <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                        </ion-avatar>
+                <ion-grid>
+                    <ion-row class="product-list">
+                        <ion-col *ngFor="let product of order; let i = index" col-12 col-md-4>
+                            <ion-item>
+                                <ion-avatar item-start>
+                                    <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                                </ion-avatar>
 
-                        <p class="highlight">{{ product.name }}</p>
-                        <p>Quantidade: {{ product.quantity }}</p>
-                        <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
-                        <p>Preço Total: {{ product.price * product.quantity | currency:'BRL':'R$' }}</p>
+                                <p class="highlight">{{ product.name }}</p>
+                                <p>Quantidade: {{ product.quantity }}</p>
+                                <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
+                                <p>Preço Total: {{ product.price * product.quantity | currency:'BRL':'R$' }}</p>
 
-                        <button ion-button type="button" clear item-end icon-only large class="options-button"
-                                (click)="showOptions(product.id, i)">
-                            <ion-icon name="more"></ion-icon>
-                        </button>
-                    </ion-item>
+                                <button ion-button type="button" clear item-end icon-only large class="options-button"
+                                        (click)="showOptions(product.id, i)">
+                                    <ion-icon name="more"></ion-icon>
+                                </button>
+                            </ion-item>
 
-                    <ion-item *ngIf="order.length == 0">
-                        Nenhum produto adicionado
-                    </ion-item>
-                </ion-list>
+                            <ion-item *ngIf="order.length == 0">
+                                Nenhum produto adicionado
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </div>
         </div>
     </form>

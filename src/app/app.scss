@@ -14,6 +14,11 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+select-searchable {
+    min-height: 35px;
+    padding-left: 16px;
+}
+
 .header-md::after {
     content: none;
 }
@@ -43,6 +48,13 @@ ion-content {
     > .scroll-content {
         background-color: transparent !important;
         border-top: none !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    ion-content {
+        background-size: auto;
+        background-repeat: repeat;
     }
 }
 
@@ -160,7 +172,7 @@ ion-content {
         &.product-list {
             margin-bottom: 1rem;
 
-            > .item {
+            .item {
                 > ion-avatar {
                     margin-bottom: 0;
                     margin-top: 0;
@@ -220,7 +232,7 @@ ion-content {
 
 ion-modal {
     .back-button {
-        display: block!important
+        display: block !important
     }
 }
 
@@ -236,13 +248,32 @@ ion-list {
     > ion-item,
     > form > ion-item {
 
+        &:first-child {
+
+            > .item-inner {
+
+                ion-label {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
+
+ion-col,
+ion-list {
+
+    > ion-item,
+    > form > ion-item {
+
         > .item-inner {
+            border-bottom: 0 !important;
             color: #737373;
             padding-right: 0 !important;
 
             .item-button {
-                height: 3.6rem;
                 font-size: 1.4rem;
+                height: 3.6rem;
             }
 
             > .options-button {
@@ -251,16 +282,6 @@ ion-list {
                 > .button-inner {
                     color: #3b5998;
                     font-size: 1.6rem;
-                }
-            }
-        }
-
-        &:first-child {
-
-            > .item-inner {
-
-                ion-label {
-                    margin-top: 0;
                 }
             }
         }
@@ -315,6 +336,17 @@ ion-list {
                         margin-top: 1.4rem !important;
                     }
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    ion-col {
+        &.single-item {
+
+            > ion-item {
+                margin: 0;
             }
         }
     }

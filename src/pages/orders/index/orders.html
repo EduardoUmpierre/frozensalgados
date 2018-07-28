@@ -1,9 +1,3 @@
-<!--
-  Generated template for the OrdersPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
     <ion-navbar>
         <ion-title>Pedidos</ion-title>
@@ -26,28 +20,34 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <ion-list class="single-item">
-        <ion-item *ngFor="let order of orders; let i = index" class="list-item" (click)="goToDetails(order.id)">
-            <div class="list-item__content">
-                <div class="highlight">Pedido: {{ order.id }}</div>
-                <div>Data: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</div>
-                <div>Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}</div>
-            </div>
+    <ion-grid>
+        <ion-row class="single-item">
+            <ion-col *ngFor="let order of orders; let i = index" col-12 col-xl-3 col-lg-3 col-md-4 (click)="goToDetails(order.id)">
+                <ion-item class="list-item">
+                    <div class="list-item__content">
+                        <div class="highlight">Pedido: {{ order.id }}</div>
+                        <div>Data: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</div>
+                        <div>Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}</div>
+                    </div>
 
-            <ion-grid class="list-item__footer">
-                <ion-row>
-                    <ion-col col-6>
-                        <div>Cliente: {{ order.customer.name }}</div>
-                    </ion-col>
-                    <ion-col col-6>
-                        <div>Total: {{ order.total | currency:'BRL':'R$' }}</div>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
+                    <ion-grid class="list-item__footer">
+                        <ion-row>
+                            <ion-col col-6>
+                                <div>Cliente: {{ order.customer.name }}</div>
+                            </ion-col>
+                            <ion-col col-6>
+                                <div>Total: {{ order.total | currency:'BRL':'R$' }}</div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </ion-col>
 
-        <ion-item *ngIf="loaded && orders.length == 0" class="list-item no-items">
-            Nenhum pedido realizado
-        </ion-item>
-    </ion-list>
+            <ion-col *ngIf="loaded && orders.length == 0" class="list-item no-items">
+                <ion-item>
+                    Nenhum pedido realizado
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

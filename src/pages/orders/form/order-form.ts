@@ -19,13 +19,6 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import { Category } from "../../../models/Category";
 
-/**
- * Generated class for the OrderFormPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
     selector: 'page-order-form',
@@ -144,12 +137,7 @@ export class OrderFormPage {
 
         productModal.onDidDismiss(data => {
             if (data instanceof Product) {
-                console.log(data);
-                console.log(this.order);
-
                 let products = this.order.filter(item => item.id == data.id);
-
-                console.log(products);
 
                 if (products.length > 0) {
                     let alert = this.alertCtrl.create({

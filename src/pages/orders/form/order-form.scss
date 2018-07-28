@@ -19,4 +19,19 @@ page-order-form {
     .add-product-button {
         margin-bottom: 1rem;
     }
+
+    .item-md {
+
+        ion-label {
+            font-size: 1.4rem;
+        }
+
+        > ion-avatar {
+
+            > img {
+                height: auto;
+                width: auto;
+            }
+        }
+    }
 }
