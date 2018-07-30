@@ -17,7 +17,12 @@ export class HttpAngularProvider {
         requestOptions.withCredentials = true;
         requestOptions.headers = options;
 
-        return this.http.get(url, requestOptions).map(resp => options.responseType == 'text' ? resp.text() : resp.json());
+        return this.http.get(url, requestOptions).map(resp => {
+            console.log(options.responseType);
+            console.log(resp.text());
+
+            return options.responseType == 'text' ? resp.text() : resp.json();
+        });
     }
 
     /**

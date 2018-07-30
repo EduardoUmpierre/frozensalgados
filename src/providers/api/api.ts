@@ -96,13 +96,15 @@ export class ApiProvider {
      * HTTP GET request
      *
      * @param {{}} params
+     * @param {string} type
      * @returns {any}
      */
-    get(params = {}) {
+    get(params = {}, type: string = 'json') {
         this.buildUrlParams(params);
 
         return this.resolve(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {
-            'Authorization': 'Bearer ' + res
+            'Authorization': 'Bearer ' + res,
+            'responseType': type
         })));
     }
 

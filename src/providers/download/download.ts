@@ -5,6 +5,7 @@ import { AlertController, Platform } from "ionic-angular";
 import { ApiProvider } from "../api/api";
 import { AndroidPermissions } from "@ionic-native/android-permissions";
 import { FileOpener } from "@ionic-native/file-opener";
+import 'rxjs/Rx';
 
 declare var cordova: any;
 
@@ -46,6 +47,23 @@ export class DownloadProvider {
             this.platform.ready().then(() => this.checkPermission(url, filename, extension));
         } else {
             // Download web
+            console.log('download');
+            this.apiProvider.loader('Baixando arquivo').builder(url).get({'stream': false}, 'text').subscribe(res => {
+                let blob = new Blob([res], {type: 'application/pdf'});
+
+                let link = document.createElement('a');
+                // Browsers that support HTML5 download attribute
+                if (link.download !== undefined)
+                {
+                    let url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', filename);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            });
         }
     };
 
