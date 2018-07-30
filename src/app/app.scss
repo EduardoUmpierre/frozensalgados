@@ -220,6 +220,10 @@ ion-content {
     }
 }
 
+ion-col > .list-item {
+    margin: 0;
+}
+
 .list-ios > .item-block:last-child,
 .list-ios > .item-block:first-child,
 .list-ios > .item-wrapper:last-child .item-block{

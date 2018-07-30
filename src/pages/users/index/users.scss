@@ -2,4 +2,8 @@ page-users {
     .deleted {
         opacity: .5;
     }
+
+    ion-label {
+        margin: 0 !important;
+    }
 }
