@@ -20,6 +20,7 @@ import { SyncProvider } from "../../../providers/sync/sync";
 export class UsersPage {
     user: any = {};
     users = [];
+    filteredItems = [];
     loaded: boolean = false;
 
     constructor(private navCtrl: NavController, private apiProvider: ApiProvider, private storage: Storage,
@@ -33,7 +34,10 @@ export class UsersPage {
     ionViewWillEnter() {
         this.syncProvider
             .verifySync('users')
-            .then(users => this.users = users)
+            .then(users => {
+                this.users = users;
+                this.filteredItems = users;
+            })
             .then(() => this.loaded = true)
             .catch((error) => console.log(error));
     }
@@ -125,8 +129,21 @@ export class UsersPage {
     doRefresh(refresher) {
         this.syncProvider
             .verifySync('users', true, false)
-            .then(users => this.users = users)
+            .then(users => {
+                this.users = users;
+                this.filteredItems = users;
+            })
             .then(() => refresher.complete())
             .catch((error) => console.log(error));
+    }
+
+    /**
+     * @param ev
+     * @returns {any[]}
+     */
+    filterItems(ev: any) {
+        let val = ev.target.value;
+
+        this.filteredItems = this.users.filter((item) => item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
     }
 }

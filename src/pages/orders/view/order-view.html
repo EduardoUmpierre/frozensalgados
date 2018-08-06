@@ -11,7 +11,8 @@
 </ion-header>
 
 <ion-content>
-    <div class="list-item" *ngIf="order">
+    <div class="grid" fixed>
+        <div class="list-item" *ngIf="order">
         <div class="list-item__header">Cliente</div>
 
         <div class="list-item__content">
@@ -65,5 +66,6 @@
         <ion-grid class="list-item__footer centered">
             <div>Valor total: {{ order.total | currency:'BRL':'R$' }}</div>
         </ion-grid>
+    </div>
     </div>
 </ion-content>

@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ReportsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
     <ion-navbar>
         <ion-title>Relatórios</ion-title>
@@ -11,33 +5,35 @@
 </ion-header>
 
 <ion-content>
-    <button ion-button (click)="goToReportPeriod()" full clear icon-left large>
-        <ion-icon name="calendar"></ion-icon>
-        Período
-    </button>
+    <div class="grid" fixed>
+        <button ion-button (click)="goToReportPeriod()" full clear icon-left large>
+            <ion-icon name="calendar"></ion-icon>
+            Período
+        </button>
 
-    <button ion-button (click)="goToReportView('customers')" full clear icon-left large>
-        <ion-icon name="people"></ion-icon>
-        Clientes
-    </button>
+        <button ion-button (click)="goToReportView('customers')" full clear icon-left large>
+            <ion-icon name="people"></ion-icon>
+            Clientes
+        </button>
 
-    <button ion-button (click)="goToReportView('orders')" full clear icon-left large>
-        <ion-icon name="clipboard"></ion-icon>
-        Pedidos
-    </button>
+        <button ion-button (click)="goToReportView('orders')" full clear icon-left large>
+            <ion-icon name="clipboard"></ion-icon>
+            Pedidos
+        </button>
 
-    <button ion-button (click)="goToReportView('products')" full clear icon-left large>
-        <ion-icon name="alarm"></ion-icon>
-        Produtos
-    </button>
+        <button ion-button (click)="goToReportView('products')" full clear icon-left large>
+            <ion-icon name="alarm"></ion-icon>
+            Produtos
+        </button>
 
-    <button ion-button (click)="goToReportView('categories')" full clear icon-left large>
-        <ion-icon name="list"></ion-icon>
-        Categorias
-    </button>
+        <button ion-button (click)="goToReportView('categories')" full clear icon-left large>
+            <ion-icon name="list"></ion-icon>
+            Categorias
+        </button>
 
-    <button ion-button (click)="goToReportView('sellers')" full clear icon-left large>
-        <ion-icon name="briefcase"></ion-icon>
-        Vendedores
-    </button>
+        <button ion-button (click)="goToReportView('sellers')" full clear icon-left large>
+            <ion-icon name="briefcase"></ion-icon>
+            Vendedores
+        </button>
+    </div>
 </ion-content>

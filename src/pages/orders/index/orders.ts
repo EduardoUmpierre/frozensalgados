@@ -18,6 +18,7 @@ import { SyncProvider } from "../../../providers/sync/sync";
 })
 export class OrdersPage {
     orders = [];
+    filteredItems = [];
     loaded: boolean = false;
 
     constructor(public navCtrl: NavController, private navParams: NavParams, private syncProvider: SyncProvider) {
@@ -29,7 +30,10 @@ export class OrdersPage {
     ionViewWillEnter() {
         this.syncProvider
             .verifySync('orders', this.navParams.get('force'))
-            .then(orders => this.orders = orders)
+            .then(orders => {
+                this.orders = orders;
+                this.filteredItems = orders;
+            })
             .then(() => this.loaded = true)
             .catch((error) => console.log(error));
     }
@@ -58,8 +62,21 @@ export class OrdersPage {
     doRefresh(refresher) {
         this.syncProvider
             .verifySync('orders', true, false)
-            .then(orders => this.orders = orders)
+            .then(orders => {
+                this.orders = orders;
+                this.filteredItems = orders;
+            })
             .then(() => refresher.complete())
             .catch((error) => console.log(error));
+    }
+
+    /**
+     * @param ev
+     * @returns {any[]}
+     */
+    filterItems(ev: any) {
+        let val = ev.target.value;
+
+        this.filteredItems = this.orders.filter((item) => item.customer.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
     }
 }

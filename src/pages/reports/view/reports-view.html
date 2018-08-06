@@ -18,7 +18,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-list class="single-item" *ngIf="loaded">
+    <div class="grid" fixed>
+        <ion-list class="single-item" *ngIf="loaded">
         <ion-item *ngFor="let report of reports.list" class="list-item" (click)="goToDetails(report.id)">
             <ion-avatar item-start>
                 <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
@@ -34,6 +35,7 @@
             <div>Nenhum item encontrado</div>
         </ion-item>
     </ion-list>
+    </div>
 </ion-content>
 
 <ion-footer>

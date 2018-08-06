@@ -20,9 +20,15 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <ion-grid>
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col>
+                <ion-searchbar (input)="filterItems($event)" placeholder="Pesquisar por cliente"></ion-searchbar>
+            </ion-col>
+        </ion-row>
+
         <ion-row class="single-item">
-            <ion-col *ngFor="let order of orders; let i = index" col-12 col-xl-3 col-lg-3 col-md-4 (click)="goToDetails(order.id)">
+            <ion-col *ngFor="let order of filteredItems; let i = index" col-12 col-xl-4 col-lg-4 col-md-4 (click)="goToDetails(order.id)">
                 <ion-item class="list-item">
                     <div class="list-item__content">
                         <div class="highlight">Pedido: {{ order.id }}</div>
@@ -43,7 +49,7 @@
                 </ion-item>
             </ion-col>
 
-            <ion-col *ngIf="loaded && orders.length == 0">
+            <ion-col *ngIf="loaded && filteredItems.length == 0">
                 <ion-item class="list-item no-items">
                     Nenhum pedido realizado
                 </ion-item>

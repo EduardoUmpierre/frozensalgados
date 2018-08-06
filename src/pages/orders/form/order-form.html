@@ -22,138 +22,142 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="form" (ngSubmit)="create()">
-        <div [ngSwitch]="tab">
-            <!-- Informações do pedido -->
-            <div class="list-item" *ngSwitchCase="'info'">
-                <ion-list>
-                    <!-- Cliente -->
-                    <ion-item>
-                        <div class="field-form-label">Cliente</div>
-                        <select-searchable
-                                formControlName="customer"
-                                itemValueField="id"
-                                itemTextField="name"
-                                title="Cliente"
-                                [items]="customers"
-                                (onChange)="searchCustomerOrders($event)"
-                                [canSearch]="true">
-                        </select-searchable>
-                    </ion-item>
+    <div class="grid" fixed>
+        <form [formGroup]="form" (ngSubmit)="create()">
+            <div [ngSwitch]="tab">
+                <!-- Informações do pedido -->
+                <div class="list-item" *ngSwitchCase="'info'">
+                    <ion-list>
+                        <!-- Cliente -->
+                        <ion-item>
+                            <div class="field-form-label">Cliente</div>
+                            <select-searchable
+                                    formControlName="customer"
+                                    itemValueField="id"
+                                    itemTextField="name"
+                                    title="Cliente"
+                                    [items]="customers"
+                                    (onChange)="searchCustomerOrders($event)"
+                                    [canSearch]="true">
+                            </select-searchable>
+                        </ion-item>
 
-                    <!-- Pedidos -->
-                    <ion-item>
-                        <ion-label stacked>Carregar pedido</ion-label>
-                        <ion-select (ionChange)="loadOrder($event)" [disabled]="orders.length == 0">
-                            <ion-option value="{{ order.id }}" [selected]="currentOrder == order.id"
-                                        *ngFor="let order of orders">
-                                {{ order.created_at }}
-                            </ion-option>
-                            <ion-option [selected]="currentOrder == 0" *ngIf="orders.length == 0">
-                                Nenhum pedido recente
-                            </ion-option>
-                        </ion-select>
-                    </ion-item>
+                        <!-- Pedidos -->
+                        <ion-item>
+                            <ion-label stacked>Carregar pedido</ion-label>
+                            <ion-select (ionChange)="loadOrder($event)" [disabled]="orders.length == 0">
+                                <ion-option value="{{ order.id }}" [selected]="currentOrder == order.id"
+                                            *ngFor="let order of orders">
+                                    {{ order.created_at }}
+                                </ion-option>
+                                <ion-option [selected]="currentOrder == 0" *ngIf="orders.length == 0">
+                                    Nenhum pedido recente
+                                </ion-option>
+                            </ion-select>
+                        </ion-item>
 
-                    <!-- Status -->
-                    <ion-item>
-                        <ion-label stacked>Status</ion-label>
-                        <ion-select formControlName="status">
-                            <ion-option value="1">Pedido</ion-option>
-                            <ion-option value="2">Bonificação</ion-option>
-                            <ion-option value="3">Troca</ion-option>
-                        </ion-select>
-                    </ion-item>
+                        <!-- Status -->
+                        <ion-item>
+                            <ion-label stacked>Status</ion-label>
+                            <ion-select formControlName="status">
+                                <ion-option value="1">Pedido</ion-option>
+                                <ion-option value="2">Bonificação</ion-option>
+                                <ion-option value="3">Troca</ion-option>
+                            </ion-select>
+                        </ion-item>
 
-                    <!-- Forma de pagamento -->
-                    <ion-item>
-                        <ion-label stacked>Forma de pagamento</ion-label>
-                        <ion-select formControlName="payment_method">
-                            <ion-option value="1">Boleto</ion-option>
-                            <ion-option value="2">Cheque</ion-option>
-                            <ion-option value="3">Dinheiro</ion-option>
-                            <ion-option value="4">Voucher</ion-option>
-                        </ion-select>
-                    </ion-item>
+                        <!-- Forma de pagamento -->
+                        <ion-item>
+                            <ion-label stacked>Forma de pagamento</ion-label>
+                            <ion-select formControlName="payment_method">
+                                <ion-option value="1">Boleto</ion-option>
+                                <ion-option value="2">Cheque</ion-option>
+                                <ion-option value="3">Dinheiro</ion-option>
+                                <ion-option value="4">Voucher</ion-option>
+                            </ion-select>
+                        </ion-item>
 
-                    <!-- Data de entrega -->
-                    <ion-item>
-                        <ion-label stacked>Data de entrega</ion-label>
-                        <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
-                                      formControlName="delivery_date"
-                                      (ionChange)="updateDeliveryDate($event)"></ion-datetime>
-                    </ion-item>
+                        <!-- Data de entrega -->
+                        <ion-item>
+                            <ion-label stacked>Data de entrega</ion-label>
+                            <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
+                                          formControlName="delivery_date"
+                                          (ionChange)="updateDeliveryDate($event)"></ion-datetime>
+                        </ion-item>
 
-                    <!-- Quantidade de dias para o primeiro pagamento -->
-                    <ion-item>
-                        <ion-label stacked>Qnt. de dias para o primeiro pagamento</ion-label>
-                        <ion-input type="number" min="0" (keyup)="updatePaymentDate($event)"
-                                   [(ngModel)]="paymentDays" [ngModelOptions]="{standalone: true}"></ion-input>
-                    </ion-item>
+                        <!-- Quantidade de dias para o primeiro pagamento -->
+                        <ion-item>
+                            <ion-label stacked>Qnt. de dias para o primeiro pagamento</ion-label>
+                            <ion-input type="number" min="0" (keyup)="updatePaymentDate($event)"
+                                       [(ngModel)]="paymentDays" [ngModelOptions]="{standalone: true}"></ion-input>
+                        </ion-item>
 
-                    <!-- Data de pagamento -->
+                        <!-- Data de pagamento -->
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col col-8>
+                                    <ion-item>
+                                        <ion-label stacked>Data de pagamento</ion-label>
+                                        <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
+                                                      formControlName="payment_date"
+                                                      (ionChange)="updatePaymentDays($event)"></ion-datetime>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col col-4>
+                                    <ion-item>
+                                        <ion-label stacked>Prestações</ion-label>
+                                        <ion-input type="number" formControlName="installments" min="1"
+                                                   max="3"></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+
+                        <!-- Observações -->
+                        <ion-item>
+                            <ion-label stacked>Observações</ion-label>
+                            <ion-textarea formControlName="comments"></ion-textarea>
+                        </ion-item>
+                    </ion-list>
+                </div>
+
+                <!-- Produtos -->
+                <div class="list-item" *ngSwitchCase="'products'">
+                    <button ion-button type="button" color="blue" full (click)="loadProductModal()"
+                            class="add-product-button">
+                        Adicionar Produto
+                    </button>
+
                     <ion-grid>
-                        <ion-row>
-                            <ion-col col-8>
+                        <ion-row class="product-list">
+                            <ion-col *ngFor="let product of order; let i = index" col-12 col-md-4>
                                 <ion-item>
-                                    <ion-label stacked>Data de pagamento</ion-label>
-                                    <ion-datetime displayFormat="DDD DD/MM/YYYY" pickerFormat="DD MM YYYY"
-                                                  formControlName="payment_date"
-                                                  (ionChange)="updatePaymentDays($event)"></ion-datetime>
+                                    <ion-avatar item-start>
+                                        <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                                    </ion-avatar>
+
+                                    <p class="highlight">{{ product.name }}</p>
+                                    <p>Quantidade: {{ product.quantity }}</p>
+                                    <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
+                                    <p>Preço Total: {{ product.price * product.quantity | currency:'BRL':'R$' }}</p>
+
+                                    <button ion-button type="button" clear item-end icon-only large
+                                            class="options-button"
+                                            (click)="showOptions(product.id, i)">
+                                        <ion-icon name="more"></ion-icon>
+                                    </button>
                                 </ion-item>
-                            </ion-col>
-                            <ion-col col-4>
-                                <ion-item>
-                                    <ion-label stacked>Prestações</ion-label>
-                                    <ion-input type="number" formControlName="installments" min="1" max="3"></ion-input>
+
+                                <ion-item *ngIf="order.length == 0">
+                                    Nenhum produto adicionado
                                 </ion-item>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
-
-                    <!-- Observações -->
-                    <ion-item>
-                        <ion-label stacked>Observações</ion-label>
-                        <ion-textarea formControlName="comments"></ion-textarea>
-                    </ion-item>
-                </ion-list>
+                </div>
             </div>
-
-            <!-- Produtos -->
-            <div class="list-item" *ngSwitchCase="'products'">
-                <button ion-button type="button" color="blue" full (click)="loadProductModal()"
-                        class="add-product-button">
-                    Adicionar Produto
-                </button>
-
-                <ion-grid>
-                    <ion-row class="product-list">
-                        <ion-col *ngFor="let product of order; let i = index" col-12 col-md-4>
-                            <ion-item>
-                                <ion-avatar item-start>
-                                    <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                                </ion-avatar>
-
-                                <p class="highlight">{{ product.name }}</p>
-                                <p>Quantidade: {{ product.quantity }}</p>
-                                <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
-                                <p>Preço Total: {{ product.price * product.quantity | currency:'BRL':'R$' }}</p>
-
-                                <button ion-button type="button" clear item-end icon-only large class="options-button"
-                                        (click)="showOptions(product.id, i)">
-                                    <ion-icon name="more"></ion-icon>
-                                </button>
-                            </ion-item>
-
-                            <ion-item *ngIf="order.length == 0">
-                                Nenhum produto adicionado
-                            </ion-item>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </ion-content>
 
 <ion-footer>
