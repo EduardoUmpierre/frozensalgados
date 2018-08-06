@@ -19,6 +19,8 @@ export class MyApp {
             // Here you can do any higher level native things you might need.
             storage.get('token')
                 .then((res) => {
+                    console.log('token', res);
+
                     if (res && res != null) {
                         this.rootPage = HomePage;
                     } else {

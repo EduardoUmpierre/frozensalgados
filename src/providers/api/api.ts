@@ -99,12 +99,13 @@ export class ApiProvider {
      * @param {string} type
      * @returns {any}
      */
-    get(params = {}, type: string = 'json') {
+    get(params = {}, type: any = 'json') {
         this.buildUrlParams(params);
 
         return this.resolve(this.getApiToken().flatMap((res) => this.httpProvider.http.get(this.url, {
             'Authorization': 'Bearer ' + res,
-            'responseType': type
+            'responseType': type,
+            'Accept': 'application/pdf'
         })));
     }
 
@@ -173,13 +174,16 @@ export class ApiProvider {
         let title = 'Erro';
         let message = 'Erro no servidor, informe o erro ' + error.status + ' ao administrador.';
 
-        console.log(error);
-
-        if (error.status === 401) {
+        if (error.status == 401) {
             title = 'Sessão expirada';
             message = 'A sua sessão expirou, logue-se novamente.';
 
-            this.app.getActiveNav().setRoot(LoginFormPage);
+            if (error.error == 'invalid_credentials') {
+                title = 'Atenção';
+                message = 'Usuário e/ou senha inválidos';
+            } else {
+                this.app.getActiveNav().setRoot(LoginFormPage);
+            }
         }
 
         if (error.status === 422) {

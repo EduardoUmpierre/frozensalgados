@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { Http, RequestOptions, ResponseContentType } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -13,15 +13,31 @@ export class HttpAngularProvider {
      * @returns {Observable<any>}
      */
     public get(url, options: any = {}) {
-        let requestOptions = new RequestOptions();
+        let requestOptions = new RequestOptions({
+            headers: options,
+            responseType: options.responseType == 'json' ? ResponseContentType.Json : options.responseType
+        });
         requestOptions.withCredentials = true;
-        requestOptions.headers = options;
 
         return this.http.get(url, requestOptions).map(resp => {
-            console.log(options.responseType);
-            console.log(resp.text());
+            let response;
 
-            return options.responseType == 'text' ? resp.text() : resp.json();
+            switch (options.responseType) {
+                case 'text':
+                    response = resp.text();
+                    break;
+                case 'blob':
+                    response = resp;
+                    break;
+                case ResponseContentType.Blob:
+                    response = resp;
+                    break;
+                default:
+                    response = resp.json();
+                    break;
+            }
+
+            return response;
         });
     }
 
