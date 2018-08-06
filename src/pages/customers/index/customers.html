@@ -44,8 +44,10 @@
                 </ion-item>
             </ion-col>
 
-            <ion-col *ngIf="loaded && customers.length == 0" class="list-item no-items">
-                Nenhum cliente atendido
+            <ion-col *ngIf="loaded && customers.length == 0" class="single-item">
+                <ion-item class="list-item no-items">
+                    Nenhum cliente atendido
+                </ion-item>
             </ion-col>
         </ion-row>
     </ion-grid>
