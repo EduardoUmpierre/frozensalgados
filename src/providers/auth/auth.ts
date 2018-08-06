@@ -28,7 +28,7 @@ export class AuthProvider extends ApiProvider {
         data = this.buildAuthForm(data);
         data.grant_type = 'password';
 
-        return this.httpProvider.http.post(this.urlBase + 'oauth/token', data).toPromise().then(res => res);
+        return this.httpProvider.http.post(this.urlBase + 'oauth/token', data).toPromise();
     }
 
     /**

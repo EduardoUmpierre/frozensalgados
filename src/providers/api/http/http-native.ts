@@ -34,8 +34,7 @@ export class HttpNativeProvider {
         return Observable.fromPromise(this.platform.ready().then(() => {
             this.http.setDataSerializer('json');
             return this.http.post(url, params, options)
-                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data))
-                .catch((err) => console.log(err));
+                .then(resp => options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
         }));
     }
 

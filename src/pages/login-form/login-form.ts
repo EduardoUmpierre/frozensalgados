@@ -39,6 +39,8 @@ export class LoginFormPage {
             .then((res) => {
                 this.AuthProvider.hideLoader();
 
+                console.log('res', res);
+
                 this.storage.set('token', res.access_token).then(() => {
                     this.AuthProvider.getUser().subscribe((user) => {
                         this.storage.set('user', user).then(() => this.navCtrl.setRoot(HomePage))
@@ -48,11 +50,13 @@ export class LoginFormPage {
             .catch((err) => {
                 this.AuthProvider.hideLoader();
 
+                console.log('err login', err);
+
                 let title = 'Erro';
                 let message = 'Erro no servidor, informe o erro ' + err.status + ' ao administrador.';
 
                 if (err.status === 401) {
-                    let error = JSON.parse(err._body) || {};
+                    let error = err.hasOwnProperty('_body') ? JSON.parse(err._body) : JSON.parse(err.error);
 
                     if (error.error == 'invalid_credentials') {
                         title = 'Atenção';
