@@ -5,6 +5,7 @@ import { ReportsDetailPage } from "../detail/reports-detail";
 import { ReportPopoverComponent } from "../../../components/report-popover/report-popover";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import { DownloadProvider } from "../../../providers/download/download";
 
 /**
  * Generated class for the ReportsViewPage page.
@@ -21,36 +22,35 @@ import 'moment/locale/pt-br';
 export class ReportsViewPage {
     private reports;
     private category;
+    private categoryName;
     private pageTitle;
     private period;
     private periodTitle;
     private loaded;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider,
-                public popoverCtrl: PopoverController) {
+                public popoverCtrl: PopoverController, private downloadProvider: DownloadProvider) {
         this.category = this.navParams.get('category');
-
-        let categoryName;
 
         switch (this.category) {
             case 'categories':
-                categoryName = 'categorias';
+                this.categoryName = 'categorias';
                 break;
             case 'sellers':
-                categoryName = 'vendedores';
+                this.categoryName = 'vendedores';
                 break;
             case 'products':
-                categoryName = 'produtos';
+                this.categoryName = 'produtos';
                 break;
             case 'customers':
-                categoryName = 'clientes';
+                this.categoryName = 'clientes';
                 break;
             case 'orders':
-                categoryName = 'pedidos';
+                this.categoryName = 'pedidos';
                 break;
         }
 
-        this.pageTitle = 'Relatório de ' + categoryName;
+        this.pageTitle = 'Relatório de ' + this.categoryName;
 
         this.updatePeriod(this.navParams.get('period'));
     }
@@ -103,5 +103,23 @@ export class ReportsViewPage {
                     this.loaded = true;
                 });
         }
+    }
+
+    /**
+     * Calls the download method
+     */
+    download() {
+        let url = 'reports/' + this.category + '/download';
+        let filename = 'relatorio-' + this.categoryName;
+
+        if (this.period && this.period[0] && this.period[1]) {
+            const from = moment(this.period[0]);
+            const to = moment(this.period[1]);
+
+            url += '/' + from.format('YYYY-MM-DD') + '/' + to.format('YYYY-MM-DD');
+            filename += '-' + from.format('DD-MM-YYYY') + '-' + to.format('DD-MM-YYYY');
+        }
+
+        this.downloadProvider.download(url, filename);
     }
 }
