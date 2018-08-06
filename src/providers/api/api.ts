@@ -12,7 +12,7 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class ApiProvider {
     private url: string;
-    public urlBase = this.isApp() ? 'https://frozensalgados.herokuapp.com/' : 'http://localhost:8000/';
+    public urlBase = this.isApp() || this.httpProvider.isWebApp() ? 'https://frozensalgados.herokuapp.com/' : 'http://localhost:8000/';
     protected loading;
 
     constructor(public httpProvider: HttpProvider, private platform: Platform, public loadingCtrl: LoadingController,

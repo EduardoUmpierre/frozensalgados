@@ -13,7 +13,7 @@ export class HttpProvider {
             let isApp = this.isApp();
 
             console.log(this.platform.platforms());
-            console.log('IS APP?', isApp);
+            console.log('IS APP?', isApp, 'IS WEBAPP?', this.isWebApp());
 
             this.http = isApp ? this.nativeHttp : this.angularHttp;
         });
@@ -26,5 +26,14 @@ export class HttpProvider {
      */
     public isApp() {
         return this.platform.is('cordova');
+    }
+
+    /**
+     * Verify if the platform is a web application
+     *
+     * @returns {boolean}
+     */
+    public isWebApp() {
+        return window.location.hostname !== 'localhost';
     }
 }
