@@ -5,6 +5,7 @@
         <ion-buttons end *ngIf="currentUser.role == 1">
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Adicionar</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -31,55 +32,106 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <div [ngSwitch]="tab">
-        <!-- Informações do pedido -->
-        <div *ngSwitchCase="'products'">
-            <ion-grid fixed>
-                <ion-row class="single-item">
-                    <ion-col *ngFor="let product of products; let i = index" col-12 col-xl-4 col-lg-4 col-md-4>
-                        <ion-item class="list-item">
-                            <ion-avatar item-start>
-                                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                            </ion-avatar>
+    <div class="grid" fixed>
+        <div [ngSwitch]="tab">
+            <!-- Products -->
+            <div *ngSwitchCase="'products'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-searchbar (input)="filterItems($event)" placeholder="Pesquisar"></ion-searchbar>
+                        </ion-col>
+                    </ion-row>
 
-                            <p class="highlight">{{ product.name }}</p>
-                            <p>Categoria: {{ product.category ? product.category.name : 'Sem categoria' }}</p>
-                            <p>Preço Un: {{ product.price | currency:'BRL':'R$' }}</p>
-                            <p>Peso (kg): {{ product.weight | number:'1.3-3' }}</p>
+                    <ion-row class="table-grid table-grid--products">
+                        <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl has-gap">
+                            <ion-item>
+                                <div>
+                                    <div class="highlight">Nome</div>
+                                    <div>Categoria</div>
+                                    <div>Preço Un</div>
+                                    <div>Peso (kg)</div>
+                                </div>
+                            </ion-item>
+                        </ion-col>
 
-                            <button ion-button clear item-end icon-only large class="options-button"
-                                    (click)="showOptions(product.id, i)" *ngIf="currentUser.role == 1">
-                                <ion-icon name="more"></ion-icon>
-                            </button>
-                        </ion-item>
+                        <ion-col *ngFor="let product of filteredProducts; let i = index" col-12 col-xl-12 col-lg-12
+                                 col-md-6 class="single-item">
+                            <ion-item class="list-item">
+                                <ion-avatar item-start class="hide-lg">
+                                    <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                                </ion-avatar>
 
-                        <ion-item *ngIf="loaded && products.length == 0" class="list-item no-items">
-                            Nenhum produto adicionado
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </div>
+                                <div>
+                                    <div class="highlight">
+                                        {{ product.name }}
+                                    </div>
+                                    <div>
+                                        <span class="hide-lg">Categoria:</span>
+                                        {{ product.category ? product.category.name : 'Sem categoria' }}
+                                    </div>
+                                    <div>
+                                        <span class="hide-lg">Preço Un:</span>
+                                        {{ product.price | currency:'BRL':'R$' }}
+                                    </div>
+                                    <div>
+                                        <span class="hide-lg">Peso (kg):</span>
+                                        {{ product.weight | number:'1.3-3' }}
+                                    </div>
+                                </div>
 
-        <div *ngSwitchCase="'categories'">
-            <ion-grid fixed>
-                <ion-row class="single-item" id="categories">
-                    <ion-col *ngFor="let category of categories; let i = index" col-12 col-xl-4 col-lg-4 col-md-4>
-                        <ion-item class="list-item">
-                            <p class="highlight">{{ category.name }}</p>
+                                <button ion-button clear item-end icon-only large class="options-button"
+                                        (click)="showOptions(product.id, i)" *ngIf="currentUser.role == 1">
+                                    <ion-icon name="more"></ion-icon>
+                                </button>
+                            </ion-item>
 
-                            <button ion-button clear item-end icon-only large class="options-button"
-                                    (click)="showOptions(category.id, i)" *ngIf="currentUser.role == 1">
-                                <ion-icon name="more"></ion-icon>
-                            </button>
-                        </ion-item>
+                            <ion-item *ngIf="loaded && products.length == 0" class="list-item no-items">
+                                Nenhum produto adicionado
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
 
-                        <ion-item *ngIf="loaded && categories.length == 0" class="list-item no-items">
-                            Nenhuma categoria adicionada
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+            <!-- Categories -->
+            <div *ngSwitchCase="'categories'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-searchbar (input)="filterItems($event)" placeholder="Pesquisar"></ion-searchbar>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="table-grid table-grid--categories" id="categories">
+                        <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl has-gap">
+                            <ion-item>
+                                <div>
+                                    <div class="highlight">Nome</div>
+                                </div>
+                            </ion-item>
+                        </ion-col>
+
+                        <ion-col *ngFor="let category of filteredCategories; let i = index" col-12 col-xl-12 col-lg-12
+                                 col-md-6 class="single-item">
+                            <ion-item class="list-item">
+                                <div>
+                                    <div class="highlight">{{ category.name }}</div>
+                                </div>
+
+                                <button ion-button clear item-end icon-only large class="options-button"
+                                        (click)="showOptions(category.id, i)" *ngIf="currentUser.role == 1">
+                                    <ion-icon name="more"></ion-icon>
+                                </button>
+                            </ion-item>
+
+                            <ion-item *ngIf="loaded && categories.length == 0" class="list-item no-items">
+                                Nenhuma categoria adicionada
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </div>
     </div>
 </ion-content>

@@ -5,6 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Adicionar</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -27,15 +28,38 @@
             </ion-col>
         </ion-row>
 
-        <ion-row>
-            <ion-col *ngFor="let customer of filteredItems; let i = index" col-12 col-xl-4 col-lg-4 col-md-4
+        <ion-row class="table-grid table-grid--customers">
+            <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl has-gap">
+                <ion-item>
+                    <div>
+                        <div class="highlight">Nome</div>
+                        <div>#</div>
+                        <div>Endereço</div>
+                        <div>Telefone</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col *ngFor="let customer of filteredItems; let i = index" col-12 col-xl-12 col-lg-12 col-md-6
                      class="single-item">
                 <ion-item class="list-item">
                     <div (click)="goToDetails(customer.id)">
-                        <div class="highlight">Cliente {{ customer.name }}</div>
-                        <div>Código: {{ customer.id }}</div>
-                        <div>Endereço: {{ customer.address }}</div>
-                        <div>Telefone: {{ customer.phone }}</div>
+                        <div class="highlight">
+                            <span class="hide-lg">Cliente</span>
+                            {{ customer.name }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Código:</span>
+                            {{ customer.id }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Endereço:</span>
+                            {{ customer.address }}, {{ customer.address_number }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Telefone:</span>
+                            {{ customer.phone }}
+                        </div>
                     </div>
 
                     <button ion-button clear item-end icon-only large class="options-button"

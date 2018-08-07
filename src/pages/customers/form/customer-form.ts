@@ -139,15 +139,4 @@ export class CustomerFormPage {
             }
         });
     }
-
-    /**
-     *
-     */
-    updateCheckbox() {
-        if (this.form.controls['ie_exempt'].value) {
-            //
-        } else {
-            //
-        }
-    }
 }

@@ -23,82 +23,82 @@
 <ion-content>
     <div class="grid" fixed>
         <ion-list class="single-item" *ngIf="report">
-        <!-- Pedidos -->
-        <ion-item class="list-item" (click)="goToReport('orders')">
-            <div class="highlight">Pedidos</div>
-            <div>Quantidade: {{ report.orders_quantity }}</div>
-            <div>Total: {{ report.orders_total | currency:'BRL':'R$' }}</div>
-        </ion-item>
+            <!-- Pedidos -->
+            <ion-item class="list-item" (click)="goToReport('orders')">
+                <div class="highlight">Pedidos</div>
+                <div>Quantidade: {{ report.orders_quantity }}</div>
+                <div>Total: {{ report.orders_total | currency:'BRL':'R$' }}</div>
+            </ion-item>
 
-        <!-- Clientes -->
-        <ion-item class="list-item" (click)="goToReport('customers')">
-            <div class="highlight">Clientes</div>
-            <div>Clientes atendidos: {{ report.customers_quantity }}</div>
-            <div>Ticket médio: {{ report.average_ticket | currency:'BRL':'R$' }}</div>
-        </ion-item>
+            <!-- Clientes -->
+            <ion-item class="list-item" (click)="goToReport('customers')">
+                <div class="highlight">Clientes</div>
+                <div>Clientes atendidos: {{ report.customers_quantity }}</div>
+                <div>Ticket médio: {{ report.average_ticket | currency:'BRL':'R$' }}</div>
+            </ion-item>
 
-        <!-- Produtos -->
-        <ion-item class="list-item" (click)="goToReport('products')" *ngIf="report">
-            <div class="highlight">Produtos</div>
+            <!-- Produtos -->
+            <ion-item class="list-item" (click)="goToReport('products')" *ngIf="report">
+                <div class="highlight">Produtos</div>
 
-            <ion-list class="product-list" *ngIf="report.products_list.length > 0">
-                <ion-item *ngFor="let item of report.products_list">
-                    <ion-avatar item-start>
-                        <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                    </ion-avatar>
+                <ion-list class="product-list" *ngIf="report.products_list.length > 0">
+                    <ion-item *ngFor="let item of report.products_list">
+                        <ion-avatar item-start>
+                            <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                        </ion-avatar>
 
-                    <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
-                    <p>Quantidade: {{ item.quantity }}</p>
-                    <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
-                </ion-item>
-            </ion-list>
+                        <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
+                        <p>Quantidade: {{ item.quantity }}</p>
+                        <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
+                    </ion-item>
+                </ion-list>
 
-            <ion-list class="product-list" *ngIf="report.products_list.length == 0">
-                <ion-item>Nenhum produto vendido</ion-item>
-            </ion-list>
-        </ion-item>
+                <ion-list class="product-list" *ngIf="report.products_list.length == 0">
+                    <ion-item>Nenhum produto vendido</ion-item>
+                </ion-list>
+            </ion-item>
 
-        <!-- Categorias -->
-        <ion-item class="list-item" (click)="goToReport('categories')" *ngIf="report">
-            <div class="highlight">Categorias</div>
+            <!-- Categorias -->
+            <ion-item class="list-item" (click)="goToReport('categories')" *ngIf="report">
+                <div class="highlight">Categorias</div>
 
-            <ion-list class="product-list" *ngIf="report.categories_list.length > 0">
-                <ion-item *ngFor="let item of report.categories_list">
-                    <ion-avatar item-start>
-                        <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                    </ion-avatar>
+                <ion-list class="product-list" *ngIf="report.categories_list.length > 0">
+                    <ion-item *ngFor="let item of report.categories_list">
+                        <ion-avatar item-start>
+                            <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                        </ion-avatar>
 
-                    <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
-                    <p>Quantidade: {{ item.quantity }}</p>
-                    <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
-                </ion-item>
-            </ion-list>
+                        <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
+                        <p>Quantidade: {{ item.quantity }}</p>
+                        <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
+                    </ion-item>
+                </ion-list>
 
-            <ion-list class="product-list" *ngIf="report.categories_list.length == 0">
-                <ion-item>Nenhuma produto vendido</ion-item>
-            </ion-list>
-        </ion-item>
+                <ion-list class="product-list" *ngIf="report.categories_list.length == 0">
+                    <ion-item>Nenhuma produto vendido</ion-item>
+                </ion-list>
+            </ion-item>
 
-        <!-- Vendedores -->
-        <ion-item class="list-item" (click)="goToReport('sellers')" *ngIf="report">
-            <div class="highlight">Vendedores</div>
+            <!-- Vendedores -->
+            <ion-item class="list-item" (click)="goToReport('sellers')" *ngIf="report">
+                <div class="highlight">Vendedores</div>
 
-            <ion-list class="product-list" *ngIf="report.sellers_list.length > 0">
-                <ion-item *ngFor="let item of report.sellers_list">
-                    <ion-avatar item-start>
-                        <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                    </ion-avatar>
+                <ion-list class="product-list" *ngIf="report.sellers_list.length > 0">
+                    <ion-item *ngFor="let item of report.sellers_list">
+                        <ion-avatar item-start>
+                            <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                        </ion-avatar>
 
-                    <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
-                    <p>Quantidade: {{ item.quantity }}</p>
-                    <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
-                </ion-item>
-            </ion-list>
+                        <p class="highlight" *ngIf="item.name">{{ item.name }}</p>
+                        <p>Quantidade: {{ item.quantity }}</p>
+                        <p>Total: {{ item.total | currency:'BRL':'R$' }}</p>
+                    </ion-item>
+                </ion-list>
 
-            <ion-list class="product-list" *ngIf="report.sellers_list.length == 0">
-                <ion-item>Nenhum pedido atendido</ion-item>
-            </ion-list>
-        </ion-item>
-    </ion-list>
+                <ion-list class="product-list" *ngIf="report.sellers_list.length == 0">
+                    <ion-item>Nenhum pedido atendido</ion-item>
+                </ion-list>
+            </ion-item>
+        </ion-list>
     </div>
 </ion-content>

@@ -1,5 +1,5 @@
 page-order-form {
-    .grid {
+    .payment-date {
         padding: 0;
 
         .col {
@@ -31,6 +31,33 @@ page-order-form {
             > img {
                 height: auto;
                 width: auto;
+            }
+        }
+    }
+
+    @media screen and (min-width: map-get($screen-breakpoints, lg)) {
+        .table-grid {
+
+            ion-label {
+
+                > div {
+
+                    > div:nth-child(1) {
+                        width: 40%;
+                    }
+
+                    > div:nth-child(2) {
+                        width: 20%;
+                    }
+
+                    > div:nth-child(3) {
+                        width: 20%;
+                    }
+
+                    > div:nth-child(4) {
+                        width: 20%;
+                    }
+                }
             }
         }
     }

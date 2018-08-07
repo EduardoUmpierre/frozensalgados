@@ -23,6 +23,16 @@ select-searchable {
     content: none;
 }
 
+ion-header {
+
+    ion-buttons {
+
+        .hide-xs {
+            margin-left: 0.5rem;
+        }
+    }
+}
+
 ion-avatar {
     margin-bottom: 0 !important;
     margin-top: 0 !important;
@@ -310,6 +320,15 @@ ion-list {
                 ion-label {
                     margin-bottom: 0;
                     margin-top: 0;
+
+                    > div {
+
+                        > div {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                    }
                 }
             }
         }
@@ -393,4 +412,115 @@ form {
 
 .searchbar-md {
     padding: 0 0 8px;
+}
+
+@media screen and (min-width: map-get($screen-breakpoints, lg)) {
+    // Table
+    .table-grid {
+        margin-bottom: 3rem;
+
+        &.table-grid--product-list {
+            border: 1px solid #f0f0f0;
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+        }
+
+        ion-label {
+
+            > div {
+                display: flex;
+                padding: 1.5rem 0 !important;
+
+                > div {
+                    padding: 0 1.5rem;
+                }
+            }
+        }
+
+        // Table with gap
+        &:not(.has-gap) {
+
+            > ion-col {
+
+                > ion-item {
+                    padding-right: 0;
+                }
+            }
+        }
+
+        > ion-col {
+
+            &,
+            > ion-item {
+                padding-bottom: 0;
+                padding-top: 0;
+            }
+
+            > ion-item {
+                border-radius: 0;
+                padding-left: 0;
+            }
+
+            // Options button
+            .item-inner {
+
+                > .options-button {
+                    margin-right: 1.5rem !important;
+                }
+            }
+
+            // Header
+            &.table-grid--header {
+                * {
+                    cursor: default;
+                }
+
+                ion-label {
+
+                    > div {
+                        padding: 0.5rem 0;
+                        width: 100%;
+                    }
+                }
+
+                > ion-item {
+
+                    ion-label {
+                        font-size: 1.4rem;
+                        margin: 0;
+                    }
+                }
+
+                // Item gap
+                &.has-gap {
+
+                    > ion-item {
+                        padding-right: 6.1rem;
+                    }
+                }
+            }
+
+            // Striped
+            &:nth-child(even) {
+
+                > ion-item {
+                    background-color: #F1F1F1;
+                }
+            }
+        }
+    }
+}
+
+@each $size, $size-value in $screen-breakpoints {
+    .hide-#{$size} {
+        @media (min-width: $size-value) {
+            display: none;
+        }
+    }
+
+    .show-#{$size} {
+        @media (min-width: $size-value) {
+            display: block;
+        }
+    }
 }

@@ -8,7 +8,48 @@ page-products {
         }
     }
 
-    ion-label {
-        margin: 0 !important;
+    @media screen and (min-width: map-get($screen-breakpoints, lg)) {
+        .table-grid {
+
+            // Products
+            &.table-grid--products {
+
+                ion-label {
+
+                    > div {
+
+                        > div:nth-child(1) {
+                            width: 40%;
+                        }
+
+                        > div:nth-child(2) {
+                            width: 20%;
+                        }
+
+                        > div:nth-child(3) {
+                            width: 20%;
+                        }
+
+                        > div:nth-child(4) {
+                            width: 20%;
+                        }
+                    }
+                }
+            }
+
+            // Categories
+            &.table-grid--categories {
+
+                ion-label {
+
+                    > div {
+
+                        > div:nth-child(1) {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 page-customers {
+
     ion-card-header {
+
         & > small {
             color: #454545;
             display: block;
@@ -16,6 +18,37 @@ page-customers {
 
             &:last-child {
                 margin-bottom: 0;
+            }
+        }
+    }
+
+    @media screen and (min-width: map-get($screen-breakpoints, lg)) {
+        .table-grid--customers {
+
+            ion-label {
+
+                > div {
+
+                    > div:nth-child(1) {
+                        order: 2;
+                        width: 30%;
+                    }
+
+                    > div:nth-child(2) {
+                        order: 1;
+                        width: 10%;
+                    }
+
+                    > div:nth-child(3) {
+                        order: 3;
+                        width: 40%;
+                    }
+
+                    > div:nth-child(4) {
+                        order: 4;
+                        width: 20%;
+                    }
+                }
             }
         }
     }

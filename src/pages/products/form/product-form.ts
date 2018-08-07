@@ -6,13 +6,6 @@ import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms"
 import { SyncProvider } from "../../../providers/sync/sync";
 import { DecimalPipe } from "@angular/common";
 
-/**
- * Generated class for the ProductFormPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
     selector: 'page-product-form',

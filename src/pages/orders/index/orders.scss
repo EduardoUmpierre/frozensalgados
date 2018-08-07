@@ -5,4 +5,40 @@ page-orders {
             margin: 0;
         }
     }
+
+    @media screen and (min-width: map-get($screen-breakpoints, lg)) {
+        .table-grid--orders {
+
+            ion-label {
+
+                > div {
+
+                    > div:nth-child(1) {
+                        order: 1;
+                        width: 10%;
+                    }
+
+                    > div:nth-child(2) {
+                        order: 4;
+                        width: 25%;
+                    }
+
+                    > div:nth-child(3) {
+                        order: 3;
+                        width: 15%;
+                    }
+
+                    > div:nth-child(4) {
+                        order: 2;
+                        width: 35%;
+                    }
+
+                    > div:nth-child(5) {
+                        order: 5;
+                        width: 15%;
+                    }
+                }
+            }
+        }
+    }
 }

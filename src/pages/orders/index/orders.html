@@ -5,6 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Adicionar</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -27,25 +28,44 @@
             </ion-col>
         </ion-row>
 
-        <ion-row class="single-item">
-            <ion-col *ngFor="let order of filteredItems; let i = index" col-12 col-xl-4 col-lg-4 col-md-4 (click)="goToDetails(order.id)">
+        <ion-row class="table-grid single-item table-grid--orders">
+            <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl">
+                <ion-item>
+                    <div>
+                        <div>#</div>
+                        <div>Data do pedido</div>
+                        <div>Status</div>
+                        <div class="highlight">Cliente</div>
+                        <div class="highlight">Total</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col *ngFor="let order of filteredItems; let i = index" col-12 col-xl-12 col-lg-12 col-md-6
+                     (click)="goToDetails(order.id)">
                 <ion-item class="list-item">
                     <div class="list-item__content">
-                        <div class="highlight">Pedido: {{ order.id }}</div>
-                        <div>Data: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</div>
-                        <div>Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}</div>
+                        <div class="highlight">
+                            <span class="hide-lg">Pedido:</span>
+                            {{ order.id }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Data:</span>
+                            {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Status:</span>
+                            {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}
+                        </div>
+                        <div class="highlight">
+                            <span class="hide-lg">Cliente:</span>
+                            {{ order.customer.name }}
+                        </div>
+                        <div class="highlight">
+                            <span class="hide-lg">Total:</span>
+                            {{ order.total | currency:'BRL':'R$' }}
+                        </div>
                     </div>
-
-                    <ion-grid class="list-item__footer">
-                        <ion-row>
-                            <ion-col col-6>
-                                <div>Cliente: {{ order.customer.name }}</div>
-                            </ion-col>
-                            <ion-col col-6>
-                                <div>Total: {{ order.total | currency:'BRL':'R$' }}</div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
                 </ion-item>
             </ion-col>
 

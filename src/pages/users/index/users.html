@@ -5,6 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Adicionar</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -27,16 +28,37 @@
             </ion-col>
         </ion-row>
 
-        <ion-row class="single-item">
-            <ion-col *ngFor="let item of filteredItems; let i = index" col-12 col-xl-4 col-lg-4 col-md-4>
+        <ion-row class="table-grid">
+            <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl has-gap">
+                <ion-item>
+                    <div>
+                        <div class="highlight">Nome</div>
+                        <div>Login</div>
+                        <div>Função</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col *ngFor="let item of filteredItems; let i = index" col-12 col-xl-12 col-lg-12 col-md-6
+                     class="single-item">
                 <ion-item class="list-item" [ngClass]="{'deleted': !item.is_active}">
-                    <ion-avatar item-start>
+                    <ion-avatar item-start class="hide-lg">
                         <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
                     </ion-avatar>
 
-                    <p class="highlight">{{ item.name }}</p>
-                    <p>Login: {{ item.email }}</p>
-                    <p>Função: {{ item.role == 1 ? 'Administrador' : 'Vendedor' }}</p>
+                    <div>
+                        <div class="highlight">
+                            {{ item.name }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Login:</span>
+                            {{ item.email }}
+                        </div>
+                        <div>
+                            <span class="hide-lg">Função:</span>
+                            {{ item.role == 1 ? 'Administrador' : 'Vendedor' }}
+                        </div>
+                    </div>
 
                     <button ion-button clear item-end icon-only large class="options-button"
                             (click)="showOptions(item.id, i)">

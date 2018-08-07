@@ -5,6 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="download()">
                 <ion-icon name="download"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Download</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -13,59 +14,93 @@
 <ion-content>
     <div class="grid" fixed>
         <div class="list-item" *ngIf="order">
-        <div class="list-item__header">Cliente</div>
+            <div class="list-item__header">Cliente</div>
 
-        <div class="list-item__content">
-            <p class="highlight">Cliente {{ order.customer.name }}</p>
-            <p>CNPJ: {{ order.customer.cnpj }}</p>
-            <p>Endereço: {{ order.customer.address }}</p>
-        </div>
+            <div class="list-item__content">
+                <p class="highlight">Cliente {{ order.customer.name }}</p>
+                <p>CNPJ: {{ order.customer.cnpj }}</p>
+                <p>Endereço: {{ order.customer.address }}</p>
+            </div>
 
-        <div class="list-item__header">Pedido</div>
+            <div class="list-item__header">Pedido</div>
 
-        <div class="list-item__content">
-            <p class="highlight">Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' : 'Troca' }}</p>
-            <p>Data do pedido: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</p>
-            <p>Data de entrega: {{ order.delivery_date | date: 'dd/MM/y' }}</p>
-            <p>Observações: {{ order.comments ? order.comments : 'Nenhuma' }}</p>
-        </div>
+            <div class="list-item__content">
+                <p class="highlight">Status: {{ order.status == 1 ? 'Pedido' : order.status == 2 ? 'Bonificação' :
+                    'Troca' }}</p>
+                <p>Data do pedido: {{ order.created_at | date: 'dd/MM/y hh:mm:ss' }}</p>
+                <p>Data de entrega: {{ order.delivery_date | date: 'dd/MM/y' }}</p>
+                <p>Observações: {{ order.comments ? order.comments : 'Nenhuma' }}</p>
+            </div>
 
-        <div class="list-item__header">Pagamento</div>
+            <div class="list-item__header">Pagamento</div>
 
-        <div class="list-item__content">
-            <p>Data de pagamento: {{ order.payment_date | date: 'dd/MM/y' }}</p>
-            <p>
-                Forma de pagamento:
+            <div class="list-item__content">
+                <p>Data de pagamento: {{ order.payment_date | date: 'dd/MM/y' }}</p>
+                <p>
+                    Forma de pagamento:
 
-                <span [ngSwitch]="order.payment_method">
+                    <span [ngSwitch]="order.payment_method">
                     <span *ngSwitchDefault>Boleto</span>
                     <span *ngSwitchCase="'2'">Cheque</span>
                     <span *ngSwitchCase="'3'">Dinheiro</span>
                     <span *ngSwitchCase="'4'">Voucher</span>
                 </span>
-            </p>
+                </p>
 
-            <p>Prestações: {{ order.installments }}</p>
+                <p>Prestações: {{ order.installments }}</p>
+            </div>
+
+            <div class="list-item__header list__header">Produtos</div>
+
+            <ion-grid>
+                <ion-row class="table-grid table-grid--products table-grid--product-list">
+                    <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl">
+                        <ion-item>
+                            <div>
+                                <div>Nome</div>
+                                <div>Quantidade</div>
+                                <div>Preço Un</div>
+                                <div>Preço total</div>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+
+                    <ion-col *ngFor="let order_product of order.order_product; let i = index" col-12 col-xl-12 col-lg-12
+                             col-md-4 class="single-item">
+                        <ion-item class="list-item">
+                            <ion-avatar item-start class="hide-lg">
+                                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                            </ion-avatar>
+
+                            <div>
+                                <div class="highlight">
+                                    {{ order_product.product.name }}
+                                </div>
+                                <div>
+                                    <span class="hide-lg">Quantidade:</span>
+                                    {{ order_product.quantity }}
+                                </div>
+                                <div>
+                                    <span class="hide-lg">Preço Un:</span>
+                                    {{ order_product.unit_price | currency:'BRL':'R$' }}
+                                </div>
+                                <div>
+                                    <span class="hide-lg">Preço Total:</span>
+                                    {{ order_product.unit_price * order_product.quantity | currency:'BRL':'R$' }}
+                                </div>
+                            </div>
+                        </ion-item>
+
+                        <ion-item *ngIf="loaded && order.order_product.length == 0" class="list-item no-items">
+                            Nenhum produto adicionado
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <ion-grid class="list-item__footer centered">
+                <div>Valor total: {{ order.total | currency:'BRL':'R$' }}</div>
+            </ion-grid>
         </div>
-
-        <div class="list-item__header list__header">Produtos</div>
-
-        <ion-list class="product-list">
-            <ion-item *ngFor="let order_product of order.order_product; let i = index">
-                <ion-avatar item-start>
-                    <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-                </ion-avatar>
-
-                <p class="highlight">{{ order_product.product.name }}</p>
-                <p>Quantidade: {{ order_product.quantity }}</p>
-                <p>Preço Un: {{ order_product.unit_price | currency:'BRL':'R$' }}</p>
-                <p>Preço Total: {{ order_product.unit_price * order_product.quantity | currency:'BRL':'R$' }}</p>
-            </ion-item>
-        </ion-list>
-
-        <ion-grid class="list-item__footer centered">
-            <div>Valor total: {{ order.total | currency:'BRL':'R$' }}</div>
-        </ion-grid>
-    </div>
     </div>
 </ion-content>

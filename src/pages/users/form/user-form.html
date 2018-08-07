@@ -5,6 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="submit()" [disabled]="!form.valid">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Finalizar</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -13,70 +14,76 @@
 <ion-content>
     <div class="grid" fixed>
         <div class="list-item">
-        <ion-list>
-            <form [formGroup]="form" (ngSubmit)="submit()">
-                <ion-item [class.ng-touched]="!form.controls.name.untouched" *ngIf="user.role == 1">
-                    <ion-label stacked>Nome</ion-label>
-                    <ion-input formControlName="name" type="text"></ion-input>
-                </ion-item>
+            <ion-list>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <ion-item [class.ng-touched]="!form.controls.name.untouched" *ngIf="user.role == 1">
+                        <ion-label stacked>Nome</ion-label>
+                        <ion-input formControlName="name" type="text"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched && user.role == 1">
-                    Insira um nome válido.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched && user.role == 1">
+                        Insira um nome válido.
+                    </p>
 
-                <ion-item [class.ng-touched]="!form.controls.email.untouched" *ngIf="user.role == 1">
-                    <ion-label stacked>Login</ion-label>
-                    <ion-input formControlName="email" type="email"></ion-input>
-                </ion-item>
+                    <ion-item [class.ng-touched]="!form.controls.email.untouched" *ngIf="user.role == 1">
+                        <ion-label stacked>Login</ion-label>
+                        <ion-input formControlName="email" type="email"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.email && !form.controls.email.valid && !form.controls.email.untouched && user.role == 1">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.email && !form.controls.email.valid && !form.controls.email.untouched && user.role == 1">
+                        O campo é obrigatório.
+                    </p>
 
-                <ion-item [class.ng-touched]="!form.controls.cpf.untouched" *ngIf="user.role == 1">
-                    <ion-label stacked>CPF</ion-label>
-                    <ion-input formControlName="cpf" type="text"></ion-input>
-                </ion-item>
+                    <ion-item [class.ng-touched]="!form.controls.cpf.untouched" *ngIf="user.role == 1">
+                        <ion-label stacked>CPF</ion-label>
+                        <ion-input formControlName="cpf" type="text"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.cpf && !form.controls.cpf.valid && !form.controls.cpf.untouched && user.role == 1">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.cpf && !form.controls.cpf.valid && !form.controls.cpf.untouched && user.role == 1">
+                        O campo é obrigatório.
+                    </p>
 
-                <ion-item *ngIf="user.role == 1">
-                    <ion-label stacked>Tipo</ion-label>
-                    <ion-select formControlName="role">
-                        <ion-option value="{{ r.id }}" *ngFor="let r of roles">{{ r.title }}</ion-option>
-                    </ion-select>
-                </ion-item>
+                    <ion-item *ngIf="user.role == 1">
+                        <ion-label stacked>Tipo</ion-label>
+                        <ion-select formControlName="role">
+                            <ion-option value="{{ r.id }}" *ngFor="let r of roles">{{ r.title }}</ion-option>
+                        </ion-select>
+                    </ion-item>
 
-                <ion-item [class.ng-touched]="!form.controls.password.untouched">
-                    <ion-label stacked>Senha</ion-label>
-                    <ion-input formControlName="password" type="password"></ion-input>
-                </ion-item>
+                    <ion-item [class.ng-touched]="!form.controls.password.untouched">
+                        <ion-label stacked>Senha</ion-label>
+                        <ion-input formControlName="password" type="password"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.password && !form.controls.password.valid && !form.controls.password.untouched">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.password && !form.controls.password.valid && !form.controls.password.untouched">
+                        O campo é obrigatório.
+                    </p>
 
-                <ion-item [class.ng-touched]="!form.controls.passwordRepeat.untouched">
-                    <ion-label stacked>Confirmar senha</ion-label>
-                    <ion-input formControlName="passwordRepeat" type="password"></ion-input>
-                </ion-item>
+                    <ion-item [class.ng-touched]="!form.controls.passwordRepeat.untouched">
+                        <ion-label stacked>Confirmar senha</ion-label>
+                        <ion-input formControlName="passwordRepeat" type="password"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.passwordRepeat && !form.controls.passwordRepeat.valid && !form.controls.passwordRepeat.untouched">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.passwordRepeat && !form.controls.passwordRepeat.valid && !form.controls.passwordRepeat.untouched">
+                        O campo é obrigatório.
+                    </p>
 
-                <p class="error" *ngIf="form.errors && form.errors.passwordMismatch && !form.controls.passwordRepeat.untouched">
-                    As senhas não conferem.
-                </p>
+                    <p class="error"
+                       *ngIf="form.errors && form.errors.passwordMismatch && !form.controls.passwordRepeat.untouched">
+                        As senhas não conferem.
+                    </p>
 
-                <ion-item>
-                    <ion-label>Usuário ativo</ion-label>
-                    <ion-checkbox formControlName="is_active"></ion-checkbox>
-                </ion-item>
-            </form>
-        </ion-list>
-    </div>
+                    <ion-item>
+                        <ion-label>Usuário ativo</ion-label>
+                        <ion-checkbox formControlName="is_active"></ion-checkbox>
+                    </ion-item>
+                </form>
+            </ion-list>
+        </div>
     </div>
 </ion-content>

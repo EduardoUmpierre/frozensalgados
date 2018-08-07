@@ -5,6 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="submit()" [disabled]="!form.valid">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Finalizar</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -13,53 +14,59 @@
 <ion-content>
     <div class="grid" fixed>
         <div class="list-item">
-        <ion-list>
-            <form [formGroup]="form" (ngSubmit)="submit()">
-                <!-- Category -->
-                <ion-item [class.ng-touched]="form.controls.category && !form.controls.category.untouched">
-                    <ion-label stacked>Categoria</ion-label>
-                    <ion-select formControlName="category_id">
-                        <ion-option value="{{ category.id }}" *ngFor="let category of categories">
-                            {{ category.name }}
-                        </ion-option>
-                    </ion-select>
-                </ion-item>
+            <ion-list>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <!-- Category -->
+                    <ion-item [class.ng-touched]="form.controls.category && !form.controls.category.untouched">
+                        <ion-label stacked>Categoria</ion-label>
+                        <ion-select formControlName="category_id">
+                            <ion-option value="{{ category.id }}" *ngFor="let category of categories">
+                                {{ category.name }}
+                            </ion-option>
+                        </ion-select>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.category && !form.controls.category.valid && !form.controls.category.untouched">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.category && !form.controls.category.valid && !form.controls.category.untouched">
+                        O campo é obrigatório.
+                    </p>
 
-                <!-- Name -->
-                <ion-item [class.ng-touched]="form.controls.name && !form.controls.name.untouched">
-                    <ion-label stacked>Nome</ion-label>
-                    <ion-input type="text" formControlName="name"></ion-input>
-                </ion-item>
+                    <!-- Name -->
+                    <ion-item [class.ng-touched]="form.controls.name && !form.controls.name.untouched">
+                        <ion-label stacked>Nome</ion-label>
+                        <ion-input type="text" formControlName="name"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.name && !form.controls.name.valid && !form.controls.name.untouched">
+                        O campo é obrigatório.
+                    </p>
 
-                <!-- Price -->
-                <ion-item [class.ng-touched]="form.controls.price && !form.controls.price.untouched">
-                    <ion-label stacked>Preço</ion-label>
-                    <ion-input type="text" formControlName="price" [brmasker]="{money: true, decimal: 2}"></ion-input>
-                </ion-item>
+                    <!-- Price -->
+                    <ion-item [class.ng-touched]="form.controls.price && !form.controls.price.untouched">
+                        <ion-label stacked>Preço</ion-label>
+                        <ion-input type="text" formControlName="price"
+                                   [brmasker]="{money: true, decimal: 2}"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.price && !form.controls.price.valid && !form.controls.price.untouched">
-                    O campo é obrigatório.
-                </p>
+                    <p class="error"
+                       *ngIf="form.controls.price && !form.controls.price.valid && !form.controls.price.untouched">
+                        O campo é obrigatório.
+                    </p>
 
-                <!-- Peso -->
-                <ion-item [class.ng-touched]="form.controls.weight && !form.controls.weight.untouched">
-                    <ion-label stacked>Peso (kg)</ion-label>
-                    <ion-input type="text" formControlName="weight" [brmasker]="{money: true, decimal: 3}"></ion-input>
-                </ion-item>
+                    <!-- Peso -->
+                    <ion-item [class.ng-touched]="form.controls.weight && !form.controls.weight.untouched">
+                        <ion-label stacked>Peso (kg)</ion-label>
+                        <ion-input type="text" formControlName="weight"
+                                   [brmasker]="{money: true, decimal: 3}"></ion-input>
+                    </ion-item>
 
-                <p class="error" *ngIf="form.controls.weight && !form.controls.weight.valid && !form.controls.weight.untouched">
-                    O campo é obrigatório.
-                </p>
-            </form>
-        </ion-list>
-    </div>
+                    <p class="error"
+                       *ngIf="form.controls.weight && !form.controls.weight.valid && !form.controls.weight.untouched">
+                        O campo é obrigatório.
+                    </p>
+                </form>
+            </ion-list>
+        </div>
     </div>
 </ion-content>

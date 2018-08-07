@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
-
-/**
- * Generated class for the CustomerViewPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { CustomerFormPage } from "../form/customer-form";
 
 @IonicPage()
 @Component({
@@ -30,7 +24,7 @@ export class CustomerViewPage {
     /**
      * Push to order form page
      */
-    // goToForm() {
-    //     this.navCtrl.push(OrderFormPage, {customer: {id: this.customer.id, name: this.customer.name}});
-    // }
+    goToForm() {
+        this.navCtrl.push(CustomerFormPage, {id: this.customer.id});
+    }
 }

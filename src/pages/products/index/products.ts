@@ -22,6 +22,8 @@ export class ProductsPage {
     currentUser: any = {};
     products = [];
     categories = [];
+    filteredProducts = [];
+    filteredCategories = [];
     loaded: boolean = false;
     tab: string = 'products';
     pageTitle: string;
@@ -48,10 +50,14 @@ export class ProductsPage {
             .verifySync('products', this.navParams.get('force'))
             .then(products => {
                 this.products = products;
+                this.filteredProducts = products;
 
                 this.syncProvider
                     .verifySync('categories', this.navParams.get('force'))
-                    .then(categories => this.categories = categories)
+                    .then(categories => {
+                        this.categories = categories;
+                        this.filteredCategories = categories;
+                    })
                     .then(() => this.loaded = true)
                     .catch((error) => console.log(error));
             })
@@ -147,13 +153,19 @@ export class ProductsPage {
         if (this.isProduct()) {
             this.syncProvider
                 .verifySync('products', true, false)
-                .then(products => this.products = products)
+                .then(products => {
+                    this.products = products;
+                    this.filteredProducts = products;;
+                })
                 .then(() => refresher.complete())
                 .catch((error) => console.log(error));
         } else {
             this.syncProvider
                 .verifySync('categories', true, false)
-                .then(categories => this.categories = categories)
+                .then(categories => {
+                    this.categories = categories;
+                    this.filteredCategories = categories;
+                })
                 .then(() => refresher.complete())
                 .catch((error) => console.log(error));
         }
@@ -181,5 +193,19 @@ export class ProductsPage {
      */
     isProduct() {
         return this.tab == 'products';
+    }
+
+    /**
+     * @param ev
+     * @returns {any[]}
+     */
+    filterItems(ev: any) {
+        let val = ev.target.value;
+
+        if (this.isProduct()) {
+            this.filteredProducts = this.products.filter((item) => item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        } else {
+            this.filteredCategories = this.categories.filter((item) => item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        }
     }
 }

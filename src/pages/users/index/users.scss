@@ -3,7 +3,26 @@ page-users {
         opacity: .5;
     }
 
-    ion-label {
-        margin: 0 !important;
+    @media screen and (min-width: map-get($screen-breakpoints, lg)) {
+        .table-grid {
+
+            ion-label {
+
+                > div {
+
+                    > div:nth-child(1) {
+                        width: 40%;
+                    }
+
+                    > div:nth-child(2) {
+                        width: 30%;
+                    }
+
+                    > div:nth-child(3) {
+                        width: 30%;
+                    }
+                }
+            }
+        }
     }
 }

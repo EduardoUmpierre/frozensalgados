@@ -5,9 +5,11 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="presentPopover($event)">
                 <ion-icon name="more"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Opções</span>
             </button>
             <button ion-button icon-only (click)="download()">
                 <ion-icon name="download"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Download</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -20,21 +22,21 @@
 <ion-content>
     <div class="grid" fixed>
         <ion-list class="single-item" *ngIf="loaded">
-        <ion-item *ngFor="let report of reports.list" class="list-item" (click)="goToDetails(report.id)">
-            <ion-avatar item-start>
-                <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
-            </ion-avatar>
+            <ion-item *ngFor="let report of reports.list" class="list-item" (click)="goToDetails(report.id)">
+                <ion-avatar item-start>
+                    <img src="assets/images/placeholder-60.jpg" alt="" width="60" height="60">
+                </ion-avatar>
 
-            <div class="highlight" *ngIf="report.created_at">{{ report.created_at }}</div>
-            <div class="highlight">{{ report.name }}</div>
-            <div *ngIf="report.quantity">Quantidade: {{ report.quantity }}</div>
-            <div>Preço Total: {{ report.total | currency:'BRL':'R$' }}</div>
-        </ion-item>
+                <div class="highlight" *ngIf="report.created_at">{{ report.created_at }}</div>
+                <div class="highlight">{{ report.name }}</div>
+                <div *ngIf="report.quantity">Quantidade: {{ report.quantity }}</div>
+                <div>Preço Total: {{ report.total | currency:'BRL':'R$' }}</div>
+            </ion-item>
 
-        <ion-item class="list-item" *ngIf="reports.list.length == 0">
-            <div>Nenhum item encontrado</div>
-        </ion-item>
-    </ion-list>
+            <ion-item class="list-item" *ngIf="reports.list.length == 0">
+                <div>Nenhum item encontrado</div>
+            </ion-item>
+        </ion-list>
     </div>
 </ion-content>
 
