@@ -3,6 +3,10 @@
         <ion-title *ngIf="customer">Cliente {{ customer.name }}</ion-title>
 
         <ion-buttons end>
+            <button ion-button icon-only (click)="goToOrderForm()">
+                <ion-icon name="add"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Novo pedido</span>
+            </button>
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="create"></ion-icon>
                 <span class="hide-xs hide-sm show-lg show-xl">Editar</span>

@@ -49,6 +49,13 @@ ion-navbar {
     .toolbar-title {
         color: inherit;
     }
+
+    button {
+
+        &:hover {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+    }
 }
 
 ion-content {
@@ -77,6 +84,7 @@ ion-content {
 
     &.no-items {
         padding-bottom: 0;
+        padding-left: 1.5rem;
         padding-top: 0;
     }
 
@@ -425,6 +433,32 @@ form {
             margin-right: -0.5rem;
         }
 
+        // Table with gap
+        &:not(.has-gap) {
+
+            > ion-col {
+
+                > ion-item {
+                    padding-right: 0;
+
+                    ion-label {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+
+        // Item gap
+        &.has-gap {
+
+            > .table-grid--header {
+
+                > ion-item {
+                    padding-right: 6.1rem;
+                }
+            }
+        }
+
         ion-label {
 
             > div {
@@ -433,17 +467,6 @@ form {
 
                 > div {
                     padding: 0 1.5rem;
-                }
-            }
-        }
-
-        // Table with gap
-        &:not(.has-gap) {
-
-            > ion-col {
-
-                > ion-item {
-                    padding-right: 0;
                 }
             }
         }
@@ -459,14 +482,6 @@ form {
             > ion-item {
                 border-radius: 0;
                 padding-left: 0;
-            }
-
-            // Options button
-            .item-inner {
-
-                > .options-button {
-                    margin-right: 1.5rem !important;
-                }
             }
 
             // Header
@@ -488,14 +503,6 @@ form {
                     ion-label {
                         font-size: 1.4rem;
                         margin: 0;
-                    }
-                }
-
-                // Item gap
-                &.has-gap {
-
-                    > ion-item {
-                        padding-right: 6.1rem;
                     }
                 }
             }

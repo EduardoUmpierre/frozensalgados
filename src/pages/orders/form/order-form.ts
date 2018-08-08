@@ -31,6 +31,7 @@ export class OrderFormPage {
     private order: Product[] = [];
     private orders = [];
     private paymentDays = 1;
+    private id = null;
 
     tab: string = 'info';
     order_total: number = 0.00;
@@ -56,12 +57,38 @@ export class OrderFormPage {
     }
 
     ionViewDidLoad() {
-        if (this.navParams.get('product')) {
+        this.id = this.navParams.get('id');
+
+        if (this.id) {
             this.pageTitle = 'Editar pedido';
+
+            this.apiProvider.builder('orders/' + this.id).loader().get().subscribe((order) => {
+                const deliveryDate = moment(order.delivery_date);
+                const paymentDate = moment(order.payment_date);
+
+                this.form.controls['customer'].setValue(order.customer);
+                this.form.controls['status'].setValue(order.status);
+                this.form.controls['delivery_date'].setValue(deliveryDate.format('YYYY-MM-DD'));
+                this.form.controls['payment_date'].setValue(paymentDate.format('YYYY-MM-DD'));
+                this.form.controls['payment_method'].setValue(order.payment_method);
+                this.form.controls['installments'].setValue(order.installments);
+                this.form.controls['comments'].setValue(order.comments);
+
+                let orderProducts = [];
+
+                order.order_product.forEach((e) => {
+                    orderProducts.push(new Product(e.product.id, e.product.name, e.product.image, e.unit_price, e.quantity, e.product.weight));
+                });
+
+                this.order = orderProducts;
+                this.paymentDays = paymentDate.diff(deliveryDate, 'days');
+            });
         }
 
-        if (this.navParams.get('customer')) {
-            this.form.controls['customer'] = this.navParams.get('customer');
+        const customer = this.navParams.get('customer');
+
+        if (customer) {
+            this.form.controls['customer'].setValue(customer);
         }
     }
 
@@ -112,7 +139,6 @@ export class OrderFormPage {
     }
 
     /**
-     *
      * @param selectedValue
      */
     loadOrder(selectedValue: any) {
@@ -171,13 +197,11 @@ export class OrderFormPage {
         if (this.order.length > 0) {
             let data = Object.assign({}, {order: this.normalizeOrderData(this.order)}, this.form.value)
 
-            this.apiProvider.builder('orders').loader().post(data).subscribe((res) => {
-                this.syncProvider.verifySync('customers', true).then(() => {
-                    this.navCtrl.push(OrdersPage, {force: true}).then(() => {
-                        this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
-                    });
-                }).catch(error => console.log(error));
-            });
+            if (this.id) {
+                this.apiProvider.builder('orders/' + this.id).loader().put(Object.assign({}, {id: this.id}, data)).subscribe((res) => this.redirect());
+            } else {
+                this.apiProvider.builder('orders').loader().post(data).subscribe((res) => this.redirect());
+            }
         } else {
             let alert = this.alertCtrl.create({
                 title: 'Atenção',
@@ -316,9 +340,20 @@ export class OrderFormPage {
      * @param event
      */
     updatePaymentDays(event: any) {
-        let deliveryDate = moment(this.form.controls['delivery_date'].value);
-        let paymentDate = moment([event.year, event.month - 1, event.day]);
+        let deliveryDate = moment(moment(this.form.controls['delivery_date'].value).format('YYYY-MM-DD'));
+        let paymentDate = moment(moment([event.year, event.month - 1, event.day]).format('YYYY-MM-DD'));
 
-        this.paymentDays = paymentDate.diff(deliveryDate, 'days') + 1;
+        this.paymentDays = paymentDate.diff(deliveryDate, 'days');
+    }
+
+    /**
+     * Redirect to orders page
+     */
+    redirect() {
+        this.syncProvider.verifySync('orders', true).then(() => {
+            this.navCtrl.push(OrdersPage, {force: true}).then(() => {
+                this.navCtrl.remove(this.navCtrl.getActive().index - 2, 2);
+            });
+        }).catch(error => console.log(error));
     }
 }

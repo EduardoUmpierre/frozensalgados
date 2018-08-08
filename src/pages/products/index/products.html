@@ -43,8 +43,8 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-grid table-grid--products">
-                        <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl has-gap">
+                    <ion-row class="table-grid table-grid--products" [ngClass]="currentUser.role == 1 ? 'has-gap' : ''">
+                        <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl">
                             <ion-item>
                                 <div>
                                     <div class="highlight">Nome</div>
@@ -103,8 +103,8 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-grid table-grid--categories" id="categories">
-                        <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl has-gap">
+                    <ion-row class="table-grid table-grid--categories" id="categories" [ngClass]="currentUser.role == 1 ? 'has-gap' : ''">
+                        <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl">
                             <ion-item>
                                 <div>
                                     <div class="highlight">Nome</div>

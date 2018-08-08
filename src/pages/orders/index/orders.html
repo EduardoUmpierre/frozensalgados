@@ -5,7 +5,7 @@
         <ion-buttons end>
             <button ion-button icon-only (click)="goToForm()">
                 <ion-icon name="add"></ion-icon>
-                <span class="hide-xs hide-sm show-lg show-xl">Adicionar</span>
+                <span class="hide-xs hide-sm show-lg show-xl">Novo pedido</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -28,7 +28,7 @@
             </ion-col>
         </ion-row>
 
-        <ion-row class="table-grid single-item table-grid--orders">
+        <ion-row class="table-grid single-item table-grid--orders has-gap">
             <ion-col class="table-grid--header hide-xs hide-sm show-lg show-xl">
                 <ion-item>
                     <div>
@@ -42,9 +42,9 @@
             </ion-col>
 
             <ion-col *ngFor="let order of filteredItems; let i = index" col-12 col-xl-12 col-lg-12 col-md-6
-                     (click)="goToDetails(order.id)">
+                     class="single-item" [ngClass]="order.was_read ? 'was-read' : ''">
                 <ion-item class="list-item">
-                    <div class="list-item__content">
+                    <div class="list-item__content" (click)="goToDetails(order.id)">
                         <div class="highlight">
                             <span class="hide-lg">Pedido:</span>
                             {{ order.id }}
@@ -66,10 +66,16 @@
                             {{ order.total | currency:'BRL':'R$' }}
                         </div>
                     </div>
+
+                    <button ion-button clear item-end icon-only large class="options-button"
+                            (click)="showOptions(order.id, i)">
+                        <ion-icon name="more"></ion-icon>
+                    </button>
                 </ion-item>
             </ion-col>
 
-            <ion-col *ngIf="loaded && filteredItems.length == 0">
+            <ion-col *ngIf="loaded && filteredItems.length == 0" col-12 col-xl-12 col-lg-12 col-md-6
+                     class="single-item">
                 <ion-item class="list-item no-items">
                     Nenhum pedido realizado
                 </ion-item>

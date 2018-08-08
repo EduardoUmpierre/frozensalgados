@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from "../../../providers/api/api";
 import { CustomerFormPage } from "../form/customer-form";
+import { OrderFormPage } from "../../orders/form/order-form";
 
 @IonicPage()
 @Component({
@@ -22,9 +23,16 @@ export class CustomerViewPage {
     }
 
     /**
-     * Push to order form page
+     * Push to customer form page
      */
     goToForm() {
         this.navCtrl.push(CustomerFormPage, {id: this.customer.id});
+    }
+
+    /**
+     * Push to order form page
+     */
+    goToOrderForm() {
+        this.navCtrl.push(OrderFormPage, {customer: this.customer});
     }
 }

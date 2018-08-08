@@ -1,12 +1,23 @@
 page-orders {
-    .input-wrapper {
-
-        > ion-label {
-            margin: 0;
-        }
-    }
-
     @media screen and (min-width: map-get($screen-breakpoints, lg)) {
+        ion-col {
+
+            &:not(.was-read) {
+
+                ion-label {
+
+                    > .list-item__content {
+                        color: #333;
+
+                        &,
+                        > .highlight {
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+        }
+
         .table-grid--orders {
 
             ion-label {

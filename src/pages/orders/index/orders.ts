@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ActionSheetController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OrderViewPage } from '../view/order-view';
 import { OrderFormPage } from '../form/order-form';
 import { SyncProvider } from "../../../providers/sync/sync";
-
-/**
- * Generated class for the OrdersPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Storage } from "@ionic/storage";
+import { ApiProvider } from "../../../providers/api/api";
 
 @IonicPage()
 @Component({
@@ -17,11 +12,14 @@ import { SyncProvider } from "../../../providers/sync/sync";
     templateUrl: 'orders.html',
 })
 export class OrdersPage {
+    currentUser: any = {};
     orders = [];
     filteredItems = [];
     loaded: boolean = false;
 
-    constructor(public navCtrl: NavController, private navParams: NavParams, private syncProvider: SyncProvider) {
+    constructor(public navCtrl: NavController, private navParams: NavParams, private syncProvider: SyncProvider,
+                private actionSheetCtrl: ActionSheetController, private storage: Storage, private apiProvider: ApiProvider) {
+        this.storage.get('user').then((user) => this.currentUser = user);
     }
 
     /**
@@ -49,9 +47,11 @@ export class OrdersPage {
 
     /**
      * Push to order form page
+     *
+     * @param {number} id
      */
-    goToForm() {
-        this.navCtrl.push(OrderFormPage);
+    goToForm(id: number = null) {
+        this.navCtrl.push(OrderFormPage, {id: id});
     }
 
     /**
@@ -78,5 +78,52 @@ export class OrdersPage {
         let val = ev.target.value;
 
         this.filteredItems = this.orders.filter((item) => item.customer.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    }
+
+    /**
+     * @param {number} id
+     * @param {number} key
+     */
+    showOptions(id: number, key: number) {
+        let buttons: any[] = [
+            {
+                text: 'Marcar como' + (this.orders[key].was_read ? ' não ' : ' ') + 'lido',
+                handler: () => this.markAsRead(id, key)
+            },
+            {
+                text: 'Cancelar',
+                role: 'cancel'
+            }
+        ];
+
+        if (this.currentUser.role == 1) {
+            buttons.push({
+                text: 'Editar',
+                handler: () => this.goToForm(id)
+            });
+        }
+
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opções',
+            buttons: buttons
+        });
+
+        actionSheet.present();
+    }
+
+    /**
+     * @param {number} id
+     * @param {number} key
+     */
+    markAsRead(id: number, key: number) {
+        this.apiProvider.builder('orders/read').loader().post({id: id}).subscribe((res) => {
+            const newWasReadValue = res.was_read;
+
+            this.syncProvider.syncCategories(['orders'], true, false)
+                .then((res) => {
+                    this.orders[key].was_read = newWasReadValue;
+                })
+                .catch((error) => console.log(error))
+        });
     }
 }
