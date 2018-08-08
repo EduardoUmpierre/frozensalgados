@@ -43,7 +43,11 @@ export class SyncProvider {
                 if (sync && this.isSyncTimeValid(sync['date']) && !force) {
                     resolve(sync['items']);
                 } else {
-                    this.getCategoryData(category, toast).then((data) => resolve(data))
+                    if (toast) {
+                        this.loader();
+                    }
+
+                    this.getCategoryData(category, toast, true).then((data) => resolve(data))
                         .catch((error) => reject(error));
                 }
             }).catch((error) => reject(error));

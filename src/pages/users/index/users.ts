@@ -123,17 +123,14 @@ export class UsersPage {
 
     /**
      * Updates the user with the refresher
-     *
-     * @param refresher
      */
-    doRefresh(refresher) {
+    doRefresh() {
         this.syncProvider
-            .verifySync('users', true, false)
+            .verifySync('users', true)
             .then(users => {
                 this.users = users;
                 this.filteredItems = users;
             })
-            .then(() => refresher.complete())
             .catch((error) => console.log(error));
     }
 

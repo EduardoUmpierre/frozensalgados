@@ -14,10 +14,16 @@
 <ion-content>
     <div class="grid" fixed>
         <div class="list-item" *ngIf="order">
+            <div class="list-item__header">Vendedor</div>
+
+            <div class="list-item__content">
+                <p class="highlight">Nome: {{ order.user.name }}</p>
+            </div>
+
             <div class="list-item__header">Cliente</div>
 
             <div class="list-item__content">
-                <p class="highlight">Cliente {{ order.customer.name }}</p>
+                <p class="highlight">Nome: {{ order.customer.name }}</p>
                 <p>CNPJ: {{ order.customer.cnpj }}</p>
                 <p>Endereço: {{ order.customer.address }}</p>
             </div>

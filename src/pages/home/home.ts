@@ -70,13 +70,10 @@ export class HomePage {
 
     /**
      * Updates all the categories with the refresher
-     *
-     * @param refresher
      */
-    doRefresh(refresher) {
+    doRefresh() {
         this.syncProvider
-            .syncCategories(['customers', 'orders', 'products', 'users'], true, false)
-            .then(() => refresher.complete())
+            .syncCategories(['customers', 'orders', 'products', 'users'], true)
             .catch((error) => console.log(error));
     }
 }

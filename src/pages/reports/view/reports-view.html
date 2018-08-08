@@ -3,13 +3,14 @@
         <ion-title>{{ pageTitle }}</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only (click)="presentPopover($event)">
-                <ion-icon name="more"></ion-icon>
-                <span class="hide-xs hide-sm show-lg show-xl">Opções</span>
-            </button>
             <button ion-button icon-only (click)="download()">
                 <ion-icon name="download"></ion-icon>
                 <span class="hide-xs hide-sm show-lg show-xl">Download</span>
+            </button>
+
+            <button ion-button icon-only (click)="presentPopover($event)">
+                <ion-icon name="more"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Opções</span>
             </button>
         </ion-buttons>
     </ion-navbar>

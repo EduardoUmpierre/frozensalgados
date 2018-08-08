@@ -146,27 +146,23 @@ export class ProductsPage {
 
     /**
      * Updates the products with the refresher
-     *
-     * @param refresher
      */
-    doRefresh(refresher) {
+    doRefresh() {
         if (this.isProduct()) {
             this.syncProvider
-                .verifySync('products', true, false)
+                .verifySync('products', true)
                 .then(products => {
                     this.products = products;
-                    this.filteredProducts = products;;
+                    this.filteredProducts = products;
                 })
-                .then(() => refresher.complete())
                 .catch((error) => console.log(error));
         } else {
             this.syncProvider
-                .verifySync('categories', true, false)
+                .verifySync('categories', true)
                 .then(categories => {
                     this.categories = categories;
                     this.filteredCategories = categories;
                 })
-                .then(() => refresher.complete())
                 .catch((error) => console.log(error));
         }
     }

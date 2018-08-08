@@ -56,17 +56,14 @@ export class OrdersPage {
 
     /**
      * Updates the orders with the refresher
-     *
-     * @param refresher
      */
-    doRefresh(refresher) {
+    doRefresh() {
         this.syncProvider
-            .verifySync('orders', true, false)
+            .verifySync('orders', true)
             .then(orders => {
                 this.orders = orders;
                 this.filteredItems = orders;
             })
-            .then(() => refresher.complete())
             .catch((error) => console.log(error));
     }
 

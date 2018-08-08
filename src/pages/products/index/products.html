@@ -2,8 +2,13 @@
     <ion-navbar>
         <ion-title>{{ pageTitle }}</ion-title>
 
-        <ion-buttons end *ngIf="currentUser.role == 1">
-            <button ion-button icon-only (click)="goToForm()">
+        <ion-buttons end>
+            <button ion-button icon-only (click)="doRefresh()">
+                <ion-icon name="refresh"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Atualizar</span>
+            </button>
+
+            <button ion-button icon-only (click)="goToForm()" *ngIf="currentUser.role == 1">
                 <ion-icon name="add"></ion-icon>
                 <span class="hide-xs hide-sm show-lg show-xl">Adicionar</span>
             </button>
@@ -23,15 +28,6 @@
 </ion-header>
 
 <ion-content>
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content
-                pullingIcon="arrow-dropdown"
-                pullingText="Puxe para atualizar"
-                refreshingSpinner="circles"
-                refreshingText="Atualizando...">
-        </ion-refresher-content>
-    </ion-refresher>
-
     <div class="grid" fixed>
         <div [ngSwitch]="tab">
             <!-- Products -->

@@ -121,17 +121,14 @@ export class CustomersPage {
 
     /**
      * Updates the customer with the refresher
-     *
-     * @param refresher
      */
-    doRefresh(refresher) {
+    doRefresh() {
         this.syncProvider
-            .verifySync('customers', true, false)
+            .verifySync('customers', true)
             .then(customers => {
                 this.customers = customers;
                 this.filteredItems = customers;
             })
-            .then(() => refresher.complete())
             .catch((error) => console.log(error));
     }
 
