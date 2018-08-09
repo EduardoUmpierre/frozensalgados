@@ -39,8 +39,6 @@ export class LoginFormPage {
             .then((res) => {
                 this.AuthProvider.hideLoader();
 
-                console.log('res', res);
-
                 this.storage.set('token', res.access_token).then(() => {
                     this.AuthProvider.getUser().subscribe((user) => {
                         this.storage.set('user', user).then(() => this.navCtrl.setRoot(HomePage))

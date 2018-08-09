@@ -3,6 +3,11 @@
         <ion-title *ngIf="order">Pedido {{ order.id }}</ion-title>
 
         <ion-buttons end>
+            <button ion-button icon-only (click)="goToForm()" *ngIf="currentUser && currentUser.role == 1">
+                <ion-icon name="create"></ion-icon>
+                <span class="hide-xs hide-sm show-lg show-xl">Editar</span>
+            </button>
+
             <button ion-button icon-only (click)="download()">
                 <ion-icon name="download"></ion-icon>
                 <span class="hide-xs hide-sm show-lg show-xl">Download</span>

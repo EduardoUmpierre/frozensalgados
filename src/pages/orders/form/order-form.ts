@@ -82,6 +82,8 @@ export class OrderFormPage {
 
                 this.order = orderProducts;
                 this.paymentDays = paymentDate.diff(deliveryDate, 'days');
+
+                this.updateTotal();
             });
         }
 
