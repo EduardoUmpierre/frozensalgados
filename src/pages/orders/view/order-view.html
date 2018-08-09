@@ -46,11 +46,11 @@
                     Forma de pagamento:
 
                     <span [ngSwitch]="order.payment_method">
-                    <span *ngSwitchDefault>Boleto</span>
-                    <span *ngSwitchCase="'2'">Cheque</span>
-                    <span *ngSwitchCase="'3'">Dinheiro</span>
-                    <span *ngSwitchCase="'4'">Voucher</span>
-                </span>
+                        <span *ngSwitchDefault>Boleto</span>
+                        <span *ngSwitchCase="'2'">Cheque</span>
+                        <span *ngSwitchCase="'3'">Dinheiro</span>
+                        <span *ngSwitchCase="'4'">Voucher</span>
+                    </span>
                 </p>
 
                 <p>Prestações: {{ order.installments }}</p>
