@@ -230,4 +230,11 @@ export class ApiProvider {
     public isApp() {
         return this.httpProvider.isApp();
     }
+
+    /**
+     * @returns {boolean}
+     */
+    public isWebApp() {
+        return this.httpProvider.isWebApp();
+    }
 }
